@@ -1,0 +1,54 @@
+a {
+   color: #0b61a4;
+}
+
+a:hover {
+    color: #66a3d2;
+}
+
+#nav {
+    background: #033e6b;
+    min-height: 2.5em;
+    margin: 0 0 .5em 0;
+    padding: .5em 0;
+    border-top: black 1px solid;
+    border-bottom: black 1px solid;
+}
+#nav a {
+    font-family: "Arial Black";
+    color: #3f92d2;
+    font-size: 2em;
+    text-decoration: none;
+    display: inline;
+    padding: .4em;
+}
+
+#nav a:hover {
+    color: #66a3d2;
+}
+
+#nav a.selected {
+    font-weight: bold;
+}
+
+#adminMenu a,h4 {
+    margin-left: 2em;
+}
+
+.pagination {
+
+}
+.paginationControl {
+    margin-left: 10%;
+    margin-bottom: 1em;
+    margin-top: 1em;
+    max-width: 80%;
+    text-align: center;
+    font-size: larger;
+}
+.paginationControl tr {
+    border: #ccc 1px solid;
+}
+.paginationControl td {
+    font-size: larger;
+}

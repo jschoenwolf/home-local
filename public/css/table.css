@@ -1,0 +1,135 @@
+.table {
+    max-width: 90%;
+    font-size: larger;
+    border-left: #ccc solid 1px;
+    border-right: #ccc solid 1px;
+    margin-left: 3.5em;
+}
+
+.table tr:last-child {
+    border-bottom: #ccc solid 1px;
+    margin-bottom: 1em;
+
+}
+.search {
+    text-align: left;
+}
+.search th {
+    font-size: larger;
+}
+.search td {
+    float: left;
+}
+
+th.tableth {
+    background: #c3d9ff;
+    text-align: center;
+    border-bottom: #ccc double 1px;
+    font-size: larger;
+}
+td {
+    text-align: center;
+}
+.space {
+    font-size: larger;
+    height: max-content;
+    width: max-content;
+}
+
+td.track {
+    width: 10%;
+}
+
+td.title {
+    text-align: left;
+    min-width: 33%;
+}
+
+td.audio_player {
+    float: right;
+    width: 400px;
+}
+.mejs-container {
+    max-width: 400px;
+}
+
+.result {
+    text-align: center;
+}
+
+.alpha_table {
+    max-width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 50px;
+}
+
+.alpha_table h2 {
+    text-align: center;
+}
+
+.alpha {
+    border: #ccc 1px solid;
+
+}
+
+.alpha tr {
+    border-bottom: #ccc 1px solid;
+}
+.alpha td {
+    font-size: 3em;
+    border-right: #ccc 1px solid;
+    padding: 0;
+}
+
+.alpha td a {
+    display: block;
+}
+
+.alpha td a:hover {
+    color: #c3d9ff;
+    background: #66a3d2;
+}
+
+.display {
+    border-top: #eee 1px solid;
+}
+#gap {
+    background: #66a3d2;
+}
+div.g {
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+.genre {
+    table-layout: fixed;
+    margin: 2px;
+    width: 95%;
+
+}
+
+.genre td {
+
+}
+.genre {
+    margin-left: 10px;
+}
+.genre a {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    font-variant: small-caps;
+    font-size: 1.5em;
+    background: #ffdc73;
+    border: #ccc 3px outset;
+    border-radius: .3em;
+    height: 1.6em;
+
+}
+.genre a:hover {
+    color: #033e6b;
+    background: #66a3d2;
+    border-style: inset;
+}

@@ -1,0 +1,15 @@
+<?php
+echo $this->doctype() . "\n";
+?>
+<html>
+    <head>
+        <?php
+        echo $this->headMeta() . "\n";
+        echo $this->headLink() . "\n";
+        echo $this->headscript() . "\n";
+        ?>
+    </head>
+    <body>
+        <?php echo $this->layout()->content; ?>
+    </body>
+</html>

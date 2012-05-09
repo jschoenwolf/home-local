@@ -1,0 +1,12 @@
+<section class="block">
+    <article class="span-20 prepend-3 column">
+        <video id="video" class="video-js vjs-default-skin" controls width="960"
+               height="600" poster="<?php echo '/' . $this->video->path . '_sheet.jpg' ?>"
+               preload="auto" data-setup="{}">
+            <source src="<?php echo $this->baseUrl() . '/' . $this->video->path ?>" type='video/mp4'>
+        </video>
+    </article>
+</section>
+
+
+
