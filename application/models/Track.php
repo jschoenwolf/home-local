@@ -39,7 +39,7 @@ class Application_Model_Track extends JGS_Model_Entity
                     "'Album' can only be set using an instance of 'Application_Model_Album'."
             );
         }
-        if ($name == 'artist' && !$value instanceof Application_Model_Artist) {
+        elseif ($name == 'artist' && !$value instanceof Application_Model_Artist) {
             throw new Zend_Db_Table_Exception(
                     "'Artist' can only be set using an instance of 'Application_Model_Artist'."
             );
@@ -50,20 +50,20 @@ class Application_Model_Track extends JGS_Model_Entity
 
     public function __get($name) {
         if ($name == 'album' && $this->getReferenceId('album') &&
-                !$this->_data['album'] instanceof Application_Model_Album) {
+                !$this->_data['artist'] instanceof Application_Model_Album) {
             if (!$this->_albumMapper) {
-                $this->_albumMapper = new $this->_albumMapperClass;
+                $this->_albumMapper = new $this->_albumMapperClass();
             }
             $this->_data['album'] = $this->_albumMapper->find($this->getReferenceId('album'));
         }
-        if ($name == 'artist' && $this->getReferenceId('artist') &&
+        elseif ($name == 'artist' && $this->getReferenceId('artist') &&
                 !$this->_data['artist'] instanceof Application_Model_Artist) {
             if (!$this->_artistMapper) {
-                $this->_artistMapper = new $this->_artistMapperClass;
+                $this->_artistMapper = new $this->_artistMapperClass();
             }
             $this->_data['artist'] = $this->_artistMapper->find($this->getReferenceId('artist'));
         }
-        parent::__get($name);
+        return parent::__get($name);
     }
 
     public function setAlbumMapper(Application_Model_Mapper_Album $mapper) {

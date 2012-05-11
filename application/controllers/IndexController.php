@@ -19,8 +19,9 @@ class IndexController extends Zend_Controller_Action
         $track = $mapper->find(386);
 //
 //        $track = $mapper->find(403);
-//        Zend_Debug::dump($mapper->find(396), 'Track');
-        echo $track->title . ' ' . $track->artist . ' ' . $track->album;
+        Zend_Debug::dump($track, 'Track');
+        Zend_Debug::dump($track->artist, 'Artist');
+        Zend_Debug::dump($track->album, 'Album');
 
     }
 }

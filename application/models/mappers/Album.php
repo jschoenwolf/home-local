@@ -28,7 +28,32 @@ class Application_Model_Mapper_Album extends JGS_Model_Mapper
                 ));
         $album->setReferenceId('artist', $result->artist_id);
         $this->_setIdentity($id, $album);
+        Zend_Debug::dump($album, 'AlbumMapper');
+        return $album;
+    }
 
-        return $entry;
+    public function save(Application_Model_Album $album) {
+
+        if (!$album->id) {
+            $data = array(
+                'name'      => $album->name,
+                'art'       => $album->art,
+                'year'      => $album->year,
+                'artist_id' => $album->artist->id
+            );
+            $album->id = $this->_getGateway()->insert($data);
+            $this->_setIdentity($album->id, $album);
+        } else {
+            $data = array(
+                'id'        => $album->id,
+                'name'      => $album->name,
+                'art'       => $album->art,
+                'year'      => $album->year,
+                'artist_id' => $album->artist->id
+            );
+            $where = $this->_getGateway()->getAdapter()
+                    ->quoteInto('id = ?', $album->id);
+            $this->_getGateway()->update($data, $where);
+        }
     }
 }

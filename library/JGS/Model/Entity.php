@@ -30,10 +30,14 @@ class JGS_Model_Entity
     }
 
     public function __set($name, $value) {
-        if (!array_key_exists($name, $this->_data)) {
-            continue;
+        try {
+            if (!array_key_exists($name, $this->_data)) {
+                throw new Zend_Db_Exception('This doese not work');
+            }
+            $this->_data[$name] = $value;
+        } catch (Exception $e) {
+            Zend_Debug::dump($e->getTraceAsString(), 'Exception');
         }
-        $this->_data[$name] = $value;
     }
 
     public function __get($name) {

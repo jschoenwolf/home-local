@@ -12,11 +12,11 @@
  */
 class Application_Model_Album extends JGS_Model_Entity
 {
-    protected $data = array(
-        'id' => NULL,
-        'name' => '',
-        'art' => '',
-        'year' => '',
+    protected $_data = array(
+        'id'     => NULL,
+        'name'   => '',
+        'art'    => '',
+        'year'   => '',
         'artist' => NULL
     );
     protected $_references = array();
@@ -39,11 +39,11 @@ class Application_Model_Album extends JGS_Model_Entity
         if ($name == 'artist' && $this->getReferenceId('artist') &&
                 !$this->_data['artist'] instanceof Application_Model_Artist) {
             if (!$this->_artistMapper) {
-                $this->_artistMapper = new $this->_artistMapperClass;
+                $this->_artistMapper = new $this->_artistMapperClass();
             }
             $this->_data['artist'] = $this->_artistMapper->find($this->getReferenceId('artist'));
         }
-        parent::__get($name);
+        return parent::__get($name);
     }
 
      public function setArtistMapper(Application_Model_Mapper_Artist $mapper) {
