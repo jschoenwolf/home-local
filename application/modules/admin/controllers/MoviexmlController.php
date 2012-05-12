@@ -13,7 +13,7 @@ class Admin_MoviexmlController extends Zend_Controller_Action
         if ($this->_helper->FlashMessenger->hasMessages()) {
             $this->view->messages = $this->_helper->FlashMessenger->getMessages();
         }
-        $this->_xmlUtilities = new JGS_Application_XmlUtilities();
+        $this->_xmlUtilities = new Jgs_Application_XmlUtilities();
         $this->_session = new Zend_Session_Namespace('xml');
     }
 

@@ -29,7 +29,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         //Initialize view
         $view = new Zend_View();
 
-        $view->addHelperPath('/../library/JGS/Application/View/Helper');
+        $view->addHelperPath('/../library/Jgs/Application/View/Helper');
 
         $view->doctype(Zend_Registry::get('config')->resources->view->doctype);
 
@@ -48,7 +48,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
         //add javascript files
         $view->headScript()->setFile('/javascript/mediaelement/build/jquery.js');
-        $view->headScript()->setFile('/javascript/modernizr.js');
+//        $view->headScript()->setFile('/javascript/modernizr.js');
 
         //add it to the view renderer
         $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper(

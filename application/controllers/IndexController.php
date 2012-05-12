@@ -17,11 +17,12 @@ class IndexController extends Zend_Controller_Action
 
         $mapper = new Application_Model_Mapper_Track();
         $track = $mapper->find(386);
-//
-//        $track = $mapper->find(403);
-        Zend_Debug::dump($track, 'Track');
-        Zend_Debug::dump($track->artist, 'Artist');
-        Zend_Debug::dump($track->album, 'Album');
+
+        echo 'Title = ' .$track->title .
+             '<br/>Album Name = ' . $track->album->name .
+             '<br />Artist Name = ' . $track->artist->name .
+             '<br />Album Artist Name = ' . $track->album->artist->name;
+
 
     }
 }

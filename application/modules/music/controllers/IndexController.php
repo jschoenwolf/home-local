@@ -28,7 +28,7 @@ class Music_IndexController extends Zend_Controller_Action
         if ($this->_helper->FlashMessenger->hasMessages()) {
             $this->view->messages = $this->_helper->FlashMessenger->getMessages();
         }
-        $this->_utilities = new JGS_Application_Utilities();
+        $this->_utilities = new Jgs_Application_Utilities();
     }
 
     public function indexAction() {
@@ -49,7 +49,7 @@ class Music_IndexController extends Zend_Controller_Action
 
         $request = $this->getRequest()->getParams();
         $model = new Application_Model_DbTable_Track();
-        
+
         switch ($request) {
             case (array_key_exists('query', $request) && isset($request['query'])):
                 $adapter = $model->fetchAllByQueryPaged($request['query']);

@@ -1,23 +1,29 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
- * Description of TrackMapper
+ * Description of Application_Model_Mapper_Track
  *
- * @author john
+ * @author John Schoenwolf
  */
-class Application_Model_Mapper_Track extends JGS_Model_Mapper
+class Application_Model_Mapper_Track extends Jgs_Model_Mapper
 {
+    /**
+     * Name of database table as a string.
+     *
+     * @var string $_tableName
+     */
     protected $_tableName = 'track';
+    /**
+     * Name of entity model class as a string.
+     *
+     * @var string $_entityClass
+     */
     protected $_entityClass = 'Application_Model_Track';
 
     /**
+     * Find a single row in the database table.
      *
-     * @param type $id
+     * @param string $id
      * @return Application_Model_Track
      */
     public function find($id) {
@@ -44,6 +50,7 @@ class Application_Model_Mapper_Track extends JGS_Model_Mapper
     }
 
     /**
+     * Insert or update a single row in database.
      *
      * @param Application_Model_Track $track
      */
@@ -85,6 +92,7 @@ class Application_Model_Mapper_Track extends JGS_Model_Mapper
     }
 
     /**
+     * Delete a single row in database table.
      *
      * @param Application_Model_Track $track
      */

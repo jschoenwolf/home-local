@@ -1,17 +1,17 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
- * Description of Artist
+ * Description of Application_Model_Artist
  *
- * @author john
+ * @author John Schoenwolf
  */
-class Application_Model_Artist extends JGS_Model_Entity
+class Application_Model_Artist extends Jgs_Model_Entity
 {
+    /**
+     * An array of object entities.
+     *
+     * @var array $_data
+     */
     protected $_data = array(
         'id'   => NULL,
         'name' => '',
