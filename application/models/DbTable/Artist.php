@@ -36,15 +36,5 @@ class Application_Model_DbTable_Artist extends Zend_Db_Table_Abstract {
         return $row;
     }
 
-    public function fetchPagedArtists() {
-
-        $select = $this->select();
-        $select->order('name', 'ASC');
-
-        $adapter = new Zend_Paginator_Adapter_DbTableSelect($select);
-
-        return $adapter;
-    }
-
 }
 

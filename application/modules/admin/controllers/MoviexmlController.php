@@ -4,17 +4,21 @@ class Admin_MoviexmlController extends Zend_Controller_Action
 {
     protected $_xmlUtilities = null;
     protected $_session;
+    protected $_message;
 
     public function preDispatch() {
 
     }
 
     public function init() {
-        if ($this->_helper->FlashMessenger->hasMessages()) {
-            $this->view->messages = $this->_helper->FlashMessenger->getMessages();
-        }
+
         $this->_xmlUtilities = new Jgs_Application_XmlUtilities();
         $this->_session = new Zend_Session_Namespace('xml');
+        $this->_message = $this->getHelper('FlashMessenger');
+        if ($this->_message->hasMessages()) {
+            $this->view->messages = $this->_message->getMessages();
+
+        }
     }
 
     public function indexAction() {

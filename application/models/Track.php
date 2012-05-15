@@ -5,7 +5,7 @@
  *
  * @author John Schoenwolf
  */
-class Application_Model_Track extends Jgs_Model_Entity
+class Application_Model_Track extends Jgs_Application_Model_Entity
 {
     /**
      * An array of object entities.
@@ -25,12 +25,6 @@ class Application_Model_Track extends Jgs_Model_Entity
         'artist'    => NULL,
         'album'     => NULL
     );
-    /**
-     * An array of reference id's for lazy loading related objects.
-     *
-     * @var array $_references
-     */
-//    protected $_references = array();
     /**
      * Name of related objects mapper class a string.
      *
