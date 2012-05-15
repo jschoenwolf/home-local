@@ -5,7 +5,7 @@
  *
  * @author John Schoenwolf
  */
-class Application_Model_Album extends Jgs_Model_Entity
+class Application_Model_Album extends Jgs_Application_Model_Entity
 {
 
     /**

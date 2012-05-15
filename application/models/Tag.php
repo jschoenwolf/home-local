@@ -79,59 +79,55 @@ class Application_Model_Tag
 
     public function saveTags() {
 
-        $trackGateway = new Application_Model_DbTable_Track();
-        $artistGateway = new Application_Model_DbTable_Artist();
-        $albumGateway = new Application_Model_DbTable_Album();
+        $trackMapper  = new Application_Model_Mapper_Track();
+        $artistMapper = new Application_Model_Mapper_Artist();
+        $albumMapper  = new Application_Model_Mapper_Album();
 
         if (isset($this->_hash)) {
-
             //see if track already exists by comparing hashs
-            $trackRow = $trackGateway->fetchTrackRow('hash', $this->getHash());
-
+            $trackRow = $trackMapper->fetchByColumn('hash', $this->getHash());
             //if track does not exist
-            if (!$trackRow) {
+            if (is_null($trackRow)) {
                 //save the artist
                 $artistData = array(
                     'name' => $this->getArtist()
                 );
                 //see it the artist exists by name
-                $artistRow = $artistGateway->fetchArtistRow('name', $this->getArtist());
+                $artistRow = $artistMapper->fetchByColumn('name', $this->getArtist());
                 //does artist exist?
-                if (!$artistRow) {
-                    $artistRow = $artistGateway->saveArtist($artistData);
+                if (is_null($artistRow)) {
+                    $artistRow = $artistMapper->save($artistData);
                 }
 
                 //Save the Album Data
                 //does the album exist?
-                $albumRow = $albumGateway->fetchAlbumRow('name', $this->getAlbum());
+                $albumRow = $albumMapper->fetchByColumn('name', $this->getAlbum());
                 //if yes
-                if (!$albumRow) {
-
+                if (is_null($albumRow)) {
                     $albumData = array(
-                        'name' => $this->getAlbum(),
+                        'name'      => $this->getAlbum(),
                         'artist_id' => $artistRow->id,
-                        'art' => $this->getAlbum() . '.jpg',
-                        'year' => $this->getYear()
+                        'art'       => $this->getAlbum() . '.jpg',
+                        'year'      => $this->getYear()
                     );
                     //get album row
-                    $albumRow = $albumGateway->saveAlbum($albumData);
+                    $albumRow = $albumMapper->save($albumData);
                 }
-
                 //Save track data
                 $trackData = array(
-                    'title' => $this->getTitle(),
-                    'filename' => $this->getFilename(),
-                    'path' => $this->getPath(),
-                    'format' => $this->getFormat(),
-                    'genre' => $this->getGenre(),
+                    'title'     => $this->getTitle(),
+                    'filename'  => $this->getFilename(),
+                    'path'      => $this->getPath(),
+                    'format'    => $this->getFormat(),
+                    'genre'     => $this->getGenre(),
                     'artist_id' => $artistRow->id,
-                    'album_id' => $albumRow->id,
-                    'track' => $this->getTrack(),
+                    'album_id'  => $albumRow->id,
+                    'track'     => $this->getTrack(),
                     'play_time' => $this->getPlay_time(),
-                    'hash' => $this->getHash()
+                    'hash'      => $this->getHash()
                 );
                 //save track data
-                $trackGateway->saveTrack($trackData);
+                $trackMapper->save($trackData);
             }
         } else {
             return;

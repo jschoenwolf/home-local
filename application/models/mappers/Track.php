@@ -5,7 +5,7 @@
  *
  * @author John Schoenwolf
  */
-class Application_Model_Mapper_Track extends Jgs_Model_Mapper
+class Application_Model_Mapper_Track extends Jgs_Application_Model_Mapper
 {
     /**
      * Name of database table as a string.
@@ -20,6 +20,11 @@ class Application_Model_Mapper_Track extends Jgs_Model_Mapper
      */
     protected $_entityClass = 'Application_Model_Track';
 
+    public function __construct(Zend_Db_Table_Abstract $tableGateway = NULL) {
+        $this->_tableGateway = new Application_Model_DbTable_Track();
+        parent::__construct($tableGateway);
+    }
+
     /**
      * Find a single row in the database table.
      *
@@ -30,24 +35,31 @@ class Application_Model_Mapper_Track extends Jgs_Model_Mapper
         if ($this->_getIdentity($id)) {
             return $this->_getIdentity($id);
         }
-        $result = $this->_getGateway()->find($id)->current();
-        $track = new $this->_entityClass(array(
-                    'id'        => $result->id,
-                    'title'     => $result->title,
-                    'filename'  => $result->filename,
-                    'path'      => $result->path,
-                    'format'    => $result->format,
-                    'genre'     => $result->genre,
-                    'track'     => $result->track,
-                    'hash'      => $result->hash,
-                    'play_time' => $result->play_time
-                ));
-        $track->setReferenceId('artist', $result->artist_id);
-        $track->setReferenceId('album', $result->album_id);
-        $this->_setIdentity($id, $track);
+        $select = $this->_select;
+        $select->where('id = ?', $id);
+        $row = $this->_getGateway()->fetchRow($select);
+        if (is_null($row)) {
+            return NULL;
+        } else {
+            $track = new $this->_entityClass(array(
+                        'id'        => $row->id,
+                        'title'     => $row->title,
+                        'filename'  => $row->filename,
+                        'path'      => $row->path,
+                        'format'    => $row->format,
+                        'genre'     => $row->genre,
+                        'track'     => $row->track,
+                        'hash'      => $row->hash,
+                        'play_time' => $row->play_time
+                    ));
+            $track->setReferenceId('artist', $row->artist_id);
+            $track->setReferenceId('album', $row->album_id);
+            $this->_setIdentity($id, $track);
 
-        return $track;
+            return $track;
+        }
     }
+
 
     /**
      * Insert or update a single row in database.
@@ -91,6 +103,77 @@ class Application_Model_Mapper_Track extends Jgs_Model_Mapper
         }
     }
 
+    public function fetchAll() {
+        $result = $this->_getGateway()->fetchAll();
+        $tracks = array();
+        foreach ($result as $row) {
+            $track = new $this->_entityClass(array(
+                        'id'        => $row->id,
+                        'title'     => $row->title,
+                        'filename'  => $row->filename,
+                        'path'      => $row->path,
+                        'format'    => $row->format,
+                        'genre'     => $row->genre,
+                        'track'     => $row->track,
+                        'hash'      => $row->hash,
+                        'play_time' => $row->play_time
+                    ));
+            $track->setReferenceId('artist', $row->artist_id);
+            $track->setReferenceId('album', $row->album_id);
+            $tracks[] = $track;
+        }
+        return $tracks;
+    }
+
+    /**
+     *
+     * @return \Zend_Paginator_Adapter_DbTableSelect
+     */
+    public function fetchPagedTracks($artist = NULL, $query = NULL) {
+
+        $select = $this->_getGateway()
+                       ->select(Zend_Db_Table::SELECT_WITH_FROM_PART)
+                       ->setIntegrityCheck(FALSE);
+        $select->join('artist', 'artist.id = track.artist_id', array(
+                      'artist' => 'name'
+        ));
+        $select->join('album', 'album.id = track.album_id', array(
+                      'album' => 'name', 'artist_id', 'year'
+        ));
+        if (!is_null($artist)) {
+            $select->where('artist.id = ?', $artist);
+        }
+        if (!is_null($query)) {
+            $select->where("track.title LIKE '%$query%'");
+            $select->orWhere("artist.name LIKE '%$query%'");
+        }
+        $select->order('artist', 'ASC');
+        $select->order('album');
+        $select->order('track', 'ASC');
+
+        $adapter = new Zend_Paginator_Adapter_DbTableSelect($select);
+
+        return $adapter;
+    }
+
+    public function fetchAlbum($album_id) {
+        $select = $this->_getGateway()
+                       ->select(Zend_Db_Table::SELECT_WITH_FROM_PART)
+                       ->setIntegrityCheck(FALSE);
+        $select->join('artist', 'artist.id = track.artist_id', array(
+            'artist' => 'name'
+        ));
+        $select->join('album', 'album.id = track.album_id', array(
+            'album' => 'name', 'artist_id', 'year', 'art'
+        ));
+        $select->where('album_id = ?', $album_id);
+        $select->order('track', 'ASC');
+
+        $result = $this->_getGateway()->fetchAll($select);
+
+        return $result;
+    }
+
     /**
      * Delete a single row in database table.
      *
@@ -107,4 +190,8 @@ class Application_Model_Mapper_Track extends Jgs_Model_Mapper
         }
         $this->_getGateway()->delete($where);
     }
+    protected function createEntity($row) {
+
+    }
+
 }

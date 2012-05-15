@@ -10,7 +10,7 @@
  *
  * @author john
  */
-class JGS_Application_Resource_Cache extends Zend_Application_Resource_ResourceAbstract
+class Jgs_Application_Resource_Cache extends Zend_Application_Resource_ResourceAbstract
 {
 
     public function init() {

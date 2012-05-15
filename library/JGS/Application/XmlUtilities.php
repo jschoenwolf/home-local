@@ -6,7 +6,7 @@
  * @author John Schoenwolf
  * @copyright 2012
  */
-class JGS_Application_XmlUtilities
+class Jgs_Application_XmlUtilities
 {
 
     /**

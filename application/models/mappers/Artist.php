@@ -5,7 +5,7 @@
  *
  * @author John Schoenwolf
  */
-class Application_Model_Mapper_Artist extends Jgs_Model_Mapper
+class Application_Model_Mapper_Artist extends Jgs_Application_Model_Mapper
 {
     /**
      * Name of database table as a string
@@ -31,15 +31,33 @@ class Application_Model_Mapper_Artist extends Jgs_Model_Mapper
         if ($this->_getIdentity($id)) {
             return $this->_getIdentity($id);
         }
-        $result = $this->_getGateway()->find($id)->current();
+        $select = $this->_select;
+        $select->where('id = ?', $id);
+        $row = $this->_getGateway()->fetchRow($select);
+        if (is_null($row)) {
+            return NULL;
+        } else {
+            $artist = new $this->_entityClass(array(
+                        'id'   => $row->id,
+                        'name' => $row->name
+                    ));
+            $this->_setIdentity($id, $artist);
 
-        $artist = new $this->_entityClass(array(
-                    'id'   => $result->id,
-                    'name' => $result->name
-                ));
-        $this->_setIdentity($id, $artist);
+            return $artist;
+        }
+    }
 
-        return $artist;
+    /**
+     *
+     * @return \Zend_Paginator_Adapter_DbTableSelect
+     */
+    public function fetchAllPaged() {
+
+        $select = $this->_select->order('name', 'ASC');
+
+        $adapter = new Zend_Paginator_Adapter_DbTableSelect($select);
+
+        return $adapter;
     }
 
     /**
@@ -82,4 +100,8 @@ class Application_Model_Mapper_Artist extends Jgs_Model_Mapper
         }
         $this->_getGateway()->delete($where);
     }
+    protected function createEntity($row) {
+
+    }
+
 }

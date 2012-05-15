@@ -1,19 +1,23 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
- * Description of Entity
+ * Description of Jgs_Application_Model_Entity
  *
- * @author john
+ * @author John Schoenwolf
  */
-class JGS_Model_Entity
+class Jgs_Application_Model_Entity
 {
+    /**
+     * An array of reference id's for lazy loading related objects.
+     *
+     * @var array $_references
+     */
     protected $_references = array();
 
+    /**
+     *
+     * @param array $data
+     */
     public function __construct(array $data = null) {
 
         if (!is_null($data)) {
@@ -24,42 +28,74 @@ class JGS_Model_Entity
         }
     }
 
+    /**
+     *
+     * @return array $_data
+     */
     public function toArray() {
 
         return $this->_data;
     }
 
+    /**
+     *
+     * @param string $name
+     * @param string $value
+     * @throws Zend_Db_Table_Exception
+     */
     public function __set($name, $value) {
-        try {
+
             if (!array_key_exists($name, $this->_data)) {
-                throw new Zend_Db_Exception('This doese not work');
+                throw new Zend_Db_Table_Exception('This doese not work');
             }
             $this->_data[$name] = $value;
-        } catch (Exception $e) {
-            Zend_Debug::dump($e->getTraceAsString(), 'Exception');
-        }
     }
 
+    /**
+     *
+     * @param string $name
+     * @return string
+     */
     public function __get($name) {
+
         if (array_key_exists($name, $this->_data)) {
             return $this->_data[$name];
         }
     }
 
+    /**
+     *
+     * @param string $name
+     * @return bool
+     */
     public function __isset($name) {
         return isset($this->_data[$name]);
     }
 
+    /**
+     *
+     * @param string $name
+     */
     public function __unset($name) {
         if (isset($this->_data[$name])) {
             unset($this->_data[$name]);
         }
     }
 
+    /**
+     *
+     * @param string $name
+     * @param string $id
+     */
     public function setReferenceId($name, $id) {
         $this->_references[$name] = $id;
     }
 
+    /**
+     *
+     * @param string $name
+     * @return string
+     */
     public function getReferenceId($name) {
         if (isset($this->_references[$name])) {
             return $this->_references[$name];

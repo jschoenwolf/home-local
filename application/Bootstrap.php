@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Application bootstrap file.
+ */
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
 
@@ -28,15 +31,16 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     protected function _initView() {
         //Initialize view
         $view = new Zend_View();
-
+        //add custom view helper path
         $view->addHelperPath('/../library/Jgs/Application/View/Helper');
-
+        //set doctype for default layout
         $view->doctype(Zend_Registry::get('config')->resources->view->doctype);
-
+        //set default title
         $view->headTitle('Our Home');
-
+        //set head meta data
         $view->headMeta()->appendHttpEquiv('Content-Type', Zend_Registry::get(
                         'config')->resources->view->contentType);
+        //set css includes
         $view->headLink()->setStylesheet('/css/normalize.css');
         $view->headLink()->appendStylesheet('/css/blueprint/src/liquid.css');
         $view->headLink()->appendStylesheet('/css/blueprint/src/typography.css');
@@ -45,10 +49,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $view->headLink()->appendStylesheet('/css/main.css');
         $view->headLink()->appendStylesheet('/css/nav.css');
         $view->headLink()->appendStylesheet('/css/table.css');
-
         //add javascript files
         $view->headScript()->setFile('/javascript/mediaelement/build/jquery.js');
-//        $view->headScript()->setFile('/javascript/modernizr.js');
 
         //add it to the view renderer
         $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper(
@@ -56,6 +58,13 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $viewRenderer->setView($view);
         //Return it, so that it can be stored by the bootstrap
         return $view;
+    }
+
+    protected function _initHelpers() {
+
+        Zend_Controller_Action_HelperBroker::addPath(
+                '/../library/Jgs/Application/Controller/Action/Helper',
+                'Jgs_Application_Controller_Action_Helper');
     }
 }
 

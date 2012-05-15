@@ -3,6 +3,7 @@
 class Music_IndexController extends Zend_Controller_Action
 {
     protected $_utilities = null;
+    protected $_message;
 
     public function preDispatch() {
 
@@ -22,19 +23,22 @@ class Music_IndexController extends Zend_Controller_Action
         ));
 
         $this->_helper->layout()->search = $searchForm;
+
     }
 
     public function init() {
-        if ($this->_helper->FlashMessenger->hasMessages()) {
-            $this->view->messages = $this->_helper->FlashMessenger->getMessages();
+
+        $this->_message = $this->getHelper('FlashMessenger');
+        if ($this->_message->hasMessages()) {
+            $this->view->messages = $this->_message->getMessages();
         }
         $this->_utilities = new Jgs_Application_Utilities();
     }
 
     public function indexAction() {
 
-        $model = new Application_Model_DbTable_Artist();
-        $adapter = $model->fetchPagedArtists();
+        $model = new Application_Model_Mapper_Artist();
+        $adapter = $model->fetchAllPaged();
 
         $paginator = new Zend_Paginator($adapter);
         $paginator->setItemCountPerPage(48)->setPageRange(5);
@@ -43,19 +47,20 @@ class Music_IndexController extends Zend_Controller_Action
         $paginator->setCurrentPageNumber($page);
 
         $this->view->paginator = $paginator;
+
     }
 
     public function displayAction() {
 
         $request = $this->getRequest()->getParams();
-        $model = new Application_Model_DbTable_Track();
+        $model = new Application_Model_Mapper_Track();
 
         switch ($request) {
             case (array_key_exists('query', $request) && isset($request['query'])):
-                $adapter = $model->fetchAllByQueryPaged($request['query']);
+                $adapter = $model->fetchPagedTracks(NULL, $request['query']);
                 break;
             case (array_key_exists('id', $request) && isset($request['id'])):
-                $adapter = $model->fetchAllByArtistPaged($request['id']);
+                $adapter = $model->fetchPagedTracks($request['id']);
                 break;
             default:
                 $adapter = $model->fetchPagedTracks();
@@ -76,10 +81,10 @@ class Music_IndexController extends Zend_Controller_Action
 
         $id = $this->_request->getParam('id');
 
-        $model = new Application_Model_DbTable_Album();
+        $model = new Application_Model_Mapper_Track();
         $album = $model->fetchAlbum($id);
         $this->view->album = $album;
-
+        Zend_Debug::dump($album, 'Album');
         $this->view->artPath = '/images/mp3art/';
     }
 }

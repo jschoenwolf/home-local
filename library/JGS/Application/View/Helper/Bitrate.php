@@ -1,14 +1,9 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of Bitrate
  *
- * @author john
+ * @author John schoenwolf
  */
 class Zend_View_Helper_Bitrate extends Zend_View_Helper_Abstract
 {

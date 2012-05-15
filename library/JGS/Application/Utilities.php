@@ -11,7 +11,7 @@
  * @author John Schoenwolf
  * @copyright 2012
  */
-class JGS_Application_Utilities
+class Jgs_Application_Utilities
 {
 
     /**

@@ -5,7 +5,7 @@
  *
  * @author John Schoenwolf
  */
-class Application_Model_Mapper_Album extends Jgs_Model_Mapper
+class Application_Model_Mapper_Album extends Jgs_Application_Model_Mapper
 {
 
     /**
@@ -31,18 +31,25 @@ class Application_Model_Mapper_Album extends Jgs_Model_Mapper
         if ($this->_getIdentity($id)) {
             return $this->_getIdentity($id);
         }
-        $result = $this->_getGateway()->find($id)->current();
-        $album = new $this->_entityClass(array(
-                    'id'   => $result->id,
-                    'name' => $result->name,
-                    'art'  => $result->art,
-                    'year' => $result->year
-                ));
-        $album->setReferenceId('artist', $result->artist_id);
-        $this->_setIdentity($id, $album);
+        $select = $this->_select;
+        $select->where('id = ?', $id);
+        $row = $this->_getGateway()->fetchRow($select);
+        if (is_null($row)) {
+            return NULL;
+        } else {
+            $album = new $this->_entityClass(array(
+                        'id'   => $row->id,
+                        'name' => $row->name,
+                        'art'  => $row->art,
+                        'year' => $row->year
+                    ));
+            $album->setReferenceId('artist', $row->artist_id);
+            $this->_setIdentity($id, $album);
 
-        return $album;
+            return $album;
+        }
     }
+
 
     /**
      * Insert or update a single row in database table.
@@ -90,4 +97,8 @@ class Application_Model_Mapper_Album extends Jgs_Model_Mapper
         }
         $this->_getGateway()->delete($where);
     }
+    protected function createEntity($row) {
+
+    }
+
 }
