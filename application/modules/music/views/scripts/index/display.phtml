@@ -11,24 +11,24 @@ echo $this->paginationControl(
     <table>
         <?php
         foreach ($this->paginator as $track):;
-            $artist = $track->artist;
-            $album = $track->album;
+            $artist = $track->artist->id;
+            $album = $track->album->id;
             ?>
             <?php if ($end_artist != $artist): ?>
 
 
                 <thead>
                     <tr>
-                        <th colspan="3"><?php echo $track->artist ?></th>
+                        <th colspan="3"><?php echo $track->artist->name ?></th>
                     </tr>
                 </thead>
             <?php endif ?>
             <?php if ($end_album != $album): ?>
 
                 <tr class="display">
-                    <th><img src="<?php echo $this->thumbPath . $track->album . '_thumb.jpg' ?>" alt="Album Art" /></th>
-                    <th><a href="/music/index/album/id/<?php echo $track->album_id ?>"><?php echo $track->album ?></a></th>
-                    <th><?php echo $track->year ?></th>
+                    <th><img src="<?php echo $this->thumbPath . $track->album->name . '_thumb.jpg' ?>" alt="Album Art" /></th>
+                    <th><a href="/music/index/album/id/<?php echo $track->album->id ?>"><?php echo $track->album->name ?></a></th>
+                    <th><?php echo $track->album->year ?></th>
                 </tr>
 
                 <tr>
@@ -42,13 +42,14 @@ echo $this->paginationControl(
             <tr>
                 <td class="track"><?php echo $track->track ?></td>
                 <td class="title"><?php echo $track->title ?></td>
-                <td class="audio_player"><audio controls="controls" preload="none"><source src="<?php echo $this->path($track->path) ?>" type="audio/mp3" /></audio></td>
+                <td class="audio_player"><audio controls="controls" preload="none">
+                        <source src="<?php echo $this->path($track->path) ?>" type="audio/mp3" /></audio></td>
             </tr>
 
 
             <?php
-            $end_artist = $track->artist;
-            $end_album = $track->album
+            $end_artist = $track->artist->id;
+            $end_album = $track->album->id
             ?>
 
         <?php endforeach ?>

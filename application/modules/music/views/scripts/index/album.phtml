@@ -1,4 +1,4 @@
-<?php $art = $this->artPath . $this->album[0]->album . '.jpg' ?>
+<?php $art = $this->artPath . $this->album->art ?>
 <section class="block">
     <article class="column span-4 prepend-8 append-12 last">
         <img id="album_img" src="<?php echo $art ?>" alt="album art" height="300" width="300">
@@ -8,7 +8,7 @@
         <table>
             <thead>
                 <tr>
-                    <th colspan="3" class="large"><?php echo $this->album[0]->album ?></th>
+                    <th colspan="3" class="large"><?php echo $this->album->name ?></th>
                 </tr>
             </thead>
             <tbody>
@@ -18,7 +18,7 @@
                     <th class="tableth">&nbsp;</th>
                 </tr>
                 <tr><td colspan="3"></td></tr>
-                <?php foreach ($this->album as $track): ?>
+                <?php foreach ($this->tracks as $track): ?>
                     <tr>
                         <td class="track"><?php echo $track->track ?></td>
                         <td class="title"><?php echo $track->title ?></td>
@@ -28,7 +28,7 @@
             <?php endforeach; ?>
             <tfoot>
                 <tr>
-                    <th colspan="3" class="alt large"><?php echo $this->album[0]->artist ?></th>
+                    <th colspan="3" class="alt large"><?php echo $this->album->artist->name ?></th>
                 </tr>
             </tfoot>
         </table>

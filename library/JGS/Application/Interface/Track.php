@@ -39,4 +39,6 @@ interface Jgs_Application_Interface_Track
 
     public function setAlbum($album);
     public function getAlbum();
+
+
 }

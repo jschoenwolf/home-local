@@ -7,16 +7,16 @@ class Music_Model_Album extends Jgs_Application_Model_Entity_Abstract implements
     protected $_art;
     protected $_year;
     protected $_artist;
-    protected $_tracks = array();
 
-    function __construct($name, $art, $year, Music_Model_Artist $artist,
-     array $tracks) {
 
-        $this->setName($name);
-        $this->setArt($art);
-        $this->setYear($year);
-        $this->setArtist($artist);
-        $this->setTracks($tracks);
+    function __construct(array $data) {
+
+        $data = (object) $data;
+        $this->setId($data->id);
+        $this->setName($data->name);
+        $this->setArt($data->art);
+        $this->setYear($data->year);
+        $this->setArtist($data->artist);
     }
 
     public function getId() {
@@ -24,14 +24,15 @@ class Music_Model_Album extends Jgs_Application_Model_Entity_Abstract implements
     }
 
     public function setId($id) {
+        $id = (int)$id;
         if (!is_null($this->_id)) {
             throw new BadMethodCallException(
                 "The ID for this post has been set already."
             );
         }
-        if (!is_int($id || $id < 1 || strlen($id) > 4)) {
+        if (!is_int($id) || $id < 1 || strlen($id) > 4) {
             throw new InvalidArgumentException(
-                "The posted 'Album ID' is invalid."
+                "The posted 'Album ID' $id is invalid."
             );
         }
         $this->_id = $id;
@@ -71,7 +72,7 @@ class Music_Model_Album extends Jgs_Application_Model_Entity_Abstract implements
     }
 
     public function setYear($year) {
-        if (!is_int($year) || $year < 1900 || strlen($year) > 4) {
+        if (strlen($year) > 4) {
             throw new InvalidArgumentException(
                 "The posted value for 'Album Year' is invalid."
             );
@@ -85,7 +86,7 @@ class Music_Model_Album extends Jgs_Application_Model_Entity_Abstract implements
     }
 
     public function setArtist($artist) {
-        if (!$artist instanceof Jgs_Application_Interface_Artist) {
+        if (!$artist instanceof Music_Model_Artist) {
             throw new InvalidArgumentException(
                 "Object 'Artist' does not implement interface or is not
                  instance of 'Music_Model_Artist"
@@ -95,20 +96,11 @@ class Music_Model_Album extends Jgs_Application_Model_Entity_Abstract implements
         return $this;
     }
 
-    public function getTracks() {
-        return $this->_tracks;
-    }
+     public function getTracks() {
+        $mapper = new Music_Model_Mapper_Track();
+        $tracks = $mapper->findByColumn('album_id', $this->id, 'track ASC');
 
-    public function setTracks($tracks) {
-        foreach ($tracks as $track) {
-            if (!$track instanceof Music_Model_Track) {
-                throw new InvalidArgumentException(
-                    "One or more 'Tracks' are invalid."
-                );
-            }
-            $this->_tracks = $tracks;
-            return $this;
-        }
+        return $tracks;
     }
 }
 

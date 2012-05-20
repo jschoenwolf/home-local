@@ -1,9 +1,7 @@
 <?php
 
-class Music_Model_Track extends Jgs_Application_Model_Entity_Abstract
-implements Jgs_Application_Interface_Track
+class Music_Model_Track extends Jgs_Application_Model_Entity_Abstract implements Jgs_Application_Interface_Track
 {
-
     protected $_id;
     protected $_album;
     protected $_artist;
@@ -16,20 +14,21 @@ implements Jgs_Application_Interface_Track
     protected $_title;
     protected $_track;
 
+    public function __construct(array $data) {
 
+        $data = (object) $data;
 
-
-    function __construct($album, $artist, $filename, $format, $genre, $hash, $path, $play_time, $title, $track) {
-        $this->_album     = $album;
-        $this->_artist    = $artist;
-        $this->_filename  = $filename;
-        $this->_format    = $format;
-        $this->_genre     = $genre;
-        $this->_hash      = $hash;
-        $this->_path      = $path;
-        $this->_play_time = $play_time;
-        $this->_title     = $title;
-        $this->_track     = $track;
+        $this->setId($data->id);
+        $this->setAlbum($data->album);
+        $this->setArtist($data->artist);
+        $this->setFilename($data->filename);
+        $this->setFormat($data->format);
+        $this->setGenre($data->genre);
+        $this->setHash($data->hash);
+        $this->setPath($data->path);
+        $this->setPlay_time($data->play_time);
+        $this->setTitle($data->title);
+        $this->setTrack($data->track);
     }
 
     public function getAlbum() {
@@ -77,23 +76,11 @@ implements Jgs_Application_Interface_Track
     }
 
     public function setAlbum($album) {
-        if (!$album instanceof Music_Model_Album) {
-            throw new InvalidArgumentException(
-                "The posted value for 'Album' is invalid, must be
-                    instance of Music_Model_Album"
-            );
-        }
         $this->_album = $album;
         return $this;
     }
 
     public function setArtist($artist) {
-        if (!$album instanceof Music_Model_Artist) {
-            throw new InvalidArgumentException(
-                "The posted value for 'Artist' is invalid, must be
-                    instance of Music_Model_Artist"
-            );
-        }
         $this->_artist = $artist;
         return $this;
     }
@@ -119,16 +106,6 @@ implements Jgs_Application_Interface_Track
     }
 
     public function setId($id) {
-        if (!is_null($id)) {
-            throw new BadMethodCallException(
-                    "The 'ID' for this track has already been set."
-            );
-        }
-        if (!is_int($id) || $id < 1 || strlen($id) > 4) {
-            throw new InvalidArgumentException(
-                    "The posted value for 'Track ID' is invalid"
-            );
-        }
         $this->_id = $id;
         return $this;
     }
@@ -152,6 +129,5 @@ implements Jgs_Application_Interface_Track
         $this->_track = $track;
         return $this;
     }
-
 }
 

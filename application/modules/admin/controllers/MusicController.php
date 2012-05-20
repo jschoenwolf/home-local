@@ -8,7 +8,7 @@ class Admin_MusicController extends Zend_Controller_Action
     }
 
     public function indexAction() {
-        
+
     }
 
     public function readAction() {
@@ -41,6 +41,15 @@ class Admin_MusicController extends Zend_Controller_Action
             $this->_helper->flashMessenger->addMessage($e->getMessage());
             $this->_redirect($this->getRequest()->getRequestUri());
         }
+    }
+
+    public function updateartistAction() {
+        $id = $this->getRequest()->getParam('id');
+
+        $model = new Music_Model_Mapper_Artist();
+        $artists = $model->findById(20);
+        $this->view->thumbPath = '/images/mp3art/thumbs/';
+        $this->view->artists = $artists;
     }
 }
 

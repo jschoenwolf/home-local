@@ -5,7 +5,9 @@ class Music_Model_Artist extends Jgs_Application_Model_Entity_Abstract implement
     protected $_id;
     protected $_name;
 
-    public function __construct($name) {
+    public function __construct($id = NULL, $name) {
+
+        $this->setId($id);
         $this->setName($name);
     }
 
@@ -18,16 +20,14 @@ class Music_Model_Artist extends Jgs_Application_Model_Entity_Abstract implement
     }
 
     public function setId($id) {
-        if (!is_null($this->_id)) {
-            throw new BadMethodCallException(
-                "The ID for this 'Artist' has been set already."
-            );
-        }
+        $id = (int)$id;
+
         if (!is_int($id) || $id < 1 || strlen($id) > 4) {
             throw new InvalidArgumentException(
                 "The posted value 'Artist ID' is invalid, must be integer between 1 and 9999"
             );
         }
+        $this->_data['id'] = $id;
         $this->_id = $id;
         return $this;
     }
@@ -38,8 +38,17 @@ class Music_Model_Artist extends Jgs_Application_Model_Entity_Abstract implement
                 "The posted value for 'Artist Name' is invalid"
             );
         }
+        $this->_data['name'] = $name;
         $this->_name = htmlspecialchars(trim($name), ENT_QUOTES);
         return $this;
     }
+
+    public function getAlbums() {
+        $mapper = new Music_Model_Mapper_Album();
+        $albums = $mapper->findByColumn('artist_id', $this->_id);
+
+        return $albums;
+    }
+
 }
 

@@ -133,3 +133,10 @@ div.g {
     background: #66a3d2;
     border-style: inset;
 }
+
+.edit td,th {
+    border: #ccc 1px solid;
+}
+.edit input {
+    text-align: center;
+}

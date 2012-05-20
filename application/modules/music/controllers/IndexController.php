@@ -37,7 +37,7 @@ class Music_IndexController extends Zend_Controller_Action
 
     public function indexAction() {
 
-        $model = new Application_Model_Mapper_Artist();
+        $model = new Music_Model_Mapper_Artist();
         $adapter = $model->fetchAllPaged();
 
         $paginator = new Zend_Paginator($adapter);
@@ -53,7 +53,7 @@ class Music_IndexController extends Zend_Controller_Action
     public function displayAction() {
 
         $request = $this->getRequest()->getParams();
-        $model = new Application_Model_Mapper_Track();
+        $model = new Music_Model_Mapper_Track();
 
         switch ($request) {
             case (array_key_exists('query', $request) && isset($request['query'])):
@@ -81,10 +81,10 @@ class Music_IndexController extends Zend_Controller_Action
 
         $id = $this->_request->getParam('id');
 
-        $model = new Application_Model_Mapper_Track();
-        $album = $model->fetchAlbum($id);
-        $this->view->album = $album;
-        Zend_Debug::dump($album, 'Album');
+        $model = new Music_Model_Mapper_Album();
+
+        $this->view->album = $model->findById($id);
+        $this->view->tracks = $model->getTracks($id);
         $this->view->artPath = '/images/mp3art/';
     }
 }

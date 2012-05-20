@@ -79,9 +79,9 @@ class Application_Model_Tag
 
     public function saveTags() {
 
-        $trackMapper  = new Application_Model_Mapper_Track();
-        $artistMapper = new Application_Model_Mapper_Artist();
-        $albumMapper  = new Application_Model_Mapper_Album();
+        $trackMapper  = new Music_Model_Mapper_Track();
+        $artistMapper = new Music_Model_Mapper_Artist();
+        $albumMapper  = new Music_Model_Mapper_Album();
 
         if (isset($this->_hash)) {
             //see if track already exists by comparing hashs

@@ -8,6 +8,9 @@
 abstract class Jgs_Application_Model_Entity_Abstract
 {
 
+    protected $_data = array();
+
+
     /**
      * Map the setting of non-existing fields to a mutator when
      * possible, otherwise use the matching field
@@ -24,6 +27,7 @@ abstract class Jgs_Application_Model_Entity_Abstract
         } else {
             $this->$property = $value;
         }
+        $this->_data[$name] = $value;
         return $this;
     }
 
@@ -46,6 +50,6 @@ abstract class Jgs_Application_Model_Entity_Abstract
      * Get the entity fields.
      */
     public function toArray() {
-        return get_object_vars($this);
+        return $this->_data;
     }
 }
