@@ -62,6 +62,16 @@ class Music_Model_Mapper_Artist extends Jgs_Application_Model_Mapper
 
         return $adapter;
     }
+    
+    public function findByColumnPaged($column, $value) {
+        $select = $this->_getGateway()->select();
+        $select->where("$column LIKE '%$value%'");
+        $select->order('name ASC');
+        
+        $adapter = new Music_Model_Paginator_Artist($select);
+
+        return $adapter;
+    }
 
     /**
      * accepts a string, an array of id's or an instance or array of

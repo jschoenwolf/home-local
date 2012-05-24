@@ -1,14 +1,30 @@
 <?php
 
-class Admin_MusicController extends Zend_Controller_Action
-{
+class Admin_MusicController extends Zend_Controller_Action {
+
+    public function preDispatch() {
+
+        $searchForm = new Application_Form_Search();
+        $searchForm->setAction('/admin/music/update');
+        $searchForm->query->setAttribs(array('placeholder' => 'Search for Artist',
+            'size' => 27,
+        ));
+        $searchForm->search->setLabel('Find an Artist\'s work.');
+        $searchForm->setDecorators(array(
+            array('ViewScript', array(
+                    'viewScript' => '_searchForm.phtml'
+            ))
+        ));
+
+        $this->_helper->layout()->search = $searchForm;
+    }
 
     public function init() {
-
+        
     }
 
     public function indexAction() {
-
+        
     }
 
     public function readAction() {
@@ -43,13 +59,27 @@ class Admin_MusicController extends Zend_Controller_Action
         }
     }
 
-    public function updateartistAction() {
-        $id = $this->getRequest()->getParam('id');
+    public function updateAction() {
 
+        $query = $this->getRequest()->getParam('query');
+        
         $model = new Music_Model_Mapper_Artist();
-        $artists = $model->findById(20);
+        if (isset($query)) {
+            $adapter = $model->findByColumnPaged('name', $query);
+        } else {
+            $adapter = $model->fetchAllPaged();
+        }
+
+        $paginator = new Zend_Paginator($adapter);
+        $paginator->setItemCountPerPage(1)->setPageRange(5);
+
+        $page = $this->getRequest()->getParam('page', 1);
+        $paginator->setCurrentPageNumber($page);
+
+        $this->view->paginator = $paginator;
+
         $this->view->thumbPath = '/images/mp3art/thumbs/';
-        $this->view->artists = $artists;
     }
+
 }
 

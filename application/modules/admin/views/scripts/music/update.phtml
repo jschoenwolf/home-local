@@ -1,0 +1,60 @@
+
+<div class="column span-16 prepend-4">
+    <div class="pagination"><?php
+echo $this->paginationControl(
+        $this->paginator, 'Sliding', '_paginatorControl.phtml'
+)
+?></div>
+    <?php foreach ($this->paginator as $artist): ?>
+        <table class="edit">
+            <tr>
+                <th colspan="4"><input type="text" size="30" name="name" value="<?php echo $artist->name ?>" /></th>
+                <th><a href="/admin/music/update/id/<?php echo $artist->id ?>">Edit Artist</a></th>
+            </tr>   
+            <?php if (count($artist->getAlbums()) > 0): ?>
+                <tr>
+                    <th colspan="5">Albums</th>
+                </tr>
+                <?php foreach ($artist->getAlbums() as $album): ?>
+
+                    <tr>
+                        <th colspan="4"><input type="text" size="30" name="name" value="<?php echo $album->name ?>" /></th>
+                        <td><a href="/admin/music/updatealbum/id/<?php echo $album->id ?>">Edit Album</a></td>
+                    </tr>
+                    <tr>
+                        <td colspan="4"><img src="<?php echo $this->thumbPath . $album->name . '_thumb.jpg' ?>" alt="thumbnail"/></td>
+                        <td><?php echo $album->year ?></td>
+                    </tr>
+
+                    <?php foreach ($album->getTracks() as $track): ?>
+                        <tr>
+                            <td><input type="text" name="track" size="2" value="<?php echo $track->track ?>" /></td>
+                            <td><input type="text" name="title" size="35" value="<?php echo $track->title ?>" /></td>
+                            <td><input type="text" name="genre" size="8" value="<?php echo $track->genre ?>" /></td>
+                            <td><?php echo $this->Playtime($track->play_time) ?></td>
+                            <td><a href="/admin/music/updatetrack/id/<?php echo $track->id ?>">Edit Track</a></td>
+                        </tr>
+                    <?php endforeach ?>
+                <?php endforeach ?>
+            <?php else: ?>
+                <tr>
+                    <th colspan="5">Tracks</th>
+                </tr>
+                <?php foreach ($artist->getTracks() as $track): ?>
+                    <tr>
+                        <td><input type="text" name="track" size="2" value="<?php echo $track->track ?>" /></td>
+                        <td><input type="text" name="title" size="35" value="<?php echo $track->title ?>" /></td>
+                        <td><input type="text" name="genre" size="8" value="<?php echo $track->genre ?>" /></td>
+                        <td><?php echo $this->Playtime($track->play_time) ?></td>
+                        <td><a href="/admin/music/updatetrack/id/<?php echo $track->id ?>">Edit Track</a></td>
+                    </tr>
+                <?php endforeach ?>
+            <?php endif ?>
+        </table>
+    <?php endforeach; ?>
+    <div class="pagination"><?php
+    echo $this->paginationControl(
+            $this->paginator, 'Sliding', '_paginatorControl.phtml'
+    )
+    ?></div>
+</div>

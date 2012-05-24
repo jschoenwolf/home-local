@@ -49,6 +49,13 @@ class Music_Model_Artist extends Jgs_Application_Model_Entity_Abstract implement
 
         return $albums;
     }
+    
+    public function getTracks() {
+        $mapper = new Music_Model_Mapper_Track();
+        $tracks = $mapper->findByColumn('artist_id', $this->_id);
+
+        return $tracks;
+    }
 
 }
 

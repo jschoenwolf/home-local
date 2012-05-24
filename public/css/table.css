@@ -134,7 +134,10 @@ div.g {
     border-style: inset;
 }
 
-.edit td,th {
+.edit td{
+    border: #ccc 1px solid;
+}
+.edit th{
     border: #ccc 1px solid;
 }
 .edit input {
