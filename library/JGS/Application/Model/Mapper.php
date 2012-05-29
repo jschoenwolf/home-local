@@ -15,6 +15,7 @@ abstract class Jgs_Application_Model_Mapper
      */
     protected $_tableGateway = NULL;
     protected $_data;
+    protected $_map = array();
 
     /**
      * Will accept a DbTable model passed or will instantiate
@@ -43,6 +44,26 @@ abstract class Jgs_Application_Model_Mapper
     }
 
     /**
+     *
+     * @param string $id
+     * @param object $entity
+     */
+    protected function _setMap($id, $entity) {
+        $this->_map[$id] = $entity;
+    }
+
+    /**
+     *
+     * @param string $id
+     * @return string
+     */
+    protected function _getMap($id) {
+        if (array_key_exists($id, $this->_map)) {
+            return $this->_map[$id];
+        }
+    }
+
+    /**
      * findByColumn() returns an array of rows selected
      * by column name and column value.
      * Optional orderBy value.
@@ -56,15 +77,20 @@ abstract class Jgs_Application_Model_Mapper
 
         $select = $this->_getGateway()->select();
         $select->where("$column = ?", $value);
+
         if (!is_null($order)) {
             $select->order($order);
         }
+
         $result = $this->_getGateway()->fetchAll($select);
+
         $entities = array();
         foreach ($result as $row) {
             $entity = $this->createEntity($row);
+            $this->_setMap($row->id, $entity);
             $entities[] = $entity;
         }
+
         return $entities;
     }
 
@@ -76,19 +102,21 @@ abstract class Jgs_Application_Model_Mapper
      * @return object Jgs_Application_Model_Entity_Abstract
      */
     public function findById($id) {
+        //return identity map entry if present
+        if ($this->_getMap($id)) {
+            return $this->_getMap($id);
+        }
+        //create select object
+        $select = $this->_getGateway()->select();
+        $select->where('id = ?', $id);
+        //result set, fetchRow returns array of row objects
+        $row = $this->_getGateway()->fetchRow($select);
+        //create object
+        $entity = $this->createEntity($row);
+        //assign object to odentity map
+        $this->_setMap($row->id, $entity);
 
-            $select = $this->_getGateway()->select();
-            $select->where('id = ?', $id);
-
-            $row = $this->_getGateway()->fetchRow($select);
-
-            if (is_null($row)) {
-                return NULL;
-            }
-            $entity = $this->createEntity($row);
-
-            return $entity;
-
+        return $entity;
     }
 
     /**
@@ -101,15 +129,20 @@ abstract class Jgs_Application_Model_Mapper
     public function findAll($order = NULL) {
 
         $select = $this->_getGateway()->select();
+
         if (!is_null($order)) {
             $select->order($order);
         }
+
         $rowset = $this->_getGateway()->fetchAll($select);
+
         $entities = array();
         foreach ($rowset as $row) {
             $entity = $this->createEntity($row);
+            $this->_setMap($row->id, $entity);
             $entities[] = $entity;
         }
+
         return $entities;
     }
 

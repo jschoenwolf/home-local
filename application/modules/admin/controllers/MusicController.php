@@ -1,6 +1,8 @@
 <?php
 
-class Admin_MusicController extends Zend_Controller_Action {
+class Admin_MusicController extends Zend_Controller_Action
+{
+    protected $_message;
 
     public function preDispatch() {
 
@@ -20,11 +22,15 @@ class Admin_MusicController extends Zend_Controller_Action {
     }
 
     public function init() {
-        
+
+        $this->_message = $this->getHelper('FlashMessenger');
+        if ($this->_message->hasMessages()) {
+            $this->view->messages = $this->_message->getMessages();
+        }
     }
 
     public function indexAction() {
-        
+
     }
 
     public function readAction() {
@@ -62,7 +68,7 @@ class Admin_MusicController extends Zend_Controller_Action {
     public function updateAction() {
 
         $query = $this->getRequest()->getParam('query');
-        
+
         $model = new Music_Model_Mapper_Artist();
         if (isset($query)) {
             $adapter = $model->findByColumnPaged('name', $query);
@@ -81,5 +87,56 @@ class Admin_MusicController extends Zend_Controller_Action {
         $this->view->thumbPath = '/images/mp3art/thumbs/';
     }
 
+    public function updatetrackAction() {
+
+        $id = $this->_request->getParam('id');
+        $model = new Music_Model_Mapper_Track();
+        $track = $model->findById($id);
+        $form = $this->_form($track);
+        $form->setAction('/admin/music/updatetrack');
+        if ($this->getRequest()->isPost()) {
+            if ($form->isValid($this->getRequest()->getPost())) {
+                $data = $form->getValues();
+                //$data = $this->_fixData($data);
+                $model = new Music_Model_Mapper_Track();
+                $update = $model->saveTrack($data);
+
+                $this->_message->addMessage("Update of track '$update->title' complete!");
+                $this->getHelper('Redirector')->gotoSimple('update');
+            }
+        } else {
+            $form->populate($track);
+            $this->view->form = $form;
+        }
+    }
+
+    private function _form(array $data) {
+        $form = new Zend_Form();
+        $form->setMethod('POST');
+
+        foreach ($data as $key => $value) {
+            $form->addElement('text', $key, array(
+                'label' => $key . ':',
+                'attribs' => array('size' => 40),
+                'filters' => array('StringTrim', 'StripTags')
+            ));
+        }
+        $form->addElement('submit', 'submit', array(
+            'label' => 'Submit'
+        ));
+        return $form;
+    }
+
+    private function _fixData(array $data) {
+        if (array_key_exists('artist', $data)) {
+            $data['artist_id'] = $data['artist'];
+            unset($data['artist']);
+        }
+        if (array_key_exists('album', $data)) {
+            $data['album_id'] = $data['album'];
+            unset($data['album']);
+        }
+        return $data;
+    }
 }
 

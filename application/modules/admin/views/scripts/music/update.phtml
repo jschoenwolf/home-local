@@ -1,16 +1,17 @@
 
-<div class="column span-16 prepend-4">
-    <div class="pagination"><?php
+
+<div class="pagination"><?php
 echo $this->paginationControl(
         $this->paginator, 'Sliding', '_paginatorControl.phtml'
 )
 ?></div>
+<article class="table">
     <?php foreach ($this->paginator as $artist): ?>
         <table class="edit">
             <tr>
                 <th colspan="4"><input type="text" size="30" name="name" value="<?php echo $artist->name ?>" /></th>
-                <th><a href="/admin/music/update/id/<?php echo $artist->id ?>">Edit Artist</a></th>
-            </tr>   
+                <th><a href="/admin/music/updateartist/id/<?php echo $artist->id ?>">Edit Artist</a></th>
+            </tr>
             <?php if (count($artist->getAlbums()) > 0): ?>
                 <tr>
                     <th colspan="5">Albums</th>
@@ -52,9 +53,9 @@ echo $this->paginationControl(
             <?php endif ?>
         </table>
     <?php endforeach; ?>
-    <div class="pagination"><?php
+</article>
+<div class="pagination"><?php
     echo $this->paginationControl(
             $this->paginator, 'Sliding', '_paginatorControl.phtml'
     )
     ?></div>
-</div>

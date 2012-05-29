@@ -23,7 +23,6 @@ class Music_IndexController extends Zend_Controller_Action
         ));
 
         $this->_helper->layout()->search = $searchForm;
-
     }
 
     public function init() {
@@ -47,34 +46,53 @@ class Music_IndexController extends Zend_Controller_Action
         $paginator->setCurrentPageNumber($page);
 
         $this->view->paginator = $paginator;
-
     }
 
     public function displayAction() {
 
         $request = $this->getRequest()->getParams();
-        $model = new Music_Model_Mapper_Track();
 
         switch ($request) {
             case (array_key_exists('query', $request) && isset($request['query'])):
+                $model = new Music_Model_Mapper_Track();
                 $adapter = $model->fetchPagedTracks(NULL, $request['query']);
+                $paginator = new Zend_Paginator($adapter);
+                $paginator->setItemCountPerPage(20)->setPageRange(5);
+
+                $page = $this->getRequest()->getParam('page', 1);
+                $paginator->setCurrentPageNumber($page);
+
+                $this->view->paginator = $paginator;
+                $this->view->artPath = '/images/mp3art/';
                 break;
             case (array_key_exists('id', $request) && isset($request['id'])):
-                $adapter = $model->fetchPagedTracks($request['id']);
+                $this->_forward('artist', NULL, NULL, array('id' => $request['id']));
                 break;
             default:
                 $adapter = $model->fetchPagedTracks();
                 break;
         }
-        $paginator = new Zend_Paginator($adapter);
-        $paginator->setItemCountPerPage(15)->setPageRange(5);
+    }
 
-        $page = $this->_request->getParam('page', 1);
+    public function artistAction() {
+        $id = $this->getRequest()->getParam('id');
+        $artist = new Music_Model_Mapper_Artist();
+        if (count($artist->findById($id)->getAlbums()) > 0) {
+            $model = new Music_Model_Mapper_Album();
+            $adapter = $model->findByIdPaged('artist_id ', $id);
+        } else {
+            $track = new Music_Model_Mapper_Track();
+            $adapter = $track->findByIdPaged('artist_id', $id);
+        }
+
+        $paginator = new Zend_Paginator($adapter);
+        $paginator->setItemCountPerPage(1)->setPageRange(5);
+
+        $page = $this->getRequest()->getParam('page', 1);
         $paginator->setCurrentPageNumber($page);
 
         $this->view->paginator = $paginator;
-
-        $this->view->thumbPath = '/images/mp3art/thumbs/';
+        $this->view->artPath = '/images/mp3art/';
     }
 
     public function albumAction() {
@@ -82,9 +100,15 @@ class Music_IndexController extends Zend_Controller_Action
         $id = $this->_request->getParam('id');
 
         $model = new Music_Model_Mapper_Album();
+        $adapter = $model->findByIdPaged('id ', $id);
 
-        $this->view->album = $model->findById($id);
-        $this->view->tracks = $model->getTracks($id);
+        $paginator = new Zend_Paginator($adapter);
+        $paginator->setItemCountPerPage(1)->setPageRange(5);
+
+        $page = $this->getRequest()->getParam('page', 1);
+        $paginator->setCurrentPageNumber($page);
+
+        $this->view->paginator = $paginator;
         $this->view->artPath = '/images/mp3art/';
     }
 }
