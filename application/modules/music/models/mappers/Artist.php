@@ -9,9 +9,8 @@ class Music_Model_Mapper_Artist extends Jgs_Application_Model_Mapper
 {
     protected $_tableName = 'artist';
 
-
     public function __construct(Zend_Db_Table_Abstract $tableGateway = NULL) {
-        $this->_tableGateway = new Application_Model_DbTable_Artist();
+        $tableGateway = new Application_Model_DbTable_Artist();
         parent::__construct($tableGateway);
     }
 
@@ -23,7 +22,11 @@ class Music_Model_Mapper_Artist extends Jgs_Application_Model_Mapper
      */
     public function createEntity($row) {
 
-        $artist = new Music_Model_Artist($row->id,$row->name);
+        $data = array(
+            'id'   => $row->id,
+            'name' => $row->name
+        );
+        $artist = new Music_Model_Artist($data);
 
         return $artist;
     }
@@ -62,12 +65,12 @@ class Music_Model_Mapper_Artist extends Jgs_Application_Model_Mapper
 
         return $adapter;
     }
-    
+
     public function findByColumnPaged($column, $value) {
         $select = $this->_getGateway()->select();
         $select->where("$column LIKE '%$value%'");
         $select->order('name ASC');
-        
+
         $adapter = new Music_Model_Paginator_Artist($select);
 
         return $adapter;
@@ -82,23 +85,20 @@ class Music_Model_Mapper_Artist extends Jgs_Application_Model_Mapper
     public function deleteTrack($artist) {
         if ($artist instanceof Music_Model_Artist) {
             $where = $this->_getGateway()->getAdapter()
-                          ->quoteInto('id = ?', $artist->id);
+                    ->quoteInto('id = ?', $artist->id);
         } elseif (is_array($artist)) {
             foreach ($artist as $id) {
                 if (is_object($id)) {
                     $where = $this->_getGateway()->getAdapter()
-                                  ->quoteInto('id = ?', $id->id);
+                            ->quoteInto('id = ?', $id->id);
                 }
                 $where = $this->_getGateway()->getAdapter()
-                              ->quoteInto('id = ?', $id);
+                        ->quoteInto('id = ?', $id);
             }
         } else {
             $where = $this->_getGateway()->getAdapter()
-                          ->quoteInto('id = ?', $artist);
+                    ->quoteInto('id = ?', $artist);
         }
         $this->_getGateway()->delete($where);
     }
-
-    
-
 }

@@ -39,9 +39,7 @@ class Music_Model_Mapper_Track extends Jgs_Application_Model_Mapper
      * @param Zend_Db_Table_Abstract $tableGateway
      */
     public function __construct(Zend_Db_Table_Abstract $tableGateway = NULL) {
-        $this->_tableGateway = new Application_Model_DbTable_Track();
-        $this->_artistMapper = new Music_Model_Mapper_Artist();
-        $this->_albumMapper  = new Music_Model_Mapper_Album();
+        $tableGateway = new Application_Model_DbTable_Track();
         parent::__construct($tableGateway);
     }
 
@@ -53,10 +51,6 @@ class Music_Model_Mapper_Track extends Jgs_Application_Model_Mapper
      */
     public function createEntity($row) {
 
-        $artist = $this->_artistMapper->findById($row->artist_id);
-
-        $album = $this->_albumMapper->findById($row->album_id);
-
         $data = array(
             'id'        => $row->id,
             'filename'  => $row->filename,
@@ -67,10 +61,10 @@ class Music_Model_Mapper_Track extends Jgs_Application_Model_Mapper
             'play_time' => $row->play_time,
             'title'     => $row->title,
             'track'     => $row->track,
-            'album'     => $album,
-            'artist'    => $artist
-
+            'album'     => $row->album_id,
+            'artist'    => $row->artist_id
         );
+
         return new Music_Model_Track($data);
     }
 
@@ -113,21 +107,31 @@ class Music_Model_Mapper_Track extends Jgs_Application_Model_Mapper
      */
     public function fetchPagedTracks($id = NULL, $query = NULL) {
 
-        $select = $this->_getGateway()
-                       ->select(Zend_Db_Table::SELECT_WITH_FROM_PART);
-        $select->setIntegrityCheck(FALSE);
-        $select->join('artist', 'artist.id = track.artist_id');
         if (!is_null($id)) {
+            $select = $this->_getGateway()->select();
             $select->where('track.artist_id = ?', $id);
         }
         if (!is_null($query)) {
+            $select = $this->_getGateway()
+                    ->select(Zend_Db_Table::SELECT_WITH_FROM_PART);
+            $select->setIntegrityCheck(FALSE);
+            $select->join('artist', 'artist.id = track.artist_id');
             $select->where("track.title LIKE '%$query%'");
             $select->orWhere("artist.name LIKE '%$query%'");
         }
         $select->order('track.artist_id ASC');
-        $select->order('album_id ASC');
+        $select->order('track.album_id ASC');
         $select->order('track.track ASC');
 
+        $adapter = new Music_Model_Paginator_Track($select);
+
+        return $adapter;
+    }
+
+    public function findByIdPaged($column, $value) {
+        $select = $this->_getGateway()->select();
+        $select->where("$column = ?", $value);
+        //assign select object to object specific paginator adapter
         $adapter = new Music_Model_Paginator_Track($select);
 
         return $adapter;

@@ -5,11 +5,6 @@ class Music_Model_Artist extends Jgs_Application_Model_Entity_Abstract implement
     protected $_id;
     protected $_name;
 
-    public function __construct($id = NULL, $name) {
-
-        $this->setId($id);
-        $this->setName($name);
-    }
 
     public function getId() {
         return $this->_id;
@@ -35,7 +30,7 @@ class Music_Model_Artist extends Jgs_Application_Model_Entity_Abstract implement
     public function setName($name) {
         if (!is_string($name) || strlen($name) < 2 || strlen($name) > 255) {
             throw new InvalidArgumentException(
-                "The posted value for 'Artist Name' is invalid"
+                "The posted value ($name) for 'Artist Name' is invalid"
             );
         }
         $this->_data['name'] = $name;
@@ -49,7 +44,7 @@ class Music_Model_Artist extends Jgs_Application_Model_Entity_Abstract implement
 
         return $albums;
     }
-    
+
     public function getTracks() {
         $mapper = new Music_Model_Mapper_Track();
         $tracks = $mapper->findByColumn('artist_id', $this->_id);

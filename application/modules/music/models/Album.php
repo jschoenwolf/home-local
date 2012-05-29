@@ -7,17 +7,8 @@ class Music_Model_Album extends Jgs_Application_Model_Entity_Abstract implements
     protected $_art;
     protected $_year;
     protected $_artist;
+    protected $_artistMapper = NULL;
 
-
-    function __construct(array $data) {
-
-        $data = (object) $data;
-        $this->setId($data->id);
-        $this->setName($data->name);
-        $this->setArt($data->art);
-        $this->setYear($data->year);
-        $this->setArtist($data->artist);
-    }
 
     public function getId() {
         return $this->_id;
@@ -82,23 +73,24 @@ class Music_Model_Album extends Jgs_Application_Model_Entity_Abstract implements
     }
 
     public function getArtist() {
-        return $this->_artist;
+        if (!is_null($this->_artist) && $this->_artist instanceof Music_Model_Artist) {
+            return $this->_artist;
+        } else {
+            if (!$this->_artistMapper) {
+                $this->_artistMapper = new Music_Model_Mapper_Artist();
+            }
+            return $this->_artistMapper->findById($this->getReferenceId('artist'));
+        }
     }
 
     public function setArtist($artist) {
-        if (!$artist instanceof Music_Model_Artist) {
-            throw new InvalidArgumentException(
-                "Object 'Artist' does not implement interface or is not
-                 instance of 'Music_Model_Artist"
-            );
-        }
-        $this->_artist = $artist;
+        $this->setReferenceId('artist', $artist);
         return $this;
     }
 
      public function getTracks() {
         $mapper = new Music_Model_Mapper_Track();
-        $tracks = $mapper->findByColumn('album_id', $this->id, 'track ASC');
+        $tracks = $mapper->findByColumn('album_id', $this->_id, 'track ASC');
 
         return $tracks;
     }

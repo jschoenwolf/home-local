@@ -11,24 +11,25 @@ echo $this->paginationControl(
     <table>
         <?php
         foreach ($this->paginator as $track):;
-            $artist = $track->artist->id;
-            $album = $track->album->id;
+
+            $artist = $track->getArtist()->name;
+            $album = $track->getalbum()->name;
             ?>
             <?php if ($end_artist != $artist): ?>
 
 
                 <thead>
                     <tr>
-                        <th colspan="3"><?php echo $track->artist->name ?></th>
+                        <th colspan="3"><?php echo $track->getArtist()->name ?></th>
                     </tr>
                 </thead>
             <?php endif ?>
             <?php if ($end_album != $album): ?>
 
                 <tr class="display">
-                    <th><img src="<?php echo $this->thumbPath . $track->album->name . '_thumb.jpg' ?>" alt="Album Art" /></th>
-                    <th><a href="/music/index/album/id/<?php echo $track->album->id ?>"><?php echo $track->album->name ?></a></th>
-                    <th><?php echo $track->album->year ?></th>
+                    <th><img src="<?php echo $this->artPath . 'thumbs/' . $track->getAlbum()->name . '_thumb.jpg' ?>" alt="Album Art" /></th>
+                    <th><a href="/music/index/album/id/<?php echo $track->getAlbum()->id ?>"><?php echo $track->getAlbum()->name ?></a></th>
+                    <th><?php echo $track->getAlbum()->year ?></th>
                 </tr>
 
                 <tr>
@@ -40,16 +41,16 @@ echo $this->paginationControl(
                 </tr>
             <?php endif; ?>
             <tr>
-                <td class="track"><?php echo $track->track ?></td>
-                <td class="title"><?php echo $track->title ?></td>
+                <td class="track"><?php echo $track->getTrack() ?></td>
+                <td class="title"><?php echo $track->getTitle() ?></td>
                 <td class="audio_player"><audio controls="controls" preload="none">
-                        <source src="<?php echo $this->path($track->path) ?>" type="audio/mp3" /></audio></td>
+                        <source src="<?php echo $this->path($track->getPath()) ?>" type="audio/mp3" /></audio></td>
             </tr>
 
 
             <?php
-            $end_artist = $track->artist->id;
-            $end_album = $track->album->id
+            $end_artist = $track->getArtist()->name;
+            $end_album = $track->getAlbum()->name
             ?>
 
         <?php endforeach ?>

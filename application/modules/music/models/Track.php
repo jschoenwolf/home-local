@@ -13,30 +13,30 @@ class Music_Model_Track extends Jgs_Application_Model_Entity_Abstract implements
     protected $_play_time;
     protected $_title;
     protected $_track;
+    protected $_albumMapper = NULL;
+    protected $_artistMapper = NULL;
 
-    public function __construct(array $data) {
-
-        $data = (object) $data;
-
-        $this->setId($data->id);
-        $this->setAlbum($data->album);
-        $this->setArtist($data->artist);
-        $this->setFilename($data->filename);
-        $this->setFormat($data->format);
-        $this->setGenre($data->genre);
-        $this->setHash($data->hash);
-        $this->setPath($data->path);
-        $this->setPlay_time($data->play_time);
-        $this->setTitle($data->title);
-        $this->setTrack($data->track);
-    }
 
     public function getAlbum() {
-        return $this->_album;
+        if (!is_null($this->_album) && $this->_album instanceof Music_Model_Album) {
+            return $this->_album;
+        } else {
+            if (!$this->_albumMapper) {
+                $this->_albumMapper = new Music_Model_Mapper_Album();
+            }
+            return $this->_albumMapper->findById($this->getReferenceId('album'));
+        }
     }
 
     public function getArtist() {
-        return $this->_artist;
+        if (!is_null($this->_artist) && $this->_artist instanceof Music_Model_Artist) {
+            return $this->_artist;
+        } else {
+            if (!$this->_artistMapper) {
+                $this->_artistMapper = new Music_Model_Mapper_Artist();
+            }
+            return $this->_artistMapper->findById($this->getReferenceId('artist'));
+        }
     }
 
     public function getFilename() {
@@ -76,12 +76,12 @@ class Music_Model_Track extends Jgs_Application_Model_Entity_Abstract implements
     }
 
     public function setAlbum($album) {
-        $this->_album = $album;
+        $this->setReferenceId('album', $album);
         return $this;
     }
 
     public function setArtist($artist) {
-        $this->_artist = $artist;
+        $this->setReferenceId('artist', $artist);
         return $this;
     }
 
