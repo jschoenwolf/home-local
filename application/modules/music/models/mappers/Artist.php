@@ -37,7 +37,7 @@ class Music_Model_Mapper_Artist extends Jgs_Application_Model_Mapper
      * @param Music_Model_Artist $artist
      * @return object
      */
-    public function saveTrack(Music_Model_Artist $artist) {
+    public function saveArtist(Music_Model_Artist $artist) {
 
         if (!is_null($artist->id) && !is_null($this->findById($artist->id))) {
             $select = $this->_getGateway()->select();

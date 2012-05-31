@@ -68,7 +68,7 @@ class Music_Model_Track extends Jgs_Application_Model_Entity_Abstract implements
     }
 
     public function getTitle() {
-        return $this->_title;
+        return ucwords($this->_title);
     }
 
     public function getTrack() {

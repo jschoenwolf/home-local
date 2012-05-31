@@ -11,7 +11,6 @@ class Music_Model_Mapper_Album extends Jgs_Application_Model_Mapper
 
     public function __construct(Zend_Db_Table_Abstract $tableGateway = NULL) {
         $tableGateway = new Application_Model_DbTable_Album();
-
         parent::__construct($tableGateway);
     }
 

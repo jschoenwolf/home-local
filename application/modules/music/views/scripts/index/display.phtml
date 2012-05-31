@@ -27,8 +27,8 @@ echo $this->paginationControl(
             <?php if ($end_album != $album): ?>
 
                 <tr class="display">
-                    <th><img src="<?php echo $this->artPath . 'thumbs/' . $track->getAlbum()->name . '_thumb.jpg' ?>" alt="Album Art" /></th>
-                    <th><a href="/music/index/album/id/<?php echo $track->getAlbum()->id ?>"><?php echo $track->getAlbum()->name ?></a></th>
+                    <th><img src="<?php echo $this->artPath . 'thumbs/' . ucwords($track->getAlbum()->name) . '_thumb.jpg' ?>" alt="Album Art" /></th>
+                    <th><a href="/music/index/album/id/<?php echo $track->getAlbum()->id ?>"><?php echo ucwords($track->getAlbum()->name) ?></a></th>
                     <th><?php echo $track->getAlbum()->year ?></th>
                 </tr>
 
@@ -41,8 +41,8 @@ echo $this->paginationControl(
                 </tr>
             <?php endif; ?>
             <tr>
-                <td class="track"><?php echo $track->getTrack() ?></td>
-                <td class="title"><?php echo $track->getTitle() ?></td>
+                <td class="track"><?php echo $this->escape($track->getTrack()) ?></td>
+                <td class="title"><?php echo $this->escape($track->getTitle()) ?></td>
                 <td class="audio_player"><audio controls="controls" preload="none">
                         <source src="<?php echo $this->path($track->getPath()) ?>" type="audio/mp3" /></audio></td>
             </tr>

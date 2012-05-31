@@ -1,4 +1,4 @@
-
+<?php $session = new Zend_Session_Namespace('page'); $page = $this->paginator->getCurrentPageNumber(); ?>
 
 <div class="pagination"><?php
 echo $this->paginationControl(
@@ -9,8 +9,9 @@ echo $this->paginationControl(
     <?php foreach ($this->paginator as $artist): ?>
         <table class="edit">
             <tr>
-                <th colspan="4"><input type="text" size="30" name="name" value="<?php echo $artist->name ?>" /></th>
-                <th><a href="/admin/music/updateartist/id/<?php echo $artist->id ?>">Edit Artist</a></th>
+                <th colspan="4"><?php echo $artist->name ?></th>
+                <th><a href="/admin/music/updateartist/id/<?php
+                    echo $this->escape($artist->id) ?>">Edit Artist</a></th>
             </tr>
             <?php if (count($artist->getAlbums()) > 0): ?>
                 <tr>
@@ -19,23 +20,32 @@ echo $this->paginationControl(
                 <?php foreach ($artist->getAlbums() as $album): ?>
 
                     <tr>
-                        <th colspan="4"><input type="text" size="30" name="name" value="<?php echo $album->name ?>" /></th>
-                        <td><a href="/admin/music/updatealbum/id/<?php echo $album->id ?>">Edit Album</a></td>
+                        <th colspan="4"><?php echo $this->escape($album->name) ?></th>
+                        <td><a href="/admin/music/updatealbum/id/<?php
+                            echo $this->escape($album->id) ?>">Edit Album</a></td>
                     </tr>
                     <tr>
-                        <td colspan="4"><img src="<?php echo $this->thumbPath . $album->name . '_thumb.jpg' ?>" alt="thumbnail"/></td>
-                        <td><?php echo $album->year ?></td>
+                        <td colspan="4"><img src="<?php echo $this->thumbPath .
+                                        $this->escape($album->name) . '_thumb.jpg' ?>"
+                                        alt="thumbnail"/></td>
+                        <td><?php echo $this->escape($album->year) ?></td>
                     </tr>
 
                     <?php foreach ($album->getTracks() as $track): ?>
-                        <tr>
-                            <td><input type="text" name="track" size="2" value="<?php echo $track->track ?>" /></td>
-                            <td><input type="text" name="title" size="35" value="<?php echo $track->title ?>" /></td>
-                            <td><input type="text" name="genre" size="8" value="<?php echo $track->genre ?>" /></td>
-                            <td><?php echo $this->Playtime($track->play_time) ?></td>
-                            <td><a href="/admin/music/updatetrack/id/<?php echo $track->id ?>">Edit Track</a></td>
-                        </tr>
-                    <?php endforeach ?>
+                                    <tr>
+                                        <td><?php echo $track->track ?></td>
+                                        <td><?php echo $track->title ?></td>
+                                        <td><?php echo $track->genre ?></td>
+                                        <td><?php echo $this->Playtime($track->play_time) ?></td>
+                                        <td><a href="<?php echo $this->url(array(
+                                                        'module'     => 'admin',
+                                                        'controller' => 'music',
+                                                        'action'     => 'updatetrack',
+                                                        'id'         => $track->id));
+                                                        $session->page = $page;
+                                                            ?>">Edit Track</a></td>
+                                    </tr>
+            <?php endforeach ?>
                 <?php endforeach ?>
             <?php else: ?>
                 <tr>
@@ -43,11 +53,17 @@ echo $this->paginationControl(
                 </tr>
                 <?php foreach ($artist->getTracks() as $track): ?>
                     <tr>
-                        <td><input type="text" name="track" size="2" value="<?php echo $track->track ?>" /></td>
-                        <td><input type="text" name="title" size="35" value="<?php echo $track->title ?>" /></td>
-                        <td><input type="text" name="genre" size="8" value="<?php echo $track->genre ?>" /></td>
-                        <td><?php echo $this->Playtime($track->play_time) ?></td>
-                        <td><a href="/admin/music/updatetrack/id/<?php echo $track->id ?>">Edit Track</a></td>
+                        <td><?php echo $this->escape($track->track) ?></td>
+                        <td><?php echo $this->escape($track->title) ?></td>
+                        <td><?php echo $this->escape($track->genre) ?></td>
+                        <td><?php echo $this->escape($this->Playtime($track->play_time)) ?></td>
+                        <td><a href="<?php echo $this->url(array(
+                                                        'module'     => 'admin',
+                                                        'controller' => 'music',
+                                                        'action'     => 'updatetrack',
+                                                        'id'         => $track->id));
+                                                        $session->page = $page;
+                                                            ?>">Edit Track</a></td>
                     </tr>
                 <?php endforeach ?>
             <?php endif ?>
