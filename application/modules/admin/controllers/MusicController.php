@@ -1,10 +1,9 @@
 <?php
 
-class Admin_MusicController extends Zend_Controller_Action
-{
+class Admin_MusicController extends Zend_Controller_Action {
+
     protected $_message;
     protected $_thumbPath = '/images/mp3art/thumbs/';
-
 
     public function preDispatch() {
 
@@ -32,7 +31,7 @@ class Admin_MusicController extends Zend_Controller_Action
     }
 
     public function indexAction() {
-
+        
     }
 
     public function readAction() {
@@ -107,7 +106,8 @@ class Admin_MusicController extends Zend_Controller_Action
                 $update = $model->saveTrack($newTrack);
 
                 $this->_message->addMessage("Update of track '$update->title' complete!");
-                $this->getHelper('Redirector')->gotoSimple('update', NULL, NULL, array('page' => $session->page));
+                $this->getHelper('Redirector')->gotoSimple('update', NULL, NULL,
+                        array('page' => $session->page));
             }
         } else {
             $form->populate($track);
@@ -133,7 +133,8 @@ class Admin_MusicController extends Zend_Controller_Action
                 $update = $model->saveAlbum($newAlbum);
 
                 $this->_message->addMessage("Update of Album '$update->name' complete!");
-                $this->getHelper('Redirector')->gotoSimple('update', NULL, NULL, array('page' => $session->page));
+                $this->getHelper('Redirector')->gotoSimple('update', NULL, NULL,
+                        array('page' => $session->page));
             }
         } else {
             $form->populate($album);
@@ -159,7 +160,8 @@ class Admin_MusicController extends Zend_Controller_Action
                 $update = $model->saveArtist($newArtist);
 
                 $this->_message->addMessage("Update of track '$update->name' complete!");
-                $this->getHelper('Redirector')->gotoSimple('update', NULL, NULL, array('page' => $session->page));
+                $this->getHelper('Redirector')->gotoSimple('update', NULL, NULL,
+                        array('page' => $session->page));
             }
         } else {
             $form->populate($artist);
@@ -172,8 +174,9 @@ class Admin_MusicController extends Zend_Controller_Action
         $id = $this->getRequest()->getParams('trackId');
         $model = new Music_Model_Mapper_Track();
         $model->deleteTrack($id);
-        $this->_message->addMessage(" Track '$update->title' Deleted!");
-        $this->getHelper('Redirector')->gotoSimple('update', NULL, NULL, array('page' => $session->page));
+        $this->_message->addMessage("Track Deleted!");
+        $this->getHelper('Redirector')->gotoSimple('update', NULL, NULL,
+                array('page' => $session->page));
     }
 
     private function _form(array $data) {
@@ -184,17 +187,20 @@ class Admin_MusicController extends Zend_Controller_Action
             if ($key == 'id' || $key == 'hash') {
                 $form->addElement('hidden', $key);
             } else {
-                $form->addElement('text', $key, array(
+                $form->addElement('text', $key,
+                        array(
                     'label' => $key . ':',
                     'attribs' => array('size' => 40),
                     'filters' => array('StringTrim', 'StripTags')
                 ));
             }
         }
-        $form->addElement('submit', 'submit', array(
+        $form->addElement('submit', 'submit',
+                array(
             'label' => 'Submit Changes'
         ));
         return $form;
     }
+
 }
 
