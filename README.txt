@@ -1,0 +1,1 @@
+This is a simple application I use for testing concepts and methods in PHP and Zend Framework.
