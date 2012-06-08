@@ -7,7 +7,6 @@
  */
 abstract class Jgs_Application_Model_Entity_Abstract
 {
-    protected $_data = array();
     protected $_references = array();
 
     /**
@@ -31,7 +30,7 @@ abstract class Jgs_Application_Model_Entity_Abstract
         $methods = get_class_methods($this);
 
         foreach ($options as $key => $value) {
-            $this->_data[$key] = $value;
+
             $method = 'set' . ucfirst($key);
             if (in_array($method, $methods)) {
                 $this->$method($value);
@@ -59,7 +58,7 @@ abstract class Jgs_Application_Model_Entity_Abstract
         } else {
             $this->$property = $value;
         }
-        $this->_data[$name] = $value;
+
 
         return $this;
     }
@@ -82,18 +81,36 @@ abstract class Jgs_Application_Model_Entity_Abstract
     }
 
     /**
-     * Get the entity fields.
+     * implements toArray()
+     *
+     * @return array
      */
     public function toArray() {
-
-        return $this->_data;
+        $vars = get_object_vars($this);
+        $array = array();
+        foreach ($vars as $key => $value) {
+            $array[ltrim($key, '_')] = $value;
+        }
+        return $array;
     }
 
+    /**
+     * sets reference data for lazy loading of associated objects
+     *
+     * @param string $name
+     * @param string $id
+     */
     public function setReferenceId($name, $id) {
 
         $this->_references[$name] = $id;
     }
 
+    /**
+     * retrieve reference data to lazy load object
+     *
+     * @param string $name
+     * @return string
+     */
     public function getReferenceId($name) {
 
         if (isset($this->_references[$name])) {
