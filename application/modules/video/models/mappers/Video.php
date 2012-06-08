@@ -10,8 +10,8 @@
  *
  * @author john
  */
-class Video_Model_Mapper_Video extends Jgs_Application_Model_Mapper {
-
+class Video_Model_Mapper_Video extends Jgs_Application_Model_Mapper
+{
     protected $_tablename = 'videos';
     protected $_entityClass = 'Video_Model_Video';
     protected $_genreMapper;
@@ -28,9 +28,26 @@ class Video_Model_Mapper_Video extends Jgs_Application_Model_Mapper {
     }
 
     protected function createEntity($row) {
-        
-    }
+        $data = array(
+            'title'       => $row->title,
+            'year'        => $row->year,
+            'director'    => $row->director,
+            'producers'   => $row->producers,
+            'actors'      => $row->actors,
+            'description' => $row->description,
+            'path'        => $row->path,
+            'length'      => $row->length,
+            'resolution'  => $row->resolution,
+            'poster'      => $row->poster,
+            'imdb'        => $row->imdb,
+            'genre1'      => $row->genre1,
+            'genre2'      => $row->genre2,
+            'genre3'      => $row->genre3,
+            'genre4'      => $row->genre4
+        );
 
+        return new Video_Model_Video($data);
+    }
 }
 
 ?>

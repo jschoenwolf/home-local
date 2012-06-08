@@ -14,7 +14,6 @@ abstract class Jgs_Application_Model_Mapper
      * @var Zend_Db_Table_Abstract $_tableGateway
      */
     protected $_tableGateway = NULL;
-    protected $_data;
     protected $_map = array();
 
     /**

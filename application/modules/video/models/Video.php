@@ -1,12 +1,7 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
- * Description of Video
+ * Description of Video_Model_Video
  *
  * @author john
  */
@@ -82,7 +77,8 @@ class Video_Model_Video extends Jgs_Application_Model_Entity_Abstract {
     }
 
     public function setPath($path) {
-        $this->_path = $path;
+        $utility = new Jgs_Application_Utilities();
+        $this->_path = $utility->trimPath($path, 2);
     }
 
     public function getLength() {

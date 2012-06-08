@@ -94,5 +94,6 @@ class Music_Model_Album extends Jgs_Application_Model_Entity_Abstract implements
 
         return $tracks;
     }
+    
 }
 
