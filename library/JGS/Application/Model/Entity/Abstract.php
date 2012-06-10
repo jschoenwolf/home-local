@@ -89,7 +89,13 @@ abstract class Jgs_Application_Model_Entity_Abstract
         $vars = get_object_vars($this);
         $array = array();
         foreach ($vars as $key => $value) {
-            $array[ltrim($key, '_')] = $value;
+            if ((stripos($key, 'mapper') || stripos($key, 'references')) === FALSE) {
+                if (is_null($value)) {
+                    $array[ltrim($key, '_')] = $this->getReferenceId(ltrim($key, '_'));
+                } else {
+                    $array[ltrim($key, '_')] = $value;
+                }
+            }
         }
         return $array;
     }

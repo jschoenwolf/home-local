@@ -145,18 +145,10 @@ class Music_Model_Mapper_Track extends Jgs_Application_Model_Mapper
      * @param array|string|Music_Model_Track $track
      */
     public function deleteTrack($track) {
+
         if ($track instanceof Music_Model_Track) {
             $where = $this->_getGateway()->getAdapter()
                           ->quoteInto('id = ?', $track->id);
-        } elseif (is_array($track)) {
-            foreach ($track as $id) {
-                if (is_object($id)) {
-                    $where = $this->_getGateway()->getAdapter()
-                                  ->quoteInto('id = ?', $id->id);
-                }
-                $where = $this->_getGateway()->getAdapter()
-                              ->quoteInto('id = ?', $id);
-            }
         } else {
             $where = $this->_getGateway()->getAdapter()
                           ->quoteInto('id = ?', $track);

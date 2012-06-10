@@ -74,23 +74,23 @@ class Music_Model_Mapper_Album extends Jgs_Application_Model_Mapper
      */
     public function deleteAlbum($album) {
         if ($album instanceof Music_Model_Album) {
-            $where = $this->_getGateway()->getAdapter()
-                          ->quoteInto('id = ?', $album->id);
-        } elseif (is_array($album)) {
-            foreach ($album as $id) {
-                if (is_object($id)) {
-                    $where = $this->_getGateway()->getAdapter()
-                                  ->quoteInto('id = ?', $id->id);
-                }
+            if (count($album->getTracks()) > 0) {
+                throw new Zend_Db_Table_Exception(
+                        "Album: $album->name still has tracks assigned.");
+            } else {
                 $where = $this->_getGateway()->getAdapter()
-                              ->quoteInto('id = ?', $id);
+                        ->quoteInto('id = ?', $album->id);
             }
         } else {
-            $where = $this->_getGateway()->getAdapter()
-                          ->quoteInto('id = ?', $album);
+            $result = $this->findById($album);
+            if (count($result->getTracks()) > 0) {
+                throw new Zend_Db_Table_Exception(
+                        "Album: $result->name still has tracks assigned.");
+            } else {
+                $where = $this->_getGateway()->getAdapter()
+                        ->quoteInto('id = ?', $album);
+            }
         }
         $this->_getGateway()->delete($where);
     }
-
-
 }

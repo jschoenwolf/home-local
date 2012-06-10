@@ -83,22 +83,30 @@ class Music_Model_Mapper_Artist extends Jgs_Application_Model_Mapper
      *
      * @param array|string|Music_Model_Track $artist
      */
-    public function deleteTrack($artist) {
+    public function deleteArtist($artist) {
         if ($artist instanceof Music_Model_Artist) {
-            $where = $this->_getGateway()->getAdapter()
-                    ->quoteInto('id = ?', $artist->id);
-        } elseif (is_array($artist)) {
-            foreach ($artist as $id) {
-                if (is_object($id)) {
-                    $where = $this->_getGateway()->getAdapter()
-                            ->quoteInto('id = ?', $id->id);
-                }
+            if (count($artist->getTracks()) > 0) {
+                throw new Zend_Db_Table_Exception(
+                        "Artist: $artist->name still has tracks assigned.");
+            } elseif (count($artist->getAlbums()) > 0) {
+                throw new Zend_Db_Table_Exception(
+                        "Artist: $artist->name still has tracks assigned.");
+            } else {
                 $where = $this->_getGateway()->getAdapter()
-                        ->quoteInto('id = ?', $id);
+                        ->quoteInto('id = ?', $artist->id);
             }
         } else {
-            $where = $this->_getGateway()->getAdapter()
-                    ->quoteInto('id = ?', $artist);
+            $result = $this->findById($artist);
+            if (count($result->getTracks()) > 0) {
+                throw new Zend_Db_Table_Exception(
+                        "Artist: $result->name still has tracks assigned.");
+            } elseif (count($result->getAlbums()) > 0) {
+                throw new Zend_Db_Table_Exception(
+                        "Artist: $result->name still has albums assigned.");
+            } else {
+                $where = $this->_getGateway()->getAdapter()
+                        ->quoteInto('id = ?', $artist);
+            }
         }
         $this->_getGateway()->delete($where);
     }
