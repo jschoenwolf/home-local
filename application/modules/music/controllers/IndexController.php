@@ -3,7 +3,7 @@
 class Music_IndexController extends Zend_Controller_Action
 {
     protected $_utilities = null;
-    protected $_message;
+//    protected $_message;
 
     public function preDispatch() {
 
@@ -27,10 +27,10 @@ class Music_IndexController extends Zend_Controller_Action
 
     public function init() {
 
-        $this->_message = $this->getHelper('FlashMessenger');
-        if ($this->_message->hasMessages()) {
-            $this->view->messages = $this->_message->getMessages();
-        }
+//        $this->_message = $this->getHelper('FlashMessenger');
+//        if ($this->_message->hasMessages()) {
+//            $this->view->messages = $this->_message->getMessages();
+//        }
         $this->_utilities = new Jgs_Application_Utilities();
     }
 

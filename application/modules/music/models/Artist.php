@@ -22,7 +22,7 @@ class Music_Model_Artist extends Jgs_Application_Model_Entity_Abstract implement
                 "The posted value 'Artist ID' is invalid, must be integer between 1 and 9999"
             );
         }
-        $this->_data['id'] = $id;
+
         $this->_id = $id;
         return $this;
     }
@@ -33,7 +33,7 @@ class Music_Model_Artist extends Jgs_Application_Model_Entity_Abstract implement
                 "The posted value ($name) for 'Artist Name' is invalid"
             );
         }
-        $this->_data['name'] = $name;
+        
         $this->_name = htmlspecialchars(trim($name), ENT_QUOTES);
         return $this;
     }

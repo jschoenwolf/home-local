@@ -144,3 +144,18 @@ div.g {
 .edit input {
     text-align: center;
 }
+.track {
+    max-width: 70%;
+    font-size: larger;
+    margin-left: 8em;
+    margin-top: 2.5em;
+}
+.track th {
+    border: #ccc 1px solid;
+    font-variant: small-caps;
+}
+.track td {
+    border-bottom: #ccc 1px solid;
+    border-left: #ccc solid 1px;
+    border-right: #ccc solid 1px;
+}
