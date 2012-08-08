@@ -5,10 +5,13 @@ class IndexController extends Zend_Controller_Action
     protected $_session;
     protected $_config;
     protected $_message;
+<<<<<<< HEAD
 
     public function preDispatch() {
         $this->_helper->layout()->login = $this->_helper->login();
     }
+=======
+>>>>>>> origin/master
 
     public function init() {
 
@@ -21,7 +24,11 @@ class IndexController extends Zend_Controller_Action
     }
 
     public function indexAction() {
+<<<<<<< HEAD
 
+=======
+     
+>>>>>>> origin/master
     }
 
     public function registerAction() {

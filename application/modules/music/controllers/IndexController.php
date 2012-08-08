@@ -24,7 +24,11 @@ class Music_IndexController extends Zend_Controller_Action
         if ($this->_message->hasMessages()) {
             $this->view->messages = $this->_message->getMessages();
         }
+<<<<<<< HEAD
         $this->_utilities = new Jgs_Utilities();
+=======
+        $this->_utilities = new Jgs_Application_Utilities();
+>>>>>>> origin/master
     }
 
     public function indexAction() {

@@ -11,10 +11,15 @@ a {
 }
 
 #header {
-    background: #66a2d2;
-    height: 7.5em;
-    padding: .5em 0 .5em 0;
-    text-align: center;
+/*    background: #66a2d2;*/
+/*    height: 7.5em;*/
+/*    padding: .5em 0 .5em 0;*/
+/*    text-align: center;*/
+}
+
+header {
+     background: #66a2d2;
+     text-align: center;
 }
 
 #main {
@@ -46,6 +51,8 @@ input:-moz-placeholder {
 
 #video {
     margin-top: 2em;
+    height: 720px;
+    width: 100%;
 }
 
 #movieList {
