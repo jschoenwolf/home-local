@@ -1,43 +1,46 @@
 <?php
 
-class Music_Model_Artist extends Jgs_Application_Model_Entity_Abstract implements Jgs_Application_Interface_Artist
+class Music_Model_Artist extends Jgs_Model_Entity_Abstract implements Jgs_Interface_Artist
 {
-    protected $_id;
+    /**
+     * Artist Name
+     *
+     * @var string
+     */
     protected $_name;
 
-
-    public function getId() {
-        return $this->_id;
-    }
-
+    /**
+     * Get Artist name as string.
+     *
+     * @return string
+     */
     public function getName() {
         return htmlspecialchars_decode($this->_name, ENT_QUOTES);
     }
 
-    public function setId($id) {
-        $id = (int)$id;
-
-        if (!is_int($id) || $id < 1 || strlen($id) > 4) {
-            throw new InvalidArgumentException(
-                "The posted value 'Artist ID' is invalid, must be integer between 1 and 9999"
-            );
-        }
-
-        $this->_id = $id;
-        return $this;
-    }
-
+    /**
+     * Set Artist name as string.
+     *
+     * @param type $name
+     * @return \Music_Model_Artist
+     * @throws InvalidArgumentException
+     */
     public function setName($name) {
         if (!is_string($name) || strlen($name) < 2 || strlen($name) > 255) {
             throw new InvalidArgumentException(
-                "The posted value ($name) for 'Artist Name' is invalid"
+                    "The posted value ($name) for 'Artist Name' is invalid"
             );
         }
-        
+
         $this->_name = htmlspecialchars(trim($name), ENT_QUOTES);
         return $this;
     }
 
+    /**
+     * Returns an array of Albums from the Artist id.
+     *
+     * @return \Music_Model_Mapper_Album
+     */
     public function getAlbums() {
         $mapper = new Music_Model_Mapper_Album();
         $albums = $mapper->findByColumn('artist_id', $this->_id);
@@ -45,12 +48,16 @@ class Music_Model_Artist extends Jgs_Application_Model_Entity_Abstract implement
         return $albums;
     }
 
+    /**
+     * Returns an array of Track Objects by Artist id.
+     *
+     * @return \Music_Model_Mapper_Track
+     */
     public function getTracks() {
         $mapper = new Music_Model_Mapper_Track();
         $tracks = $mapper->findByColumn('artist_id', $this->_id);
 
         return $tracks;
     }
-
 }
 

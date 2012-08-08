@@ -5,8 +5,8 @@
  *
  * @author john
  */
-class Video_Model_Video extends Jgs_Application_Model_Entity_Abstract {
-
+class Video_Model_Video extends Jgs_Model_Entity_Abstract
+{
     protected $_title;
     protected $_year;
     protected $_director;
@@ -18,10 +18,8 @@ class Video_Model_Video extends Jgs_Application_Model_Entity_Abstract {
     protected $_resolution;
     protected $_poster;
     protected $_imdb;
-    protected $_genre1;
-    protected $_genre2;
-    protected $_genre3;
-    protected $_genre4;
+    protected $_url;
+    protected $_genre;
     protected $_genreMapper = NULL;
 
     public function getTitle() {
@@ -76,9 +74,17 @@ class Video_Model_Video extends Jgs_Application_Model_Entity_Abstract {
         return $this->_path;
     }
 
+    public function getUrl() {
+        return $this->_url;
+    }
+
+    public function setUrl($url) {
+        $this->_url = $url;
+    }
+
     public function setPath($path) {
-        $utility = new Jgs_Application_Utilities();
-        $this->_path = $utility->trimPath($path, 2);
+        $this->_path = $path;
+        return $this;
     }
 
     public function getLength() {
@@ -111,38 +117,24 @@ class Video_Model_Video extends Jgs_Application_Model_Entity_Abstract {
 
     public function setImdb($imdb) {
         $this->_imdb = $imdb;
+        return $this;
     }
 
-    public function getGenre1() {
-        return $this->_genre1;
+    public function getGenre() {
+        if (!$this->_genreMapper) {
+            $this->_genreMapper = new Video_Model_Mapper_Genre();
+        }
+        $array = $this->getReferenceId('genre');
+        $genre = $this->_genreMapper->findAll($array);
+        return $genre;
     }
 
-    public function setGenre1($genre1) {
-        $this->_genre1 = $genre1;
-    }
+    public function setGenre($genre) {
+        $util = new Jgs_Utilities();
+        $array = explode(',', $genre);
+        $genre = $util->arrayTrim($array);
 
-    public function getGenre2() {
-        return $this->_genre2;
+        $this->setReferenceId('genre', $genre);
+        return $this;
     }
-
-    public function setGenre2($genre2) {
-        $this->_genre2 = $genre2;
-    }
-
-    public function getGenre3() {
-        return $this->_genre3;
-    }
-
-    public function setGenre3($genre3) {
-        $this->_genre3 = $genre3;
-    }
-
-    public function getGenre4() {
-        return $this->_genre4;
-    }
-
-    public function setGenre4($genre4) {
-        $this->_genre4 = $genre4;
-    }
-
 }

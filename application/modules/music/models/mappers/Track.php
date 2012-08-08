@@ -5,7 +5,7 @@
  *
  * @author John Schoenwolf
  */
-class Music_Model_Mapper_Track extends Jgs_Application_Model_Mapper
+class Music_Model_Mapper_Track extends Jgs_Model_Mapper_Abstract
 {
    /**
      * Name of database table as a string.
@@ -129,10 +129,17 @@ class Music_Model_Mapper_Track extends Jgs_Application_Model_Mapper
         return $adapter;
     }
 
+    /**
+     * Return specific paginator adapter
+     * 
+     * @param string $column
+     * @param string $value
+     * @return \Music_Model_Paginator_Track
+     */
     public function findByIdPaged($column, $value) {
         $select = $this->_getGateway()->select();
         $select->where("$column = ?", $value);
-        //assign select object to object specific paginator adapter
+        //assign select() to object specific paginator adapter
         $adapter = new Music_Model_Paginator_Track($select);
 
         return $adapter;

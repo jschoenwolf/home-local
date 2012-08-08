@@ -31,7 +31,7 @@ class Application_Model_Video
         if (is_array($options)) {
             $this->setOptions($options);
         }
-        $this->_utility = new JGS_Application_Utilities();
+        $this->_utility = new Jgs_Utilities();
     }
 
     public function setOptions(array $options) {
@@ -83,37 +83,11 @@ class Application_Model_Video
 
     public function saveMovie() {
         $model = new Application_Model_DbTable_Videos();
-        $genre = new Application_Model_DbTable_Genre();
-        $genre1 = array();
-        $genre2 = array();
-        $genre3 = array();
-        $genre4 = array();
-        $array = $this->getGenreArray();
-        if (array_key_exists(0, $array) && isset($array[0])) {
-            $g = $genre->fetchGenreRow('name', $array[0]);
+        $gModel = new Application_Model_DbTable_Genre();
+        $genre = array();
 
-            $genre1 = array('genre1' => $g->id);
-        } else {
-            throw new Zend_Db_Table_Exception('Video must have at least one genre assigned.');
-        }
-        if (array_key_exists(1, $array) && isset($array[1])) {
-            $g1 = $genre->fetchGenreRow('name', $array[1]);
-            $genre2 = array('genre2' => $g1->id);
-        } else {
-            $genre2 = array('genre2' => NULL);
-        }
-        if (array_key_exists(2, $array) && isset($array[2])) {
-            $g2 = $genre->fetchGenreRow('name', $array[2]);
-            $genre3 = array('genre3' => $g2->id);
-        } else {
-            $genre3 = array('genre3' => NULL);
-        }
-        if (array_key_exists(3, $array) && isset($array[3])) {
-            $g3 = $genre->fetchGenreRow('name', $array[3]);
-            $genre4 = array('genre4' => $g3->id);
-        } else {
-            $genre4 = array('genre4' => NULL);
-        }
+        $array = $this->getGenreArray();
+
 
         $data = array(
             'title'       => $this->getTitle(),
@@ -128,7 +102,7 @@ class Application_Model_Video
             'poster'      => $this->getPoster(),
             'imdb'        => $this->getImdb()
         );
-        $data1 = array_merge($data, $genre1, $genre2, $genre3, $genre4);
+        $data1 = array_merge($data, $genre);
         $row = $model->fetchVideoRow($this->getImdb());
         if ($row !== FALSE) {
             //update row

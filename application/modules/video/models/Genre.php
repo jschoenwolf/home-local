@@ -1,23 +1,13 @@
 <?php
 
 /**
- * Description of Genre
+ * Description of Video_Model_Genre
  *
  * @author John Schoenwolf
  */
-class Video_Model_Genre extends Jgs_Application_Model_Entity_Abstract
+class Video_Model_Genre extends Jgs_Model_Entity_Abstract
 {
-    protected $_id;
     protected $_name;
-
-    public function getId() {
-        return $this->_id;
-    }
-
-    public function setId($id) {
-        $this->_id = $id;
-        return $this;
-    }
 
     public function getName() {
         return $this->_name;

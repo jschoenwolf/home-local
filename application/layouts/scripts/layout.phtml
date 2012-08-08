@@ -1,20 +1,23 @@
-<?php
-echo $this->doctype() . "\n";
-?>
+<?php echo $this->doctype() . "\n" ?>
 <html>
     <head>
-        <title></title>
+        <?php echo $this->headTitle() . "\n" ?>
         <?php echo $this->headMeta() . "\n" ?>
         <?php echo $this->headLink() . "\n" ?>
-        <?php echo $this->headscript(). "\n"?>
+        <?php echo $this->headscript() . "\n" ?>
         <!--[if IE]><script type="text/javascript" src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
     </head>
     <body>
         <section class="container">
             <header class="block">
-                <hgroup id="header" class ="column span-24">
-                    <h1>Our Home</h1>
-                </hgroup>
+                <div id="header">
+                    <div class="column span-18">
+                        <h1>HOME</h1>
+                    </div>
+                    <div id="login" class="column span-6 last">
+                        <?php echo $this->layout()->login . "\n" ?>
+                    </div>
+                </div>
                 <nav>
                     <div id="nav" class="column span-24">
                         <a href="/">Home</a>
@@ -31,7 +34,10 @@ echo $this->doctype() . "\n";
                         <?php
                         //flash messenger display location
                         if (count($this->messages) > 0) {
-                            printf("<h3 id='flash'>%s</h3>", $this->messages[0]);
+                            foreach ($this->messages as $message) {
+                                 printf("<h3 id='flash'>%s</h3>", $message);
+                            }
+
                         }
                         ?>
                     </div>
@@ -45,8 +51,6 @@ echo $this->doctype() . "\n";
                     <div id="adminMenu">
                         <h4>Administration Links</h4>
                         <a href="/admin/music/read">Scan Music Files</a><br />
-                        <a href="/music/index/display">Display Music Tracks</a><br />
-                        <a href="/music/search/build">Build search indexes</a><br >
                         <a href="/admin/moviexml/index">Movie Xml</a><br />
                         <a href="/admin/music/update">Update Music Info</a>
                         <?php echo $this->layout()->adminMenu ?>&nbsp;

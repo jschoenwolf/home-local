@@ -12,12 +12,11 @@ class Admin_MoviexmlController extends Zend_Controller_Action
 
     public function init() {
 
-        $this->_xmlUtilities = new Jgs_Application_XmlUtilities();
+        $this->_xmlUtilities = new Jgs_XmlUtilities();
         $this->_session = new Zend_Session_Namespace('xml');
         $this->_message = $this->getHelper('FlashMessenger');
         if ($this->_message->hasMessages()) {
             $this->view->messages = $this->_message->getMessages();
-
         }
     }
 
@@ -29,14 +28,15 @@ class Admin_MoviexmlController extends Zend_Controller_Action
             if ($form->isValid($this->getRequest()->getPost())) {
                 $form->getValues();
                 Zend_Debug::dump($form->getValues(), 'Get Values');
-//                $this->_session->file = $form->file->getFileName();
-//                $this->_redirect($this->getRequest()->getRequestUri());
+                $this->_session->file = $form->file->getFileName();
+                $this->_redirect($this->getRequest()->getRequestUri());
             }
         }
         $this->view->form = $form;
     }
 
     public function genreAction() {
+        $util = new Jgs_Utilities();
         $model = new Application_Model_Video();
         try {
 
@@ -46,11 +46,16 @@ class Admin_MoviexmlController extends Zend_Controller_Action
                 $movies = $this->_xmlUtilities->xmlMoviesToArray($this->_session->file);
             }
             foreach ($movies as $movie) {
-                $model->setOptions($movie);
-                $model->storeGenre();
+                $array = explode(',', $movie['genre']);
+                $array = $util->arrayTrim($array);
+                Zend_Debug::dump($array, 'Array');
+                foreach ($array as $genre) {
+                    $gateWay = new Application_Model_DbTable_Genre ();
+                    $model = new Video_Model_Mapper_Genre($gateWay);
+                    Zend_Debug::dump($model->findByColumn('name', $genre), 'Genre Object');
+                    Zend_Debug::dump($genre, 'Raw');
+                }
             }
-            $this->_helper->flashMessenger->addMessage('Genres saved to database.');
-            $this->getHelper('Redirector')->gotoSimple('index');
         } catch (Zend_Controller_Action_Exception $e) {
             $this->_helper->flashMessenger->addMessage($e->getMessage());
             $this->_helper->flashMessenger->addMessage($e->getTrace());

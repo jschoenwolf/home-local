@@ -1,33 +1,18 @@
 <?php
 
-class Application_Form_Login extends Zend_Form
+class Application_Form_User extends Zend_Form
 {
 
     public function init() {
 
-        /**
-         * set POST method for form
-         */
         $this->setMethod('POST');
 
-        /**
-         * Set the viewScript decorator
-         */
-        $this->setDecorators(array(
-            array('ViewScript', array(
-                    'viewScript' => '_login.phtml'
-            ))
-        ));
-
-        /**
-         * Set standard filters for all elements
-         */
         $filters = array('StringTrim', 'StripTags', 'HtmlEntities');
 
+        $id = $this->createElement('hidden', 'id');
+        $id->setDecorators(array('ViewHelper'));
+        $this->addElement($id);
 
-        /**
-         * Text element 'name'
-         */
         $name = new Zend_Form_Element_Text('name');
         $name->setLabel('Name');
         $name->setAttrib('placeholder', 'Username');
@@ -38,29 +23,34 @@ class Application_Form_Login extends Zend_Form
         $name->addValidator('Alpha', FALSE, array(
             'allowWhiteSpace' => TRUE
         ));
-        $name->addErrorMessage('Your name is required.');
-        $name->removeDecorator('HtmlTag');
+        $name->addValidator(new Zend_Validate_Db_NoRecordExists(array(
+                    'table' => 'users',
+                    'field' => 'name'
+                )));
+//        $name->removeDecorator('HtmlTag');
+        $this->addElement($name);
 
-        /**
-         * Password elemnent for 'password'
-         */
         $password = new Zend_Form_Element_Password('password');
         $password->setLabel('Password');
         $password->setAttrib('placeholder', 'Password');
         $password->setOptions(array('size' => 20));
-        $password->setRequired('TRUE');
+        $password->setRequired(TRUE);
         $password->addValidator(new Jgs_Validator_Password());
         $password->addFilters($filters);
-        $password->removeDecorator('HtmlTag');
+//        $password->removeDecorator('HtmlTag');
+        $this->addElement($password);
 
+        $role = $this->createElement('select', 'role');
+        $role->setLabel("Select a role: ")
+                ->addMultiOption('user', 'User')
+                ->addMultiOption('administrator', 'Administrator');
+        $this->addElement($role);
 
         $submit = new Zend_Form_Element_Submit('submit');
-        $submit->setLabel('Login');
+        $submit->setLabel('Register');
         $submit->removeDecorator('HtmlTag');
         $submit->removeDecorator('DtDdWrapper');
-
-
-        $this->addElements(array($name, $password, $submit));
+        $this->addElement($submit);
     }
 }
 

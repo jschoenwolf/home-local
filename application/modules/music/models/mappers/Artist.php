@@ -5,7 +5,7 @@
  *
  * @author John Schoenwolf
  */
-class Music_Model_Mapper_Artist extends Jgs_Application_Model_Mapper
+class Music_Model_Mapper_Artist extends Jgs_Model_Mapper_Abstract
 {
     protected $_tableName = 'artist';
 

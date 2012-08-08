@@ -1,17 +1,21 @@
-<?php $session = new Zend_Session_Namespace('page'); $page = $this->paginator->getCurrentPageNumber(); ?>
-
-<div class="pagination"><?php
-echo $this->paginationControl(
-        $this->paginator, 'Sliding', '_paginatorControl.phtml'
-)
-?></div>
+<?php
+$session = new Zend_Session_Namespace('page');
+$page = $this->paginator->getCurrentPageNumber();
+?>
+<div class="pagination">
+    <?php
+    echo $this->paginationControl(
+            $this->paginator, 'Sliding', '_paginatorControl.phtml'
+    )
+    ?>
+</div>
 <article class="table">
     <?php foreach ($this->paginator as $artist): ?>
         <table class="edit">
             <tr>
                 <th colspan="4"><?php echo $artist->name ?></th>
-                <th><a href="/admin/music/updateartist/id/<?php
-                    echo $this->escape($artist->id) ?>">Edit Artist</a></th>
+                <th><a href="/admin/music/updateartist/id/
+                    <?php echo $this->escape($artist->id) ?>">Edit Artist</a></th>
             </tr>
             <?php if (count($artist->getAlbums()) > 0): ?>
                 <tr>
@@ -21,57 +25,63 @@ echo $this->paginationControl(
 
                     <tr>
                         <th colspan="4"><?php echo $this->escape($album->name) ?></th>
-                        <td><a href="/admin/music/updatealbum/id/<?php
-                            echo $this->escape($album->id) ?>">Edit Album</a></td>
+                        <td><a href="/admin/music/updatealbum/id/
+                            <?php echo $this->escape($album->id) ?>">Edit Album</a></td>
                     </tr>
                     <tr>
-                        <td colspan="4"><img src="<?php echo $this->thumbPath .
-                                        $this->escape($album->name) . '_thumb.jpg' ?>"
-                                        alt="thumbnail"/></td>
+                        <td colspan="4"><img src="<?php
+            echo $this->thumbPath .
+            $this->escape($album->name) . '_thumb.jpg'
+            ?>"
+                                             alt="thumbnail"/></td>
                         <td><?php echo $this->escape($album->year) ?></td>
                     </tr>
 
-                    <?php foreach ($album->getTracks() as $track): ?>
-                                    <tr>
-                                        <td><?php echo $track->track ?></td>
-                                        <td><?php echo $track->title ?></td>
-                                        <td><?php echo $track->genre ?></td>
-                                        <td><?php echo $this->Playtime($track->play_time) ?></td>
-                                        <td><a href="<?php echo $this->url(array(
-                                                        'module'     => 'admin',
-                                                        'controller' => 'music',
-                                                        'action'     => 'updatetrack',
-                                                        'id'         => $track->id));
-                                                        $session->page = $page;
-                                                            ?>">Edit Track</a></td>
-                                    </tr>
-            <?php endforeach ?>
+            <?php foreach ($album->getTracks() as $track): ?>
+                        <tr>
+                            <td><?php echo $this->escape($track->track) ?></td>
+                            <td><?php echo $this->escape($track->title) ?></td>
+                            <td><?php echo $this->escape($track->genre) ?></td>
+                            <td><?php echo $this->escape($this->Playtime($track->play_time)) ?></td>
+                            <td><a href="<?php
+                echo $this->url(array(
+                    'module'     => 'admin',
+                    'controller' => 'music',
+                    'action'     => 'updatetrack',
+                    'id'         => $track->id));
+                $session->page = $page;
+                ?>">Edit Track</a></td>
+                        </tr>
+                    <?php endforeach ?>
                 <?php endforeach ?>
-            <?php else: ?>
+    <?php else: ?>
                 <tr>
                     <th colspan="5">Tracks</th>
                 </tr>
-                <?php foreach ($artist->getTracks() as $track): ?>
+        <?php foreach ($artist->getTracks() as $track): ?>
                     <tr>
                         <td><?php echo $this->escape($track->track) ?></td>
                         <td><?php echo $this->escape($track->title) ?></td>
                         <td><?php echo $this->escape($track->genre) ?></td>
                         <td><?php echo $this->escape($this->Playtime($track->play_time)) ?></td>
-                        <td><a href="<?php echo $this->url(array(
-                                                        'module'     => 'admin',
-                                                        'controller' => 'music',
-                                                        'action'     => 'updatetrack',
-                                                        'id'         => $track->id));
-                                                        $session->page = $page;
-                                                            ?>">Edit Track</a></td>
+                        <td><a href="<?php
+            echo $this->url(array(
+                'module'     => 'admin',
+                'controller' => 'music',
+                'action'     => 'updatetrack',
+                'id'         => $this->escape($track->id)));
+            $session->page = $page;
+            ?>">Edit Track</a></td>
                     </tr>
                 <?php endforeach ?>
-            <?php endif ?>
+        <?php endif ?>
         </table>
-    <?php endforeach; ?>
+<?php endforeach; ?>
 </article>
-<div class="pagination"><?php
+<div class="pagination">
+    <?php
     echo $this->paginationControl(
             $this->paginator, 'Sliding', '_paginatorControl.phtml'
     )
-    ?></div>
+    ?>
+</div>

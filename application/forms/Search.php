@@ -5,13 +5,20 @@ class Application_Form_Search extends Zend_Form
 
     public function init() {
 
+        $this->setMethod('POST');
+        $this->setDecorators(array(
+            array('ViewScript', array(
+                    'viewScript' => '_searchForm.phtml'
+            ))
+        ));
+
         // create new element
         $query = $this->createElement('text', 'query');
         // element options
         $query->setLabel('Search Keywords');
         $query->setAttribs(array('placeholder' => 'Artist or Title',
             'size' => 27,
-            ));
+        ));
         // add the element to the form
         $this->addElement($query);
 

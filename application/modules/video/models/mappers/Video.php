@@ -10,7 +10,7 @@
  *
  * @author john
  */
-class Video_Model_Mapper_Video extends Jgs_Application_Model_Mapper
+class Video_Model_Mapper_Video extends Jgs_Model_Mapper_Abstract
 {
     protected $_tablename = 'videos';
     protected $_entityClass = 'Video_Model_Video';
@@ -27,26 +27,91 @@ class Video_Model_Mapper_Video extends Jgs_Application_Model_Mapper
         parent::__construct($tableGateway);
     }
 
-    protected function createEntity($row) {
+    /**
+     *
+     * @param object $row
+     * @return \Video_Model_Video
+     */
+    public function createEntity($row) {
         $data = array(
-            'title'       => $row->title,
-            'year'        => $row->year,
-            'director'    => $row->director,
-            'producers'   => $row->producers,
-            'actors'      => $row->actors,
+            'id' => $row->id,
+            'title' => $row->title,
+            'year' => $row->year,
+            'director' => $row->director,
+            'producers' => $row->producers,
+            'actors' => $row->actors,
             'description' => $row->description,
-            'path'        => $row->path,
-            'length'      => $row->length,
-            'resolution'  => $row->resolution,
-            'poster'      => $row->poster,
-            'imdb'        => $row->imdb,
-            'genre1'      => $row->genre1,
-            'genre2'      => $row->genre2,
-            'genre3'      => $row->genre3,
-            'genre4'      => $row->genre4
+            'path' => $row->path,
+            'length' => $row->length,
+            'resolution' => $row->resolution,
+            'poster' => $row->poster,
+            'imdb' => $row->imdb,
+            'genre' => $row->genre,
+            'url' => $row->url
         );
-
         return new Video_Model_Video($data);
+    }
+
+    /**
+     *
+     * @param Video_Model_Video $video
+     * @return object
+     */
+    public function saveVideo(Video_Model_Video $video) {
+
+        if (!is_null($video->id)) {
+            $select = $this->_getGateway()->select();
+            $select->where('id = ?', $video->id);
+            $row = $this->_getGateway()->fetchRow($select);
+        } else {
+            $row = $this->_getGateway()->createRow();
+        }
+        $row->title       = $video->title;
+        $row->year        = $video->year;
+        $row->director    = $video->director;
+        $row->producers   = $video->producers;
+        $row->actors      = $video->actors;
+        $row->description = $video->description;
+        $row->path        = $video->path;
+        $row->length      = $video->length;
+        $row->resolution  = $video->resolution;
+        $row->poster      = $video->poster;
+        $row->url         = $video->url;
+        $row->imdb        = $video->imdb;
+        $row->save();
+        return $row;
+    }
+
+    public function fetchPagedMoviesByGenre($genre) {
+
+        $select = $this->_getGateway()->select();
+        $select->where(new Zend_Db_Expr("FIND_IN_SET('$genre', genre)"));
+        $select->order('title', 'ASC');
+
+        //create a new instance of the paginator adapter and return it
+        $adapter = new Video_Model_Paginator_Video($select);
+
+        return $adapter;
+    }
+
+    public function fetchPagedMoviesByTitle($title) {
+
+        $select = $this->_getGateway()->select();
+        $select->where(new Zend_Db_Expr("title LIKE '%$title%'"));
+        $select->order('title', 'ASC');
+
+        //create a new instance of the paginator adapter and return it
+        $adapter = new Video_Model_Paginator_Video($select);
+
+        return $adapter;
+    }
+
+    public function fetchAllMoviesPaged() {
+        $select = $this->_getGateway()->select();
+        $select->order('title, ASC');
+
+        $adapter = new Video_Model_Paginator_Video($select);
+        return $adapter;
     }
 }
 

@@ -1,8 +1,7 @@
 <?php
 
-class Music_Model_Track extends Jgs_Application_Model_Entity_Abstract implements Jgs_Application_Interface_Track
+class Music_Model_Track extends Jgs_Model_Entity_Abstract implements Jgs_Interface_Track
 {
-    protected $_id;
     protected $_album;
     protected $_artist;
     protected $_filename;
@@ -15,7 +14,6 @@ class Music_Model_Track extends Jgs_Application_Model_Entity_Abstract implements
     protected $_track;
     protected $_albumMapper = NULL;
     protected $_artistMapper = NULL;
-
 
     public function getAlbum() {
         if (!is_null($this->_album) && $this->_album instanceof Music_Model_Album) {
@@ -53,10 +51,6 @@ class Music_Model_Track extends Jgs_Application_Model_Entity_Abstract implements
 
     public function getHash() {
         return $this->_hash;
-    }
-
-    public function getId() {
-        return $this->_id;
     }
 
     public function getPath() {
@@ -102,11 +96,6 @@ class Music_Model_Track extends Jgs_Application_Model_Entity_Abstract implements
 
     public function setHash($hash) {
         $this->_hash = $hash;
-        return $this;
-    }
-
-    public function setId($id) {
-        $this->_id = $id;
         return $this;
     }
 

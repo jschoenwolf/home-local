@@ -5,23 +5,15 @@ class Video_IndexController extends Zend_Controller_Action
 
     public function preDispatch() {
 
-        $searchForm = new Application_Form_MovieSearch();
-        $searchForm->setAction('/video/index/display');
-        $searchForm->search->setLabel('Search Movie Collection');
-        $searchForm->setDecorators(array(
-            array('ViewScript', array(
-                    'viewScript' => '_searchForm.phtml'
-            ))
-        ));
-
-        $this->_helper->layout()->search = $searchForm;
-
+        $this->_helper->layout()->search = $this->_helper->search(
+                '/video/index/display', 'Search Video Collection!', 'Movie Title');
 
         if ($this->getRequest()->getActionName() == 'play') {
             $this->_helper->layout->setLayout('play');
-            $this->view->headLink()->appendStylesheet('http://vjs.zencdn.net/c/video-js.css');
-            $this->view->headScript()->appendFile(
-                    'http://vjs.zencdn.net/c/video.js');
+
+            $this->view->headLink()->appendStylesheet('/javascript/video-js/video-js.css');
+            $this->view->headScript()->setFile(
+                    '/javascript/video-js/video.js');
         }
     }
 
@@ -34,14 +26,14 @@ class Video_IndexController extends Zend_Controller_Action
 
     public function indexAction() {
 
-        $genre = new Application_Model_DbTable_Genre();
-        $genres = $genre->fetchAllGenre();
+        $genre = new Video_Model_Mapper_Genre();
+        $genres = $genre->findAll();
         $this->view->genre = $genres;
     }
 
     public function displayAction() {
 
-        $model = new Application_Model_DbTable_Videos();
+        $model = new Video_Model_Mapper_Video();
         $request = $this->getRequest()->getParams();
 
         switch ($request) {
@@ -65,11 +57,19 @@ class Video_IndexController extends Zend_Controller_Action
         $this->view->paginator = $paginator;
     }
 
+    public function movieAction() {
+        $id = $this->getRequest()->getParam('id');
+        $model = new Video_Model_Mapper_Video();
+        $video = $model->findById($id);
+        $this->view->video = $video;
+        Zend_Debug::dump($video, 'Video');
+    }
+
     public function playAction() {
 
         $id = $this->getRequest()->getParam('id');
-        $model = new Application_Model_DbTable_Videos();
-        $video = $model->getVideo($id);
+        $model = new Video_Model_Mapper_Video();
+        $video = $model->findById($id);
 
         $this->view->video = $video;
     }

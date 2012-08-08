@@ -5,10 +5,15 @@
  *
  * @author John Schoenwolf
  */
-class Music_Model_Mapper_Album extends Jgs_Application_Model_Mapper
+class Music_Model_Mapper_Album extends Jgs_Model_Mapper_Abstract
 {
     protected $_tableName = 'album';
 
+    /**
+     * Construct mapper using DbTable model as $tableGateway
+     *
+     * @param Zend_Db_Table_Abstract $tableGateway
+     */
     public function __construct(Zend_Db_Table_Abstract $tableGateway = NULL) {
         $tableGateway = new Application_Model_DbTable_Album();
         parent::__construct($tableGateway);
