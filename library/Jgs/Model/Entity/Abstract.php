@@ -27,7 +27,8 @@ abstract class Jgs_Model_Entity_Abstract
      *
      * @param array $options
      */
-    public function __construct(array $options = null) {
+    public function __construct(array $options = null)
+    {
 
         if (is_array($options)) {
             $this->setOptions($options);
@@ -39,7 +40,8 @@ abstract class Jgs_Model_Entity_Abstract
      * @param array $options
      * @return \Jgs_Application_Model_Entity_Abstract
      */
-    public function setOptions(array $options) {
+    public function setOptions(array $options)
+    {
 
         $methods = get_class_methods($this);
 
@@ -57,7 +59,8 @@ abstract class Jgs_Model_Entity_Abstract
      * Map the setting of non-existing fields to a mutator when
      * possible, otherwise use the matching field
      */
-    public function __set($name, $value) {
+    public function __set($name, $value)
+    {
 
         $property = strtolower($name);
 
@@ -81,17 +84,18 @@ abstract class Jgs_Model_Entity_Abstract
      * Map the getting of non-existing properties to an accessor when
      * possible, otherwise use the matching field
      */
-    public function __get($name) {
+    public function __get($name)
+    {
 
         $property = strtolower($name);
 
         if (!property_exists($this, $property)) {
             throw new \InvalidArgumentException(
-                    "Getting the property '$property' is not valid for this entity");
+                "Getting the property '$property' is not valid for this entity");
         }
         $accessor = 'get' . ucfirst(strtolower($name));
         return (method_exists($this, $accessor) && is_callable(array(
-                    $this, $accessor))) ? $this->$accessor() : $this->$property;
+                $this, $accessor))) ? $this->$accessor() : $this->$property;
     }
 
     /**
@@ -99,7 +103,8 @@ abstract class Jgs_Model_Entity_Abstract
      *
      * @return array
      */
-    public function toArray() {
+    public function toArray()
+    {
         $vars = get_object_vars($this);
         $array = array();
         foreach ($vars as $key => $value) {
@@ -120,7 +125,8 @@ abstract class Jgs_Model_Entity_Abstract
      * @param type $id
      * @return \Jgs_Model_Entity_Abstract
      */
-    public function setId($id) {
+    public function setId($id)
+    {
         $this->id = $id;
         return $this;
     }
@@ -130,7 +136,8 @@ abstract class Jgs_Model_Entity_Abstract
      *
      * @return string
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -140,7 +147,8 @@ abstract class Jgs_Model_Entity_Abstract
      * @param string $name
      * @param string $id
      */
-    public function setReferenceId($name, $id) {
+    public function setReferenceId($name, $id)
+    {
 
         $this->references[$name] = $id;
     }
@@ -151,7 +159,8 @@ abstract class Jgs_Model_Entity_Abstract
      * @param string $name
      * @return string
      */
-    public function getReferenceId($name) {
+    public function getReferenceId($name)
+    {
 
         if (isset($this->references[$name])) {
 
