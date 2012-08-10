@@ -25,11 +25,12 @@ class Jgs_Validator_Password extends Zend_Validate_Abstract
      * @param string $value
      * @return boolean
      */
-    public function isValid($value) {
+    public function isValid($value)
+    {
         $this->_setValue($value);
 
         $isValid = true;
-        $stringLength = new Zend_Validate_StringLength (array('min' => 8));
+        $stringLength = new Zend_Validate_StringLength(array('min' => 8));
         if (!$stringLength->isValid($value)) {
             $this->_error(self::LENGTH);
             $isValid = false;

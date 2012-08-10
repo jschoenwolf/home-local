@@ -13,7 +13,8 @@
 class Zend_View_Helper_Playtime extends Zend_View_Helper_Abstract
 {
 
-    public function playtime($seconds) {
+    public function playtime($seconds)
+    {
 
         $minutes = floor($seconds % 3600 / 60);
         $seconds = $seconds % 60;

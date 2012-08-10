@@ -6,7 +6,8 @@
  *
  * @author john
  */
-class Jgs_Validator_Usphone extends Zend_Validate_Abstract {
+class Jgs_Validator_Usphone extends Zend_Validate_Abstract
+{
     const PHONE = 'phone';
 
     protected $_messageTemplates = array(
@@ -14,16 +15,16 @@ class Jgs_Validator_Usphone extends Zend_Validate_Abstract {
             Phone number must be entered in (xxx)xxx-xxxx or xxx-xxx-xxxx format."
     );
 
-    public function isValid($value) {
+    public function isValid($value)
+    {
         $this->_setValue($value);
 
-        $isValid = TRUE;
+        $isValid = true;
         $pattern = ('/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/');
         if (!preg_match($pattern, $value)) {
             $this->_error(self::PHONE);
-            $isValid = FALSE;
+            $isValid = false;
         }
         return $isValid;
     }
-
 }

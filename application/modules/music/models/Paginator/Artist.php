@@ -8,7 +8,8 @@
 class Music_Model_Paginator_Artist extends Zend_Paginator_Adapter_DbTableSelect
 {
 
-    public function getItems($offset, $itemCountPerPage) {
+    public function getItems($offset, $itemCountPerPage)
+    {
         $rows = parent::getItems($offset, $itemCountPerPage);
 
         $albums = array();

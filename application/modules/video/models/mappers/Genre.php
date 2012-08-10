@@ -40,11 +40,11 @@ class Video_Model_Mapper_Genre extends Jgs_Model_Mapper_Abstract
     public function saveGenre(Video_Model_Genre $genre) {
 
         if (!is_null($genre->id)) {
-            $select = $this->_getGateway()->select();
+            $select = $this->getGateway()->select();
             $select->where('id = ?', $genre->id);
-            $row = $this->_getGateway()->fetchRow($select);
+            $row = $this->getGateway()->fetchRow($select);
         } else {
-            $row = $this->_getGateway()->createRow();
+            $row = $this->getGateway()->createRow();
         }
         $row->name = $genre->name;
 

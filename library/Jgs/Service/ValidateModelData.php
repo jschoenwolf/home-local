@@ -11,7 +11,8 @@
 class Jgs_Service_ValidateModelData
 {
 
-    public function isIdValid($id) {
+    public function isIdValid($id)
+    {
         $data = array('id' => $id);
         $filters = array(
             'id' => array(
@@ -24,7 +25,7 @@ class Jgs_Service_ValidateModelData
         );
         $input = new Zend_Filter_Input($validators, $filters, $data);
         if ($input->isValid()) {
-            return TRUE;
+            return true;
         } else {
             return $input->getMessages();
         }

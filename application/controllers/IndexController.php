@@ -2,36 +2,33 @@
 
 class IndexController extends Zend_Controller_Action
 {
-    protected $_session;
-    protected $_config;
-    protected $_message;
-<<<<<<< HEAD
+    protected $session;
+    protected $config;
+    protected $message;
 
-    public function preDispatch() {
+    public function preDispatch()
+    {
         $this->_helper->layout()->login = $this->_helper->login();
     }
-=======
->>>>>>> origin/master
 
-    public function init() {
+    public function init()
+    {
 
-        $this->_message = $this->getHelper('FlashMessenger');
-        $this->_session = new Zend_Session_Namespace('home');
+        $this->message = $this->getHelper('FlashMessenger');
+        $this->session = new Zend_Session_Namespace('home');
 
-        if ($this->_message->hasMessages()) {
-            $this->view->messages = $this->_message->getMessages();
+        if ($this->message->hasMessages()) {
+            $this->view->messages = $this->message->getMessages();
         }
     }
 
-    public function indexAction() {
-<<<<<<< HEAD
+    public function indexAction()
+    {
 
-=======
-     
->>>>>>> origin/master
     }
 
-    public function registerAction() {
+    public function registerAction()
+    {
         $form = new Application_Form_User();
 
         if ($this->getRequest()->isPost()) {
@@ -43,7 +40,7 @@ class IndexController extends Zend_Controller_Action
 
                 $save = $mapper->saveUser($user);
 
-                $this->_message->addMessage("User $save->name added");
+                $this->message->addMessage("User $save->name added");
                 return $this->_redirect('/index');
             }
             $this->view->form = $form;
@@ -58,7 +55,8 @@ class IndexController extends Zend_Controller_Action
         }
     }
 
-    public function loginAction() {
+    public function loginAction()
+    {
         $form = new Application_Form_Login();
 
         $data = $this->_request->getParams();
@@ -97,10 +95,10 @@ class IndexController extends Zend_Controller_Action
 //        }
     }
 
-    public function logoutAction() {
+    public function logoutAction()
+    {
         $authAdapter = Zend_Auth::getInstance();
         $authAdapter->clearIdentity();
     }
-   
 }
 

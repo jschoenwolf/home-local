@@ -10,9 +10,11 @@
  *
  * @author john
  */
-class Zend_View_Helper_Path extends Zend_View_Helper_Abstract {
-    
-    public function path($path) {
+class Zend_View_Helper_Path extends Zend_View_Helper_Abstract
+{
+
+    public function path($path)
+    {
         $seg = explode('\\', $path);
         $nseg = array_shift($seg);
         $mseg = array_shift($seg);

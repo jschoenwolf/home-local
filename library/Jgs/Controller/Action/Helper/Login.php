@@ -8,7 +8,8 @@
 class Jgs_Controller_Action_Helper_Login extends Zend_Controller_Action_Helper_Abstract
 {
 
-    public function direct() {
+    public function direct()
+    {
         $form = new Application_Form_Login();
         $form->setAction('/index/login');
 

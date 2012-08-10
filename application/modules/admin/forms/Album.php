@@ -3,7 +3,8 @@
 class Admin_Form_Album extends Zend_Form
 {
 
-    public function init() {
+    public function init()
+    {
 
         $this->setMethod('POST');
         $this->setDecorators(array(
@@ -15,17 +16,17 @@ class Admin_Form_Album extends Zend_Form
 
         $name = new Zend_Form_Element_Text('name');
         $name->setLabel('Album Name ')
-                ->setOptions(array('size' => 62));
+            ->setOptions(array('size' => 62));
         $this->addElement($name);
 
         $art = new Zend_Form_Element_Text('art');
         $art->setLabel('Album Art')
-                ->setOptions(array('size' => 62));
+            ->setOptions(array('size' => 62));
         $this->addElement($art);
 
         $year = new Zend_Form_Element_Text('year');
         $year->setLabel('Release Year')
-                ->setOptions(array('size' => 62));
+            ->setOptions(array('size' => 62));
         $this->addElement($year);
 
         $artist = new Zend_Form_Element_Hidden('artist');

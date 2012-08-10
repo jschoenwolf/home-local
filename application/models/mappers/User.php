@@ -7,15 +7,16 @@
  */
 class Application_Model_Mapper_User extends Jgs_Model_Mapper_Abstract
 {
+    protected $tableName = 'users';
 
-    protected $_tableName = 'users';
-
-    public function __construct(Zend_Db_Table_Abstract $tableGateway = NULL) {
+    public function __construct(Zend_Db_Table_Abstract $tableGateway = null)
+    {
         $tableGateway = new Application_Model_DbTable_User();
         parent::__construct($tableGateway);
     }
 
-    protected function createEntity($row) {
+    protected function createEntity($row)
+    {
 
         $data = array(
             'id' => $row->id,
@@ -28,14 +29,15 @@ class Application_Model_Mapper_User extends Jgs_Model_Mapper_Abstract
         return $user;
     }
 
-    public function saveUser(Application_Model_User $user) {
+    public function saveUser(Application_Model_User $user)
+    {
 
         if (!empty($user->id) && !is_null($this->findById($user->id))) {
-            $select = $this->_getGateway()->select();
+            $select = $this->getGateway()->select();
             $select->where('id = ?', $user->id);
-            $row = $this->_getGateway()->fetchRow($select);
+            $row = $this->getGateway()->fetchRow($select);
         } else {
-            $row = $this->_getGateway()->createRow();
+            $row = $this->getGateway()->createRow();
         }
         $row->name = $user->name;
         $row->password = $user->password;

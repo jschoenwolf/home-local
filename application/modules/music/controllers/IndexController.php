@@ -2,40 +2,39 @@
 
 class Music_IndexController extends Zend_Controller_Action
 {
-    protected $_utilities = null;
-    protected $_message;
+    protected $utilities = null;
+    protected $message;
 
-    public function preDispatch() {
+    public function preDispatch()
+    {
 
         $this->view->headScript()->appendFile(
-                '/javascript/mediaelement/build/mediaelement-and-player.min.js');
+            '/javascript/mediaelement/build/mediaelement-and-player.min.js');
 
         $this->view->inlineScript()->setScript(
-                "$('audio').mediaelementplayer();");
+            "$('audio').mediaelementplayer();");
 
         $this->_helper->layout()->search = $this->_helper->search(
-                '/music/index/display', 'Search Music Collection!',
-                'Artist or Title');
+            '/music/index/display', 'Search Music Collection!', 'Artist or Title');
     }
 
-    public function init() {
+    public function init()
+    {
 
-        $this->_message = $this->getHelper('FlashMessenger');
-        if ($this->_message->hasMessages()) {
-            $this->view->messages = $this->_message->getMessages();
+        $this->message = $this->getHelper('FlashMessenger');
+        if ($this->message->hasMessages()) {
+            $this->view->messages = $this->message->getMessages();
         }
-<<<<<<< HEAD
-        $this->_utilities = new Jgs_Utilities();
-=======
-        $this->_utilities = new Jgs_Application_Utilities();
->>>>>>> origin/master
+
+        $this->utilities = new Jgs_Utilities();
     }
 
-    public function indexAction() {
+    public function indexAction()
+    {
 
         $model = new Music_Model_Mapper_Artist();
         $adapter = $model->fetchAllPaged();
-       
+
         $paginator = new Zend_Paginator($adapter);
         $paginator->setItemCountPerPage(48)->setPageRange(5);
 
@@ -45,14 +44,15 @@ class Music_IndexController extends Zend_Controller_Action
         $this->view->paginator = $paginator;
     }
 
-    public function displayAction() {
+    public function displayAction()
+    {
 
         $request = $this->getRequest()->getParams();
 
         switch ($request) {
             case (isset($request['query'])):
                 $model = new Music_Model_Mapper_Track();
-                $adapter = $model->fetchPagedTracks(NULL, $request['query']);
+                $adapter = $model->fetchPagedTracks(null, $request['query']);
                 $paginator = new Zend_Paginator($adapter);
                 $paginator->setItemCountPerPage(20)->setPageRange(5);
 
@@ -63,7 +63,7 @@ class Music_IndexController extends Zend_Controller_Action
                 $this->view->artPath = '/images/mp3art/';
                 break;
             case (isset($request['id'])):
-                $this->_forward('artist', NULL, NULL, array('id' => $request['id']));
+                $this->_forward('artist', null, null, array('id' => $request['id']));
                 break;
             default:
                 $adapter = $model->fetchPagedTracks();
@@ -71,7 +71,8 @@ class Music_IndexController extends Zend_Controller_Action
         }
     }
 
-    public function artistAction() {
+    public function artistAction()
+    {
         $id = $this->getRequest()->getParam('id');
         $artist = new Music_Model_Mapper_Artist();
         if (count($artist->findById($id)->getAlbums()) > 0) {
@@ -92,7 +93,8 @@ class Music_IndexController extends Zend_Controller_Action
         $this->view->artPath = '/images/mp3art/';
     }
 
-    public function albumAction() {
+    public function albumAction()
+    {
 
         $id = $this->_request->getParam('id');
 

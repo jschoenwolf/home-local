@@ -21,7 +21,8 @@ class Jgs_Utilities
      * @param string $path
      * @return string
      */
-    public function trimPath($path, $toRemove = 1) {
+    public function trimPath($path, $toRemove = 1)
+    {
 
         $seg = explode('\\', $path);
 
@@ -39,7 +40,8 @@ class Jgs_Utilities
      * @param array $array
      * @return array
      */
-    public function arrayTrim($array) {
+    public function arrayTrim($array)
+    {
         if (is_string($array)) {
             return trim($array);
         } else if (!is_array($array)) {
@@ -63,7 +65,8 @@ class Jgs_Utilities
      * @param string $filename
      * @param string $content
      */
-    public function writeToFile($filename, $content) {
+    public function writeToFile($filename, $content)
+    {
         // Let's make sure the file exists and is writable first.
         if (is_writable($filename)) {
 
@@ -75,7 +78,7 @@ class Jgs_Utilities
                 exit;
             }
             // Write $somecontent to our opened file.
-            if (fwrite($handle, $content) === FALSE) {
+            if (fwrite($handle, $content) === false) {
                 echo "Cannot write to file ($filename)";
                 exit;
             }
@@ -93,11 +96,12 @@ class Jgs_Utilities
      * @param type $file
      * @return type array
      */
-    public function csvToArray($file) {
+    public function csvToArray($file)
+    {
         $row = 0;
         $handle = fopen($file, "r");
         $tracks = array();
-        if ($handle != FALSE) {
+        if ($handle != false) {
             while ($data = fgetcsv($handle, 1000, ';')) {
                 if ($row === 0) {
                     $keys = $data;
@@ -116,32 +120,35 @@ class Jgs_Utilities
         }
     }
 
-    public function time($string) {
+    public function time($string)
+    {
         $exp = explode('-', $string);
         $timeString = array();
         foreach ($exp as $value) {
-           $timeString[]= $this->normTime($value);
+            $timeString[] = $this->normTime($value);
         }
         $time = implode('-', $timeString);
         return $time;
     }
 
-    public function time_to_decimal($time) {
+    public function time_to_decimal($time)
+    {
         $timeArr = explode(':', $time);
         $decTime = ($timeArr[0] * 60) + ($timeArr[1]) + ($timeArr[2] / 60);
 
         return $decTime;
     }
 
-    public function normTime($string) {
+    public function normTime($string)
+    {
         $result = preg_replace_callback('~([\d:,.]+)~', function($i) {
-                    $i[1] = str_replace(array(',', ':'), '.', $i[1]);
-                    if (strpos($i[1], '.') === false) {
-                        $i[1] .= '.00';
-                    }
+                $i[1] = str_replace(array(',', ':'), '.', $i[1]);
+                if (strpos($i[1], '.') === false) {
+                    $i[1] .= '.00';
+                }
 
-                    return $i[1];
-                }, $string);
+                return $i[1];
+            }, $string);
         return $result;
     }
 }

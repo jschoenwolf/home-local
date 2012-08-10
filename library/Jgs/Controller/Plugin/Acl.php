@@ -13,7 +13,8 @@
 class Jgs_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
 {
 
-    public function preDispatch(Zend_Controller_Request_Abstract $request) {
+    public function preDispatch(Zend_Controller_Request_Abstract $request)
+    {
         parent::preDispatch($request);
         //setup ACL
         $acl = new Zend_Acl();
@@ -35,8 +36,8 @@ class Jgs_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
         $acl->add(new Zend_Acl_Resource('bug'));
 
         //set up access rules
-        $acl->allow(NULL, array('index', 'error'));
-        $acl->allow(NULL, array('index', 'index'));
+        $acl->allow(null, array('index', 'error'));
+        $acl->allow(null, array('index', 'index'));
 
         //a guest can only read content and login
         $acl->allow('guest', 'page', array('index', 'open'));
@@ -51,7 +52,7 @@ class Jgs_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
         $acl->allow('user', 'page', array('list', 'create', 'edit', 'delete'));
 
         //administrators can do anything
-        $acl->allow('administrator', NULL);
+        $acl->allow('administrator', null);
 
         //fetch current user
         $auth = Zend_Auth::getInstance();

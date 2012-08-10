@@ -12,26 +12,26 @@
  */
 class Application_Model_Video
 {
-    protected $_title;
-    protected $_year;
-    protected $_genre = array();
-    protected $_director;
-    protected $_producers;
-    protected $_actors;
-    protected $_description;
-    protected $_path;
-    protected $_length;
-    protected $_resolution;
-    protected $_poster;
-    protected $_imdb;
-    private $_utility;
+    protected $title;
+    protected $year;
+    protected $genre = array();
+    protected $director;
+    protected $producers;
+    protected $actors;
+    protected $description;
+    protected $path;
+    protected $length;
+    protected $resolution;
+    protected $poster;
+    protected $imdb;
+    private $utility;
 
-    public function __construct(array $options = NULL) {
+    public function __construct(array $options = null) {
 
         if (is_array($options)) {
             $this->setOptions($options);
         }
-        $this->_utility = new Jgs_Utilities();
+        $this->utility = new Jgs_Utilities();
     }
 
     public function setOptions(array $options) {
@@ -68,7 +68,7 @@ class Application_Model_Video
         $model = new Application_Model_DbTable_Genre();
         foreach ($genre as $value) {
             $row = $model->fetchGenreRow('name', $value);
-            if ($row === FALSE) {
+            if ($row === false) {
                 //create new row
                 $model->saveGenre(array('name' => $value));
             } else {
@@ -104,7 +104,7 @@ class Application_Model_Video
         );
         $data1 = array_merge($data, $genre);
         $row = $model->fetchVideoRow($this->getImdb());
-        if ($row !== FALSE) {
+        if ($row !== false) {
             //update row
             $id = array('id' => $row->id);
             $data2 = array_merge($data1, $id);
@@ -116,106 +116,106 @@ class Application_Model_Video
     }
 
     public function getTitle() {
-        return $this->_title;
+        return $this->title;
     }
 
     public function setTitle($title) {
-        $this->_title = $title;
+        $this->title = $title;
     }
 
     public function getYear() {
-        return $this->_year;
+        return $this->year;
     }
 
     public function setYear($year) {
-        $this->_year = $year;
+        $this->year = $year;
     }
 
     public function getGenreString() {
-        $string = implode(',', $this->_genre);
+        $string = implode(',', $this->genre);
         return $string;
     }
 
     public function getGenreArray() {
-        return $this->_genre;
+        return $this->genre;
     }
 
     public function setGenre($genre) {
         $array = explode(',', $genre);
-        $result = $this->_utility->arrayTrim($array);
+        $result = $this->utility->arrayTrim($array);
 
-        $this->_genre = $result;
+        $this->genre = $result;
     }
 
     public function getDirector() {
-        return $this->_director;
+        return $this->director;
     }
 
     public function setDirector($director) {
-        $this->_director = $director;
+        $this->director = $director;
     }
 
     public function getProducers() {
-        return $this->_producers;
+        return $this->producers;
     }
 
     public function setProducers($producers) {
-        $this->_producers = $producers;
+        $this->producers = $producers;
     }
 
     public function getActors() {
-        return $this->_actors;
+        return $this->actors;
     }
 
     public function setActors($actors) {
-        $this->_actors = $actors;
+        $this->actors = $actors;
     }
 
     public function getDescription() {
-        return $this->_description;
+        return $this->description;
     }
 
     public function setDescription($description) {
-        $this->_description = $description;
+        $this->description = $description;
     }
 
     public function getPath() {
-        return $this->_path;
+        return $this->path;
     }
 
     public function setPath($path) {
-        $this->_path = $this->_utility->trimPath($path, 2);
+        $this->path = $this->utility->trimPath($path, 2);
     }
 
     public function getLength() {
-        return $this->_length;
+        return $this->length;
     }
 
     public function setLength($length) {
-        $this->_length = $length;
+        $this->length = $length;
     }
 
     public function getResolution() {
-        return $this->_resolution;
+        return $this->resolution;
     }
 
     public function setResolution($resolution) {
-        $this->_resolution = $resolution;
+        $this->resolution = $resolution;
     }
 
     public function getPoster() {
-        return $this->_poster;
+        return $this->poster;
     }
 
     public function setPoster($poster) {
-        $this->_poster = $poster;
+        $this->poster = $poster;
     }
 
     public function getImdb() {
-        return $this->_imdb;
+        return $this->imdb;
     }
 
     public function setImdb($imdb) {
-        $this->_imdb = $imdb;
+        $this->imdb = $imdb;
     }
 }

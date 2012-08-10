@@ -5,7 +5,8 @@ class Application_Model_DbTable_Genre extends Zend_Db_Table_Abstract
     protected $_name = 'genre';
     protected $_primary = 'id';
 
-    public function saveGenre(array $data) {
+    public function saveGenre(array $data)
+    {
 
         $dataObject = (object) $data;
         if (array_key_exists('id', $data) && isset($data['id'])) {
@@ -19,20 +20,22 @@ class Application_Model_DbTable_Genre extends Zend_Db_Table_Abstract
         return $row;
     }
 
-    public function fetchGenreRow($fieldName = NULL, $fieldValue = NULL) {
+    public function fetchGenreRow($fieldName = null, $fieldValue = null)
+    {
 
         $select = $this->select();
         $select->where("$fieldName = ?", $fieldValue);
 
         $result = $this->fetchRow($select);
         if (!$result) {
-            return FALSE;
+            return false;
         } else {
             return $result;
         }
     }
 
-    public function fetchAllGenre() {
+    public function fetchAllGenre()
+    {
         $select = $this->select();
         $select->order('name ASC');
 

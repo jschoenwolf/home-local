@@ -13,7 +13,8 @@
 class Zend_View_Helper_Length extends Zend_View_Helper_Abstract
 {
 
-    public function length($minutes) {
+    public function length($minutes)
+    {
 
         $hours = floor($minutes / 60);
         $minutes = $minutes % 60;

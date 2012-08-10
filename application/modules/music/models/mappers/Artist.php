@@ -7,9 +7,10 @@
  */
 class Music_Model_Mapper_Artist extends Jgs_Model_Mapper_Abstract
 {
-    protected $_tableName = 'artist';
+    protected $tableName = 'artist';
 
-    public function __construct(Zend_Db_Table_Abstract $tableGateway = NULL) {
+    public function __construct(Zend_Db_Table_Abstract $tableGateway = null)
+    {
         $tableGateway = new Application_Model_DbTable_Artist();
         parent::__construct($tableGateway);
     }
@@ -20,10 +21,11 @@ class Music_Model_Mapper_Artist extends Jgs_Model_Mapper_Abstract
      * @param object $row
      * @return Music_Model_Artist
      */
-    public function createEntity($row) {
+    public function createEntity($row)
+    {
 
         $data = array(
-            'id'   => $row->id,
+            'id' => $row->id,
             'name' => $row->name
         );
         $artist = new Music_Model_Artist($data);
@@ -37,14 +39,15 @@ class Music_Model_Mapper_Artist extends Jgs_Model_Mapper_Abstract
      * @param Music_Model_Artist $artist
      * @return object
      */
-    public function saveArtist(Music_Model_Artist $artist) {
+    public function saveArtist(Music_Model_Artist $artist)
+    {
 
         if (!is_null($artist->id) && !is_null($this->findById($artist->id))) {
-            $select = $this->_getGateway()->select();
+            $select = $this->getGateway()->select();
             $select->where('id = ?', $artist->id);
-            $row = $this->_getGateway()->fetchRow($select);
+            $row = $this->getGateway()->fetchRow($select);
         } else {
-            $row = $this->_getGateway()->createRow();
+            $row = $this->getGateway()->createRow();
         }
         $row->name = $artist->name;
 
@@ -57,9 +60,10 @@ class Music_Model_Mapper_Artist extends Jgs_Model_Mapper_Abstract
      *
      * @return Music_Model_Paginator_Artist
      */
-    public function fetchAllPaged() {
+    public function fetchAllPaged()
+    {
 
-        $select = $this->_getGateway()->select();
+        $select = $this->getGateway()->select();
         $select->order('name', 'ASC');
 
         $adapter = new Music_Model_Paginator_Artist($select);
@@ -67,8 +71,9 @@ class Music_Model_Mapper_Artist extends Jgs_Model_Mapper_Abstract
         return $adapter;
     }
 
-    public function findByColumnPaged($column, $value) {
-        $select = $this->_getGateway()->select();
+    public function findByColumnPaged($column, $value)
+    {
+        $select = $this->getGateway()->select();
         $select->where("$column LIKE '%$value%'");
         $select->order('name ASC');
 
@@ -83,31 +88,32 @@ class Music_Model_Mapper_Artist extends Jgs_Model_Mapper_Abstract
      *
      * @param array|string|Music_Model_Track $artist
      */
-    public function deleteArtist($artist) {
+    public function deleteArtist($artist)
+    {
         if ($artist instanceof Music_Model_Artist) {
             if (count($artist->getTracks()) > 0) {
                 throw new Zend_Db_Table_Exception(
-                        "Artist: $artist->name still has tracks assigned.");
+                    "Artist: $artist->name still has tracks assigned.");
             } elseif (count($artist->getAlbums()) > 0) {
                 throw new Zend_Db_Table_Exception(
-                        "Artist: $artist->name still has tracks assigned.");
+                    "Artist: $artist->name still has tracks assigned.");
             } else {
-                $where = $this->_getGateway()->getAdapter()
-                        ->quoteInto('id = ?', $artist->id);
+                $where = $this->getGateway()->getAdapter()
+                    ->quoteInto('id = ?', $artist->id);
             }
         } else {
             $result = $this->findById($artist);
             if (count($result->getTracks()) > 0) {
                 throw new Zend_Db_Table_Exception(
-                        "Artist: $result->name still has tracks assigned.");
+                    "Artist: $result->name still has tracks assigned.");
             } elseif (count($result->getAlbums()) > 0) {
                 throw new Zend_Db_Table_Exception(
-                        "Artist: $result->name still has albums assigned.");
+                    "Artist: $result->name still has albums assigned.");
             } else {
-                $where = $this->_getGateway()->getAdapter()
-                        ->quoteInto('id = ?', $artist);
+                $where = $this->getGateway()->getAdapter()
+                    ->quoteInto('id = ?', $artist);
             }
         }
-        $this->_getGateway()->delete($where);
+        $this->getGateway()->delete($where);
     }
 }

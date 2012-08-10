@@ -13,8 +13,8 @@ abstract class Jgs_Model_Mapper_Abstract
      *
      * @var Zend_Db_Table_Abstract $_tableGateway
      */
-    protected $_tableGateway = NULL;
-    protected $_map = array();
+    protected $tableGateway = null;
+    protected $map = array();
 
     /**
      * Will accept a DbTable model passed or will instantiate
@@ -22,14 +22,15 @@ abstract class Jgs_Model_Mapper_Abstract
      *
      * @param Zend_Db_Table_Abstract $tableGateway
      */
-    public function __construct(Zend_Db_Table_Abstract $tableGateway = NULL) {
+    public function __construct(Zend_Db_Table_Abstract $tableGateway = null)
+    {
 
         if (is_null($tableGateway)) {
 
-            $this->_tableGateway = new Zend_Db_Table($this->_tableName);
+            $this->tableGateway = new Zend_Db_Table($this->_tableName);
         } else {
 
-            $this->_tableGateway = $tableGateway;
+            $this->tableGateway = $tableGateway;
         }
     }
 
@@ -38,9 +39,10 @@ abstract class Jgs_Model_Mapper_Abstract
      *
      * @return Zend_Db_Table_Abstract
      */
-    protected function _getGateway() {
+    protected function getGateway()
+    {
 
-        return $this->_tableGateway;
+        return $this->tableGateway;
     }
 
     /**
@@ -49,8 +51,9 @@ abstract class Jgs_Model_Mapper_Abstract
      * @param string $id
      * @param object $entity
      */
-    protected function _setMap($id, $entity) {
-        $this->_map[$id] = $entity;
+    protected function setMap($id, $entity)
+    {
+        $this->map[$id] = $entity;
     }
 
     /**
@@ -59,9 +62,10 @@ abstract class Jgs_Model_Mapper_Abstract
      * @param string $id
      * @return string
      */
-    protected function _getMap($id) {
-        if (array_key_exists($id, $this->_map)) {
-            return $this->_map[$id];
+    protected function getMap($id)
+    {
+        if (array_key_exists($id, $this->map)) {
+            return $this->map[$id];
         }
     }
 
@@ -75,21 +79,22 @@ abstract class Jgs_Model_Mapper_Abstract
      * @param string $order
      * @return array of entity objects
      */
-    public function findByColumn($column, $value, $order = NULL) {
+    public function findByColumn($column, $value, $order = null)
+    {
 
-        $select = $this->_getGateway()->select();
+        $select = $this->getGateway()->select();
         $select->where("$column = ?", $value);
 
         if (!is_null($order)) {
             $select->order($order);
         }
 
-        $result = $this->_getGateway()->fetchAll($select);
+        $result = $this->getGateway()->fetchAll($select);
 
         $entities = array();
         foreach ($result as $row) {
             $entity = $this->createEntity($row);
-            $this->_setMap($row->id, $entity);
+            $this->setMap($row->id, $entity);
             $entities[] = $entity;
         }
 
@@ -103,35 +108,37 @@ abstract class Jgs_Model_Mapper_Abstract
      * @param type $id
      * @return object Jgs_Model_Entity_Abstract
      */
-    public function findById($id) {
+    public function findById($id)
+    {
 
-        if ($this->_getMap($id)) {
-            return $this->_getMap($id);
+        if ($this->getMap($id)) {
+            return $this->getMap($id);
         }
 
-        $select = $this->_getGateway()->select();
+        $select = $this->getGateway()->select();
         $select->where('id = ?', $id);
 
-        $row = $this->_getGateway()->fetchRow($select);
+        $row = $this->getGateway()->fetchRow($select);
 
         $entity = $this->createEntity($row);
 
-        $this->_setMap($row->id, $entity);
+        $this->setMap($row->id, $entity);
 
         return $entity;
     }
 
-   /**
-    * findAll() is a proxy for the fetchAll() method and returns
-    * an array of entity objects.
-    *
-    * @param array $where an array of id's
-    * @param string $order in the format of 'column ASC'
-    * @return array of entity objects
-    */
-    public function findAll(array $where = NULL, $order = NULL) {
+    /**
+     * findAll() is a proxy for the fetchAll() method and returns
+     * an array of entity objects.
+     *
+     * @param array $where an array of id's
+     * @param string $order in the format of 'column ASC'
+     * @return array of entity objects
+     */
+    public function findAll(array $where = null, $order = null)
+    {
 
-        $select = $this->_getGateway()->select();
+        $select = $this->getGateway()->select();
 
         if (!is_null($where)) {
             $select->where('id IN (?)', $where);
@@ -140,12 +147,12 @@ abstract class Jgs_Model_Mapper_Abstract
             $select->order($order);
         }
 
-        $rowset = $this->_getGateway()->fetchAll($select);
+        $rowset = $this->getGateway()->fetchAll($select);
 
         $entities = array();
         foreach ($rowset as $row) {
             $entity = $this->createEntity($row);
-            $this->_setMap($row->id, $entity);
+            $this->setMap($row->id, $entity);
             $entities[] = $entity;
         }
 

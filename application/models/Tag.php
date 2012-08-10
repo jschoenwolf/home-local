@@ -5,25 +5,26 @@
  */
 class Application_Model_Tag
 {
-    protected $_album;
-    protected $_artist;
-    protected $_bitrate;
-    protected $_title;
-    protected $_filename;
-    protected $_format;
-    protected $_genre;
-    protected $_play_time;
-    protected $_year;
-    protected $_track;
-    protected $_art = null;
-    protected $_hash;
-    protected $_path;
+    protected $album;
+    protected $artist;
+    protected $bitrate;
+    protected $title;
+    protected $filename;
+    protected $format;
+    protected $genre;
+    protected $play_time;
+    protected $year;
+    protected $track;
+    protected $art = null;
+    protected $hash;
+    protected $path;
 
     /**
      *
      * @param array $options
      */
-    public function __construct(array $options = NULL) {
+    public function __construct(array $options = null)
+    {
 
         if (is_array($options)) {
             $this->setOptions($options);
@@ -35,7 +36,8 @@ class Application_Model_Tag
      * @param array $options
      * @return \Application_Model_Tag
      */
-    public function setOptions(array $options) {
+    public function setOptions(array $options)
+    {
 
         /* @var $methods Application_Model_Tag */
         $methods = get_class_methods($this);
@@ -55,7 +57,8 @@ class Application_Model_Tag
      * @param type $value
      * @throws Zend_Exception
      */
-    public function __set($name, $value) {
+    public function __set($name, $value)
+    {
         $method = 'set' . $name;
         if (!method_exists($this, $method)) {
             throw new Zend_Exception('Invalid Tag Property');
@@ -69,7 +72,8 @@ class Application_Model_Tag
      * @return type
      * @throws Zend_Exception
      */
-    public function __get($name) {
+    public function __get($name)
+    {
         $method = 'get' . $name;
         if (!method_exists($this, $method)) {
             throw new Zend_Exception('Invalid Tag Property');
@@ -77,13 +81,14 @@ class Application_Model_Tag
         return $this->$method();
     }
 
-    public function saveTags() {
+    public function saveTags()
+    {
 
-        $trackMapper  = new Music_Model_Mapper_Track();
+        $trackMapper = new Music_Model_Mapper_Track();
         $artistMapper = new Music_Model_Mapper_Artist();
-        $albumMapper  = new Music_Model_Mapper_Album();
+        $albumMapper = new Music_Model_Mapper_Album();
 
-        if (isset($this->_hash)) {
+        if (isset($this->hash)) {
             //see if track already exists by comparing hashs
             $trackRow = $trackMapper->fetchByColumn('hash', $this->getHash());
             //if track does not exist
@@ -105,26 +110,26 @@ class Application_Model_Tag
                 //if yes
                 if (is_null($albumRow)) {
                     $albumData = array(
-                        'name'      => $this->getAlbum(),
+                        'name' => $this->getAlbum(),
                         'artist_id' => $artistRow->id,
-                        'art'       => $this->getAlbum() . '.jpg',
-                        'year'      => $this->getYear()
+                        'art' => $this->getAlbum() . '.jpg',
+                        'year' => $this->getYear()
                     );
                     //get album row
                     $albumRow = $albumMapper->save($albumData);
                 }
                 //Save track data
                 $trackData = array(
-                    'title'     => $this->getTitle(),
-                    'filename'  => $this->getFilename(),
-                    'path'      => $this->getPath(),
-                    'format'    => $this->getFormat(),
-                    'genre'     => $this->getGenre(),
+                    'title' => $this->getTitle(),
+                    'filename' => $this->getFilename(),
+                    'path' => $this->getPath(),
+                    'format' => $this->getFormat(),
+                    'genre' => $this->getGenre(),
                     'artist_id' => $artistRow->id,
-                    'album_id'  => $albumRow->id,
-                    'track'     => $this->getTrack(),
+                    'album_id' => $albumRow->id,
+                    'track' => $this->getTrack(),
                     'play_time' => $this->getPlay_time(),
-                    'hash'      => $this->getHash()
+                    'hash' => $this->getHash()
                 );
                 //save track data
                 $trackMapper->save($trackData);
@@ -134,120 +139,146 @@ class Application_Model_Tag
         }
     }
 
-    public function getAlbum() {
-        return $this->_album;
+    public function getAlbum()
+    {
+        return $this->album;
     }
 
-    public function setAlbum($album) {
-        $this->_album = $album;
+    public function setAlbum($album)
+    {
+        $this->album = $album;
         return $this;
     }
 
-    public function getArtist() {
-        return $this->_artist;
+    public function getArtist()
+    {
+        return $this->artist;
     }
 
-    public function setArtist($artist) {
-        $this->_artist = $artist;
+    public function setArtist($artist)
+    {
+        $this->artist = $artist;
         return $this;
     }
 
-    public function getBitrate() {
-        return $this->_bitrate;
+    public function getBitrate()
+    {
+        return $this->bitrate;
     }
 
-    public function setBitrate($bitrate) {
-        $this->_bitrate = $bitrate;
+    public function setBitrate($bitrate)
+    {
+        $this->bitrate = $bitrate;
         return $this;
     }
 
-    public function getTitle() {
-        return $this->_title;
+    public function getTitle()
+    {
+        return $this->title;
     }
 
-    public function setTitle($title) {
-        $this->_title = $title;
+    public function setTitle($title)
+    {
+        $this->title = $title;
         return $this;
     }
 
-    public function getFilename() {
-        return $this->_filename;
+    public function getFilename()
+    {
+        return $this->filename;
     }
 
-    public function setFilename($filename) {
-        $this->_filename = $filename;
+    public function setFilename($filename)
+    {
+        $this->filename = $filename;
         return $this;
     }
 
-    public function getFormat() {
-        return $this->_format;
+    public function getFormat()
+    {
+        return $this->format;
     }
 
-    public function setFormat($file_format) {
-        $this->_format = $file_format;
+    public function setFormat($file_format)
+    {
+        $this->format = $file_format;
         return $this;
     }
 
-    public function getPlay_time() {
-        return $this->_play_time;
+    public function getPlay_time()
+    {
+        return $this->play_time;
     }
 
-    public function setPlay_time($playtime) {
-        $this->_play_time = $playtime;
+    public function setPlay_time($playtime)
+    {
+        $this->play_time = $playtime;
         return $this;
     }
 
-    public function getYear() {
-        return $this->_year;
+    public function getYear()
+    {
+        return $this->year;
     }
 
-    public function setYear($year) {
-        $this->_year = (int) $year;
+    public function setYear($year)
+    {
+        $this->year = (int) $year;
         return $this;
     }
 
-    public function getTrack() {
-        return $this->_track;
+    public function getTrack()
+    {
+        return $this->track;
     }
 
-    public function setTrack($track) {
-        $this->_track = (int) $track;
+    public function setTrack($track)
+    {
+        $this->track = (int) $track;
         return $this;
     }
 
-    public function getArt() {
-        return $this->_art;
+    public function getArt()
+    {
+        return $this->art;
     }
 
-    public function setArt($art) {
-        $this->_art = $art;
+    public function setArt($art)
+    {
+        $this->art = $art;
         return $this;
     }
 
-    public function getHash() {
-        return $this->_hash;
+    public function getHash()
+    {
+        return $this->hash;
     }
 
-    public function setHash($hash) {
-        $this->_hash = $hash;
+    public function setHash($hash)
+    {
+        $this->hash = $hash;
         return $this;
     }
 
-    public function getGenre() {
-        return $this->_genre;
+    public function getGenre()
+    {
+        return $this->genre;
     }
 
-    public function setGenre($genre) {
-        $this->_genre = $genre;
+    public function setGenre($genre)
+    {
+        $this->genre = $genre;
         return $this;
     }
 
-    public function getPath() {
-        return $this->_path;
+    public function getPath()
+    {
+        return $this->path;
     }
 
-    public function setPath($path) {
-        $this->_path = $path;
+    public function setPath($path)
+    {
+        $this->path = $path;
         return $this;
     }
 }

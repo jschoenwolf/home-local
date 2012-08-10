@@ -60,11 +60,11 @@ class Video_Model_Mapper_Video extends Jgs_Model_Mapper_Abstract
     public function saveVideo(Video_Model_Video $video) {
 
         if (!is_null($video->id)) {
-            $select = $this->_getGateway()->select();
+            $select = $this->getGateway()->select();
             $select->where('id = ?', $video->id);
-            $row = $this->_getGateway()->fetchRow($select);
+            $row = $this->getGateway()->fetchRow($select);
         } else {
-            $row = $this->_getGateway()->createRow();
+            $row = $this->getGateway()->createRow();
         }
         $row->title       = $video->title;
         $row->year        = $video->year;
@@ -84,7 +84,7 @@ class Video_Model_Mapper_Video extends Jgs_Model_Mapper_Abstract
 
     public function fetchPagedMoviesByGenre($genre) {
 
-        $select = $this->_getGateway()->select();
+        $select = $this->getGateway()->select();
         $select->where(new Zend_Db_Expr("FIND_IN_SET('$genre', genre)"));
         $select->order('title', 'ASC');
 
@@ -96,7 +96,7 @@ class Video_Model_Mapper_Video extends Jgs_Model_Mapper_Abstract
 
     public function fetchPagedMoviesByTitle($title) {
 
-        $select = $this->_getGateway()->select();
+        $select = $this->getGateway()->select();
         $select->where(new Zend_Db_Expr("title LIKE '%$title%'"));
         $select->order('title', 'ASC');
 
@@ -107,7 +107,7 @@ class Video_Model_Mapper_Video extends Jgs_Model_Mapper_Abstract
     }
 
     public function fetchAllMoviesPaged() {
-        $select = $this->_getGateway()->select();
+        $select = $this->getGateway()->select();
         $select->order('title, ASC');
 
         $adapter = new Video_Model_Paginator_Video($select);

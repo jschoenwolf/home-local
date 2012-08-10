@@ -4,11 +4,11 @@ class Jgs_IMDb
 {
     private $baseurl = 'https://app.imdb.com/';
     private $params = array(
-        'api'       => 'v1',
-        'appid'     => 'iphone1_1',
+        'api' => 'v1',
+        'appid' => 'iphone1_1',
         'apiPolicy' => 'app1_1',
-        'apiKey'    => '2wex6aeu6a8q9e49k7sfvufd6rhh0n',
-        'locale'    => 'en_US',
+        'apiKey' => '2wex6aeu6a8q9e49k7sfvufd6rhh0n',
+        'locale' => 'en_US',
         'timestamp' => '0',
     );
     private $anonymiser = 'http://anonymouse.org/cgi-bin/anon-www.cgi/'; // URL that will be prepended to the generated API URL.
@@ -24,7 +24,8 @@ class Jgs_IMDb
     // Setting the following option to true will allow you to override any ignore options and force the title to be returned with find_by_id()
     public $forceReturn = false;
 
-    function __construct($anonymise = false, $summary = true, $titlesLimit = 0) {
+    function __construct($anonymise = false, $summary = true, $titlesLimit = 0)
+    {
         $this->anonymise = $anonymise;  // should we anonymise requests?
         if (!$summary)
             $this->summary = false; // overriding the default?
@@ -33,7 +34,8 @@ class Jgs_IMDb
     }
 
     // Build URL based on the given parameters
-    function build_url($method, $query = "", $parameter = "") {
+    function build_url($method, $query = "", $parameter = "")
+    {
 
         // Set timestamp parameter to current time
         $this->params['timestamp'] = $_SERVER['REQUEST_TIME'];
@@ -54,7 +56,8 @@ class Jgs_IMDb
     }
 
     // Search IMDb by ID of film
-    function find_by_id($id) {
+    function find_by_id($id)
+    {
         if (strpos($id, "tt") !== 0)
             $id = "tt" . $id;
         $requestURL = $this->build_url('title/maindetails', $id, 'tconst');
@@ -70,7 +73,8 @@ class Jgs_IMDb
     }
 
     // Search IMDb by title of film
-    function find_by_title($title, $year = 0) {
+    function find_by_title($title, $year = 0)
+    {
         $requestURL = $this->build_url('find', $title, 'q');
         $json = $this->fetchJSON($requestURL);
 
@@ -97,7 +101,8 @@ class Jgs_IMDb
     }
 
     // Search IMDb by ID of person
-    function person_by_id($id) {
+    function person_by_id($id)
+    {
         if (strpos($id, "nm") !== 0)
             $id = "nm" . $id;
         $requestURL = $this->build_url('name/maindetails', $id, 'nconst');
@@ -113,7 +118,8 @@ class Jgs_IMDb
     }
 
     // Search IMDb by name of person
-    function person_by_name($name) {
+    function person_by_name($name)
+    {
         $requestURL = $this->build_url('find', $name, 'q');
         $json = $this->fetchJSON($requestURL);
 
@@ -140,7 +146,8 @@ class Jgs_IMDb
     }
 
     // Top 250 Chart
-    function chart_top() {
+    function chart_top()
+    {
         $requestURL = $this->build_url('chart/top');
         $json = $this->fetchJSON($requestURL);
 
@@ -154,7 +161,8 @@ class Jgs_IMDb
     }
 
     // Bottom 100 Chart
-    function chart_bottom() {
+    function chart_bottom()
+    {
         $requestURL = $this->build_url('chart/bottom');
         $json = $this->fetchJSON($requestURL);
 
@@ -168,7 +176,8 @@ class Jgs_IMDb
     }
 
     // Box Office (US)
-    function boxoffice() {
+    function boxoffice()
+    {
         $requestURL = $this->build_url('boxoffice');
         $json = $this->fetchJSON($requestURL);
 
@@ -182,7 +191,8 @@ class Jgs_IMDb
     }
 
     // Summarise - only return the most pertinent data (when returning data from IMDb ID)
-    function summarise($obj) {
+    function summarise($obj)
+    {
 
         // If this is not an ignored type...
         if (!$this->is_ignored($obj->type, $obj->certificate->certificate, $obj->genres)) {
@@ -290,7 +300,8 @@ class Jgs_IMDb
     }
 
     // Summarise - only return the most pertinent data (when returning multiple title data)
-    function summarise_titles($objs, $yearMatch = 0) {
+    function summarise_titles($objs, $yearMatch = 0)
+    {
 
         $t = 0;
 
@@ -349,7 +360,8 @@ class Jgs_IMDb
     }
 
     // Summarise Person - only return the most pertinent data (when returning data from IMDb ID)
-    function summarise_person($obj) {
+    function summarise_person($obj)
+    {
 
         // ID with and without 'tt' prefix
         $s->id = substr($obj->nconst, 2);
@@ -385,7 +397,8 @@ class Jgs_IMDb
     }
 
     // Summarise - only return the most pertinent data (when returning multiple title data)
-    function summarise_people($objs) {
+    function summarise_people($objs)
+    {
 
         $t = 0;
 
@@ -430,7 +443,8 @@ class Jgs_IMDb
     }
 
     // Check if a title should be ignored. Returns true for yes, false for no.
-    function is_ignored($type, $cert = "", $genre = array()) {
+    function is_ignored($type, $cert = "", $genre = array())
+    {
         if ($this->forceReturn)
             return false;
         if (in_array($type, $this->ignoreTypes))
@@ -442,7 +456,8 @@ class Jgs_IMDb
     }
 
     // Check year matches
-    function yearMatch($year, $yearMatch) {
+    function yearMatch($year, $yearMatch)
+    {
         if ($yearMatch === 0)
             return true;
         if ($yearMatch == $year)
@@ -451,7 +466,8 @@ class Jgs_IMDb
     }
 
     // Basic error handling
-    function errorResponse($obj, $returnArray = false) {
+    function errorResponse($obj, $returnArray = false)
+    {
         $s->status = $obj->status;
         $s->code = $obj->code;
         $s->message = $obj->message;
@@ -465,7 +481,8 @@ class Jgs_IMDb
     }
 
     // Perform CURL request on the API URL to fetch the JSON data
-    function fetchJSON($apiUrl) {
+    function fetchJSON($apiUrl)
+    {
         $ch = curl_init($apiUrl);
         $headers[] = 'Connection: Keep-Alive';
         $headers[] = 'Content-type: text/plain;charset=UTF-8';

@@ -13,9 +13,10 @@
 class Zend_View_Helper_StringToArray extends Zend_View_Helper_Abstract
 {
 
-    public function stringToArray($delimiter, $string) {
+    public function stringToArray($delimiter, $string)
+    {
 
-        $utilities = new JGS_Application_Utilities();
+        $utilities = new Jgs_Utilities();
         $string = trim($string, '[]');
         $explode = explode($delimiter, $string);
         $array = $utilities->arrayTrim($explode);

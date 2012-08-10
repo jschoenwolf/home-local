@@ -2,48 +2,52 @@
 
 class Admin_MoviexmlController extends Zend_Controller_Action
 {
-    protected $_xmlUtilities = null;
-    protected $_session;
-    protected $_message;
+    protected $xmlUtilities = null;
+    protected $session;
+    protected $message;
 
-    public function preDispatch() {
+    public function preDispatch()
+    {
 
     }
 
-    public function init() {
+    public function init()
+    {
 
-        $this->_xmlUtilities = new Jgs_XmlUtilities();
-        $this->_session = new Zend_Session_Namespace('xml');
-        $this->_message = $this->getHelper('FlashMessenger');
-        if ($this->_message->hasMessages()) {
-            $this->view->messages = $this->_message->getMessages();
+        $this->xmlUtilities = new Jgs_XmlUtilities();
+        $this->session = new Zend_Session_Namespace('xml');
+        $this->message = $this->getHelper('FlashMessenger');
+        if ($this->message->hasMessages()) {
+            $this->view->messages = $this->message->getMessages();
         }
     }
 
-    public function indexAction() {
+    public function indexAction()
+    {
         $form = new Application_Form_Music();
         $form->setAction('/admin/moviexml/index');
-        $this->view->file = $this->_session->file;
+        $this->view->file = $this->session->file;
         if ($this->getRequest()->isPost()) {
             if ($form->isValid($this->getRequest()->getPost())) {
                 $form->getValues();
                 Zend_Debug::dump($form->getValues(), 'Get Values');
-                $this->_session->file = $form->file->getFileName();
+                $this->session->file = $form->file->getFileName();
                 $this->_redirect($this->getRequest()->getRequestUri());
             }
         }
         $this->view->form = $form;
     }
 
-    public function genreAction() {
+    public function genreAction()
+    {
         $util = new Jgs_Utilities();
         $model = new Application_Model_Video();
         try {
 
-            if (!isset($this->_session->file)) {
+            if (!isset($this->session->file)) {
                 return $this->_forward('index');
             } else {
-                $movies = $this->_xmlUtilities->xmlMoviesToArray($this->_session->file);
+                $movies = $this->xmlUtilities->xmlMoviesToArray($this->session->file);
             }
             foreach ($movies as $movie) {
                 $array = explode(',', $movie['genre']);
@@ -63,16 +67,17 @@ class Admin_MoviexmlController extends Zend_Controller_Action
         }
     }
 
-    public function movieAction() {
+    public function movieAction()
+    {
         $model = new Application_Model_Video();
         try {
-            if (!isset($this->_session->file)) {
+            if (!isset($this->session->file)) {
                 return $this->_forward('index');
             } else {
-                $movies = $this->_xmlUtilities->xmlMoviesToArray($this->_session->file);
+                $movies = $this->xmlUtilities->xmlMoviesToArray($this->session->file);
             }
             foreach ($movies as $movie) {
-                if (strpos($movie['genre'], 'TV Shows') === FALSE) {
+                if (strpos($movie['genre'], 'TV Shows') === false) {
                     $model->setOptions($movie);
                     $model->saveMovie();
                 }
@@ -86,16 +91,17 @@ class Admin_MoviexmlController extends Zend_Controller_Action
         }
     }
 
-    public function tvAction() {
+    public function tvAction()
+    {
         $model = new Application_Model_Video();
         try {
-            if (!isset($this->_session->file)) {
+            if (!isset($this->session->file)) {
                 return $this->_forward('index');
             } else {
-                $movies = $this->_xmlUtilities->xmlMoviesToArray($this->_session->file);
+                $movies = $this->xmlUtilities->xmlMoviesToArray($this->session->file);
             }
             foreach ($movies as $movie) {
-                if (strpos($movie['genre'], 'TV Shows') !== FALSE) {
+                if (strpos($movie['genre'], 'TV Shows') !== false) {
                     $model->setOptions($movie);
                     $model->saveMovie();
                 }
@@ -109,7 +115,8 @@ class Admin_MoviexmlController extends Zend_Controller_Action
         }
     }
 
-    public function clearfileAction() {
+    public function clearfileAction()
+    {
 
         Zend_Session::namespaceGet('xml');
         Zend_Session::namespaceUnset('xml');

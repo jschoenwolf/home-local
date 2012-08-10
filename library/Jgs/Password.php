@@ -1,4 +1,5 @@
 <?php
+
 /**
  * password.php
  *
@@ -24,6 +25,7 @@
  */
 define('AUTH_SALT', 'Pg$eYW77wRLQDnp*Z@rCvwboWKP5JgTXM%do60@4d707X&oOaxSQgijGH5Cqy^H4');
 define('AUTH_LEVEL', 5);
+
 /**
  * The Password class works by generating a 104-character hash.  The first 16 characters are a unique
  * salt value that is generated for each password.  The rest of the 88 characters is the hash generated
@@ -41,9 +43,12 @@ define('AUTH_LEVEL', 5);
  *    // Password was incorrect
  * }
  */
-abstract class Jgs_Password{
+abstract class Jgs_Password
+{
 
-    private function __construct(){
+    private function __construct()
+    {
+
     }
 
     /**
@@ -55,9 +60,10 @@ abstract class Jgs_Password{
      * @return
      *    Returns a salt that can be used to salt a password hash
      */
-    final static private function createPasswordSalt($length = 16){
+    final static private function createPasswordSalt($length = 16)
+    {
         $salt = '';
-        while(strlen($salt) < $length){
+        while (strlen($salt) < $length) {
             $salt .= pack('C', dechex(mt_rand()));
         }
         return substr(base64_encode($salt), 0, $length);
@@ -77,10 +83,11 @@ abstract class Jgs_Password{
      *  @return string
      *      Derived key
      */
-    final static private function pbkdf2($p, $s){
+    final static private function pbkdf2($p, $s)
+    {
         $hl = strlen(hash('whirlpool', null, true));
         $ib = $b = hash_hmac('whirlpool', $s . pack('N', 1), $p, true);
-        for($i = 1; $i < AUTH_LEVEL * 1000; $i++){
+        for ($i = 1; $i < AUTH_LEVEL * 1000; $i++) {
             $ib ^= ( $b = hash_hmac('whirlpool', $b . AUTH_SALT, $p, true));
         }
         return base64_encode($ib);
@@ -98,7 +105,8 @@ abstract class Jgs_Password{
      * @return
      *    Returns the 104-character hashed and salted password
      */
-    final static public function createPasswordHash($password, $salt = null){
+    final static public function createPasswordHash($password, $salt = null)
+    {
         $salt or $salt = self::createPasswordSalt();
         return $salt . self::pbkdf2($password, $salt);
     }
@@ -115,7 +123,8 @@ abstract class Jgs_Password{
      * @return
      *    Returns TRUE if the password matches, FALSE if not
      */
-    final static public function comparePassword($password, $hash){
+    final static public function comparePassword($password, $hash)
+    {
         return $hash === self::createPasswordHash($password, substr($hash, 0, 16), AUTH_LEVEL);
     }
 }

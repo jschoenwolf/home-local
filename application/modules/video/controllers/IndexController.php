@@ -3,35 +3,39 @@
 class Video_IndexController extends Zend_Controller_Action
 {
 
-    public function preDispatch() {
+    public function preDispatch()
+    {
 
         $this->_helper->layout()->search = $this->_helper->search(
-                '/video/index/display', 'Search Video Collection!', 'Movie Title');
+            '/video/index/display', 'Search Video Collection!', 'Movie Title');
 
         if ($this->getRequest()->getActionName() == 'play') {
             $this->_helper->layout->setLayout('play');
 
             $this->view->headLink()->appendStylesheet('/javascript/video-js/video-js.css');
             $this->view->headScript()->setFile(
-                    '/javascript/video-js/video.js');
+                '/javascript/video-js/video.js');
         }
     }
 
-    public function init() {
+    public function init()
+    {
 
         if ($this->_helper->FlashMessenger->hasMessages()) {
             $this->view->messages = $this->_helper->FlashMessenger->getMessages();
         }
     }
 
-    public function indexAction() {
+    public function indexAction()
+    {
 
         $genre = new Video_Model_Mapper_Genre();
         $genres = $genre->findAll();
         $this->view->genre = $genres;
     }
 
-    public function displayAction() {
+    public function displayAction()
+    {
 
         $model = new Video_Model_Mapper_Video();
         $request = $this->getRequest()->getParams();
@@ -57,7 +61,8 @@ class Video_IndexController extends Zend_Controller_Action
         $this->view->paginator = $paginator;
     }
 
-    public function movieAction() {
+    public function movieAction()
+    {
         $id = $this->getRequest()->getParam('id');
         $model = new Video_Model_Mapper_Video();
         $video = $model->findById($id);
@@ -65,7 +70,8 @@ class Video_IndexController extends Zend_Controller_Action
         Zend_Debug::dump($video, 'Video');
     }
 
-    public function playAction() {
+    public function playAction()
+    {
 
         $id = $this->getRequest()->getParam('id');
         $model = new Video_Model_Mapper_Video();

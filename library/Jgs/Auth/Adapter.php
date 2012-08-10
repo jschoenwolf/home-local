@@ -10,12 +10,14 @@ class Jgs_Auth_Adapter implements Zend_Auth_Adapter_Interface
     protected $_name;
     protected $_password;
 
-    function __construct($name, $password) {
+    function __construct($name, $password)
+    {
         $this->_name = $name;
         $this->_password = $password;
     }
 
-    public function authenticate() {
+    public function authenticate()
+    {
         if (empty($this->_name) || empty($this->_password)) {
             throw new Zend_Auth_Adapter_Exception();
         }
@@ -23,8 +25,8 @@ class Jgs_Auth_Adapter implements Zend_Auth_Adapter_Interface
             return new Zend_Auth_Result(Zend_Auth_Result::FAILURE_CREDENTIAL_INVALID, array());
         }
         return new Zend_Auth_Result(Zend_Auth_Result::SUCCESS, array(
-                    'name' => self::DEFAULT_NAME,
-                    'password' => self::DEFAULT_PASSWORD
-                ));
+                'name' => self::DEFAULT_NAME,
+                'password' => self::DEFAULT_PASSWORD
+            ));
     }
 }

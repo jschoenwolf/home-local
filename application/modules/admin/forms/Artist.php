@@ -16,7 +16,7 @@ class Admin_Form_Artist extends Zend_Form
 
         $name = new Zend_Form_Element_Text('name');
         $name->setLabel('Artist: ')
-             ->setOptions(array('size' => 72));
+            ->setOptions(array('size' => 72));
 
         $this->addElement($name);
 
@@ -24,7 +24,5 @@ class Admin_Form_Artist extends Zend_Form
         $submit->setLabel('Update this Artist');
         $this->addElement($submit);
     }
-
-
 }
 

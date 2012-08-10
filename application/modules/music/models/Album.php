@@ -2,11 +2,11 @@
 
 class Music_Model_Album extends Jgs_Model_Entity_Abstract implements Jgs_Interface_Album
 {
-    protected $_name;
-    protected $_art;
-    protected $_year;
-    protected $_artist;
-    protected $_artistMapper = NULL;
+    protected $name;
+    protected $art;
+    protected $year;
+    protected $artist;
+    protected $artistMapper = null;
 
     /**
      * Get Album Name
@@ -14,7 +14,7 @@ class Music_Model_Album extends Jgs_Model_Entity_Abstract implements Jgs_Interfa
      * @return string
      */
     public function getName() {
-        return htmlspecialchars_decode($this->_name, ENT_QUOTES);
+        return htmlspecialchars_decode($this->name, ENT_QUOTES);
     }
 
     /**
@@ -30,7 +30,7 @@ class Music_Model_Album extends Jgs_Model_Entity_Abstract implements Jgs_Interfa
                     "The posted 'Album Name' is invalid"
             );
         }
-        $this->_name = htmlspecialchars(trim($name), ENT_QUOTES);
+        $this->name = htmlspecialchars(trim($name), ENT_QUOTES);
         return $this;
     }
 
@@ -40,7 +40,7 @@ class Music_Model_Album extends Jgs_Model_Entity_Abstract implements Jgs_Interfa
      * @return string
      */
     public function getArt() {
-        return htmlspecialchars_decode($this->_art, ENT_QUOTES);
+        return htmlspecialchars_decode($this->art, ENT_QUOTES);
     }
 
     /**
@@ -56,7 +56,7 @@ class Music_Model_Album extends Jgs_Model_Entity_Abstract implements Jgs_Interfa
                     "The posted 'Album Image Name' is invalid"
             );
         }
-        $this->_art = htmlspecialchars(trim($art), ENT_QUOTES);
+        $this->art = htmlspecialchars(trim($art), ENT_QUOTES);
         return $this;
     }
 
@@ -66,7 +66,7 @@ class Music_Model_Album extends Jgs_Model_Entity_Abstract implements Jgs_Interfa
      * @return string
      */
     public function getYear() {
-        return $this->_year;
+        return $this->year;
     }
 
     /**
@@ -82,7 +82,7 @@ class Music_Model_Album extends Jgs_Model_Entity_Abstract implements Jgs_Interfa
                     "The posted value for 'Album Year' is invalid."
             );
         }
-        $this->_year = $year;
+        $this->year = $year;
         return $this;
     }
 
@@ -92,13 +92,13 @@ class Music_Model_Album extends Jgs_Model_Entity_Abstract implements Jgs_Interfa
      * @return \Music_Model_Artist
      */
     public function getArtist() {
-        if (!is_null($this->_artist) && $this->_artist instanceof Music_Model_Artist) {
-            return $this->_artist;
+        if (!is_null($this->artist) && $this->artist instanceof Music_Model_Artist) {
+            return $this->artist;
         } else {
-            if (!$this->_artistMapper) {
-                $this->_artistMapper = new Music_Model_Mapper_Artist();
+            if (!$this->artistMapper) {
+                $this->artistMapper = new Music_Model_Mapper_Artist();
             }
-            return $this->_artistMapper->findById($this->getReferenceId('artist'));
+            return $this->artistMapper->findById($this->getReferenceId('artist'));
         }
     }
 
@@ -115,12 +115,12 @@ class Music_Model_Album extends Jgs_Model_Entity_Abstract implements Jgs_Interfa
 
     /**
      * Get array of Track objects by Album Id
-     * 
+     *
      * @return \Music_Model_Mappper_Track
      */
     public function getTracks() {
         $mapper = new Music_Model_Mapper_Track();
-        $tracks = $mapper->findByColumn('album_id', $this->_id, 'track ASC');
+        $tracks = $mapper->findByColumn('album_id', $this->id, 'track ASC');
 
         return $tracks;
     }

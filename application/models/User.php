@@ -7,40 +7,37 @@
  */
 class Application_Model_User extends Jgs_Model_Entity_Abstract
 {
-    protected $_id;
-    protected $_name;
-    protected $_password;
-    protected $_role;
+    protected $name;
+    protected $password;
+    protected $role;
 
-    public function getId() {
-        return $this->_id;
+    public function getName()
+    {
+        return $this->name;
     }
 
-    public function setId($id = NULL) {
-        $this->_id = $id;
+    public function setName($name)
+    {
+        $this->name = $name;
     }
 
-    public function getName() {
-        return $this->_name;
+    public function getPassword()
+    {
+        return $this->password;
     }
 
-    public function setName($name) {
-        $this->_name = $name;
+    public function setPassword($password)
+    {
+        $this->password = Jgs_Password::createPasswordHash($password);
     }
 
-    public function getPassword() {
-        return $this->_password;
+    public function getRole()
+    {
+        return $this->role;
     }
 
-    public function setPassword($password) {
-        $this->_password = Jgs_Password::createPasswordHash($password);
-    }
-
-    public function getRole() {
-        return $this->_role;
-    }
-
-    public function setRole($role = 'guest') {
-        $this->_role = $role;
+    public function setRole($role = 'guest')
+    {
+        $this->role = $role;
     }
 }

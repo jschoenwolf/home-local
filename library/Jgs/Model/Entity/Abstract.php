@@ -14,20 +14,20 @@ abstract class Jgs_Model_Entity_Abstract
      *
      * @var array
      */
-    protected $_references = array();
+    protected $references = array();
     /**
      * Id of entity
      *
      * @var string
      */
-    protected $_id;
+    protected $id;
 
     /**
      * accepts an array of data for instantiating entity objects
      *
      * @param array $options
      */
-    public function __construct(array $options = NULL) {
+    public function __construct(array $options = null) {
 
         if (is_array($options)) {
             $this->setOptions($options);
@@ -59,7 +59,7 @@ abstract class Jgs_Model_Entity_Abstract
      */
     public function __set($name, $value) {
 
-        $property = '_' . strtolower($name);
+        $property = strtolower($name);
 
         if (!property_exists($this, $property)) {
             throw new \InvalidArgumentException("Setting the property '$property'
@@ -83,7 +83,7 @@ abstract class Jgs_Model_Entity_Abstract
      */
     public function __get($name) {
 
-        $property = '_' . strtolower($name);
+        $property = strtolower($name);
 
         if (!property_exists($this, $property)) {
             throw new \InvalidArgumentException(
@@ -103,11 +103,11 @@ abstract class Jgs_Model_Entity_Abstract
         $vars = get_object_vars($this);
         $array = array();
         foreach ($vars as $key => $value) {
-            if ((stripos($key, 'mapper') || stripos($key, 'references')) === FALSE) {
+            if ((stripos($key, 'mapper') || stripos($key, 'references')) === false) {
                 if (is_null($value)) {
-                    $array[ltrim($key, '_')] = $this->getReferenceId(ltrim($key, '_'));
+                    $array[$key] = $this->getReferenceId($key);
                 } else {
-                    $array[ltrim($key, '_')] = $value;
+                    $array[$key] = $value;
                 }
             }
         }
@@ -121,7 +121,7 @@ abstract class Jgs_Model_Entity_Abstract
      * @return \Jgs_Model_Entity_Abstract
      */
     public function setId($id) {
-        $this->_id = $id;
+        $this->id = $id;
         return $this;
     }
 
@@ -131,7 +131,7 @@ abstract class Jgs_Model_Entity_Abstract
      * @return string
      */
     public function getId() {
-        return $this->_id;
+        return $this->id;
     }
 
     /**
@@ -142,7 +142,7 @@ abstract class Jgs_Model_Entity_Abstract
      */
     public function setReferenceId($name, $id) {
 
-        $this->_references[$name] = $id;
+        $this->references[$name] = $id;
     }
 
     /**
@@ -153,9 +153,9 @@ abstract class Jgs_Model_Entity_Abstract
      */
     public function getReferenceId($name) {
 
-        if (isset($this->_references[$name])) {
+        if (isset($this->references[$name])) {
 
-            return $this->_references[$name];
+            return $this->references[$name];
         }
     }
 }

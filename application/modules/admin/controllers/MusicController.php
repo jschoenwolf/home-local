@@ -2,10 +2,11 @@
 
 class Admin_MusicController extends Zend_Controller_Action
 {
-    protected $_message;
-    protected $_thumbPath = '/images/mp3art/thumbs/';
+    protected $message;
+    protected $thumbPath = '/images/mp3art/thumbs/';
 
-    public function preDispatch() {
+    public function preDispatch()
+    {
 
         $searchForm = new Application_Form_Search();
         $searchForm->setAction('/admin/music/update');
@@ -22,19 +23,22 @@ class Admin_MusicController extends Zend_Controller_Action
         $this->_helper->layout()->search = $searchForm;
     }
 
-    public function init() {
+    public function init()
+    {
 
-        $this->_message = $this->getHelper('FlashMessenger');
-        if ($this->_message->hasMessages()) {
-            $this->view->messages = $this->_message->getMessages();
+        $this->message = $this->getHelper('FlashMessenger');
+        if ($this->message->hasMessages()) {
+            $this->view->messages = $this->message->getMessages();
         }
     }
 
-    public function indexAction() {
+    public function indexAction()
+    {
 
     }
 
-    public function readAction() {
+    public function readAction()
+    {
         /* @var $form Application_Form_Music */
         $form = new Application_Form_Music();
         $form->setAction('/admin/music/read');
@@ -65,7 +69,8 @@ class Admin_MusicController extends Zend_Controller_Action
         }
     }
 
-    public function updateAction() {
+    public function updateAction()
+    {
 
         $query = $this->getRequest()->getParam('query');
         $page = $this->getRequest()->getParam('page', 1);
@@ -85,10 +90,11 @@ class Admin_MusicController extends Zend_Controller_Action
 
         $this->view->paginator = $paginator;
 
-        $this->view->thumbPath = $this->_thumbPath;
+        $this->view->thumbPath = $this->thumbPath;
     }
 
-    public function updatetrackAction() {
+    public function updatetrackAction()
+    {
         $session = new Zend_Session_Namespace('page');
         $id = $this->getRequest()->getParam('id');
 
@@ -106,9 +112,8 @@ class Admin_MusicController extends Zend_Controller_Action
 
                 $update = $model->saveTrack($newTrack);
 
-                $this->_message->addMessage("Update of track '$update->title' complete!");
-                $this->getHelper('Redirector')->gotoSimple('update',
-                        NULL, NULL, array('page' => $session->page));
+                $this->message->addMessage("Update of track '$update->title' complete!");
+                $this->getHelper('Redirector')->gotoSimple('update', null, null, array('page' => $session->page));
             }
         } else {
             $form->populate($track->toArray());
@@ -116,7 +121,8 @@ class Admin_MusicController extends Zend_Controller_Action
         }
     }
 
-    public function updatealbumAction() {
+    public function updatealbumAction()
+    {
         $session = new Zend_Session_Namespace('page');
         $id = $this->getRequest()->getParam('id');
 
@@ -134,9 +140,8 @@ class Admin_MusicController extends Zend_Controller_Action
 
                 $update = $model->saveAlbum($newAlbum);
 
-                $this->_message->addMessage("Update of Album '$update->name' complete!");
-                $this->getHelper('Redirector')->gotoSimple('update',
-                        NULL, NULL, array('page' => $session->page));
+                $this->message->addMessage("Update of Album '$update->name' complete!");
+                $this->getHelper('Redirector')->gotoSimple('update', null, null, array('page' => $session->page));
             }
         } else {
             $form->populate($album->toArray());
@@ -144,7 +149,8 @@ class Admin_MusicController extends Zend_Controller_Action
         }
     }
 
-    public function updateartistAction() {
+    public function updateartistAction()
+    {
         $session = new Zend_Session_Namespace('page');
         $id = $this->getRequest()->getParam('id');
 
@@ -162,9 +168,8 @@ class Admin_MusicController extends Zend_Controller_Action
 
                 $update = $model->saveArtist($newArtist);
 
-                $this->_message->addMessage("Update of artist '$update->name' complete!");
-                $this->getHelper('Redirector')->gotoSimple('update',
-                        NULL, NULL, array('page' => $session->page));
+                $this->message->addMessage("Update of artist '$update->name' complete!");
+                $this->getHelper('Redirector')->gotoSimple('update', null, null, array('page' => $session->page));
             }
         } else {
             $form->populate($artist->toArray());
@@ -172,7 +177,8 @@ class Admin_MusicController extends Zend_Controller_Action
         }
     }
 
-    public function deleteAction() {
+    public function deleteAction()
+    {
         $session = new Zend_Session_Namespace('page');
         $request = $this->getRequest()->getParams();
         try {
@@ -181,31 +187,31 @@ class Admin_MusicController extends Zend_Controller_Action
                     $id = $request['trackId'];
                     $model = new Music_Model_Mapper_Track();
                     $model->deleteTrack($id);
-                    $this->_message->addMessage("Track Deleted!");
+                    $this->message->addMessage("Track Deleted!");
 
                     break;
                 case isset($request['albumId']):
                     $id = $request['albumId'];
                     $model = new Music_Model_Mapper_Album();
                     $model->deletealbum($id);
-                    $this->_message->addMessage("Album Deleted!");
+                    $this->message->addMessage("Album Deleted!");
 
                     break;
                 case isset($request['artistId']):
                     $id = $request['artistId'];
                     $model = new Music_Model_Mapper_Artist();
                     $model->deleteArtist($id);
-                    $this->_message->addMessage("Artist Deleted!");
+                    $this->message->addMessage("Artist Deleted!");
 
                     break;
 
                 default:
                     break;
             }
-            $this->getHelper('Redirector')->gotoSimple('update', NULL, NULL, array('page' => $session->page));
+            $this->getHelper('Redirector')->gotoSimple('update', null, null, array('page' => $session->page));
         } catch (Exception $e) {
-            $this->_message->addMessage($e->getMessage());
-            $this->getHelper('Redirector')->gotoSimple('update', NULL, NULL, array('page' => $session->page));
+            $this->message->addMessage($e->getMessage());
+            $this->getHelper('Redirector')->gotoSimple('update', null, null, array('page' => $session->page));
         }
     }
 }

@@ -2,7 +2,7 @@
 if ($this->pageCount) :
     //you need to add each of the request parameters to url
     $params = Zend_Controller_Front::getInstance()
-                    ->getRequest()->getParams();
+            ->getRequest()->getParams();
     //remove the system parameters
     unset($params['module']);
     unset($params['controller']);

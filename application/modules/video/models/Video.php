@@ -7,129 +7,155 @@
  */
 class Video_Model_Video extends Jgs_Model_Entity_Abstract
 {
-    protected $_title;
-    protected $_year;
-    protected $_director;
-    protected $_producers;
-    protected $_actors;
-    protected $_description;
-    protected $_path;
-    protected $_length;
-    protected $_resolution;
-    protected $_poster;
-    protected $_imdb;
-    protected $_url;
-    protected $_genre;
-    protected $_genreMapper = NULL;
+    protected $title;
+    protected $year;
+    protected $director;
+    protected $producers;
+    protected $actors;
+    protected $description;
+    protected $path;
+    protected $length;
+    protected $resolution;
+    protected $poster;
+    protected $imdb;
+    protected $url;
+    protected $genre;
+    protected $genreMapper = null;
 
-    public function getTitle() {
-        return $this->_title;
+    public function getTitle()
+    {
+        return $this->title;
     }
 
-    public function setTitle($title) {
-        $this->_title = $title;
+    public function setTitle($title)
+    {
+        $this->title = $title;
     }
 
-    public function getYear() {
-        return $this->_year;
+    public function getYear()
+    {
+        return $this->year;
     }
 
-    public function setYear($year) {
-        $this->_year = $year;
+    public function setYear($year)
+    {
+        $this->year = $year;
     }
 
-    public function getDirector() {
-        return $this->_director;
+    public function getDirector()
+    {
+        return $this->director;
     }
 
-    public function setDirector($director) {
-        $this->_director = $director;
+    public function setDirector($director)
+    {
+        $this->director = $director;
     }
 
-    public function getProducers() {
-        return $this->_producers;
+    public function getProducers()
+    {
+        return $this->producers;
     }
 
-    public function setProducers($producers) {
-        $this->_producers = $producers;
+    public function setProducers($producers)
+    {
+        $this->producers = $producers;
     }
 
-    public function getActors() {
-        return $this->_actors;
+    public function getActors()
+    {
+        return $this->actors;
     }
 
-    public function setActors($actors) {
-        $this->_actors = $actors;
+    public function setActors($actors)
+    {
+        $this->actors = $actors;
     }
 
-    public function getDescription() {
-        return $this->_description;
+    public function getDescription()
+    {
+        return $this->description;
     }
 
-    public function setDescription($description) {
-        $this->_description = $description;
+    public function setDescription($description)
+    {
+        $this->description = $description;
     }
 
-    public function getPath() {
-        return $this->_path;
+    public function getPath()
+    {
+        return $this->path;
     }
 
-    public function getUrl() {
-        return $this->_url;
+    public function getUrl()
+    {
+        return $this->url;
     }
 
-    public function setUrl($url) {
-        $this->_url = $url;
+    public function setUrl($url)
+    {
+        $this->url = $url;
     }
 
-    public function setPath($path) {
-        $this->_path = $path;
+    public function setPath($path)
+    {
+        $this->path = $path;
         return $this;
     }
 
-    public function getLength() {
-        return $this->_length;
+    public function getLength()
+    {
+        return $this->length;
     }
 
-    public function setLength($length) {
-        $this->_length = $length;
+    public function setLength($length)
+    {
+        $this->length = $length;
     }
 
-    public function getResolution() {
-        return $this->_resolution;
+    public function getResolution()
+    {
+        return $this->resolution;
     }
 
-    public function setResolution($resolution) {
-        $this->_resolution = $resolution;
+    public function setResolution($resolution)
+    {
+        $this->resolution = $resolution;
     }
 
-    public function getPoster() {
-        return $this->_poster;
+    public function getPoster()
+    {
+        return $this->poster;
     }
 
-    public function setPoster($poster) {
-        $this->_poster = $poster;
+    public function setPoster($poster)
+    {
+        $this->poster = $poster;
     }
 
-    public function getImdb() {
-        return $this->_imdb;
+    public function getImdb()
+    {
+        return $this->imdb;
     }
 
-    public function setImdb($imdb) {
-        $this->_imdb = $imdb;
+    public function setImdb($imdb)
+    {
+        $this->imdb = $imdb;
         return $this;
     }
 
-    public function getGenre() {
-        if (!$this->_genreMapper) {
-            $this->_genreMapper = new Video_Model_Mapper_Genre();
+    public function getGenre()
+    {
+        if (!$this->genreMapper) {
+            $this->genreMapper = new Video_Model_Mapper_Genre();
         }
         $array = $this->getReferenceId('genre');
-        $genre = $this->_genreMapper->findAll($array);
+        $genre = $this->genreMapper->findAll($array);
         return $genre;
     }
 
-    public function setGenre($genre) {
+    public function setGenre($genre)
+    {
         $util = new Jgs_Utilities();
         $array = explode(',', $genre);
         $genre = $util->arrayTrim($array);
