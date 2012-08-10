@@ -1,23 +1,26 @@
 <?php
 
 /**
- * Description of Password
+ * Description of Jgs_Validator_Password
+ *
+ * A simple Zend Framework Form validator, used to validate form input for the
+ * password field. Not to be used as a validator for the database password hash.
  *
  * @author John Schoenwolf
  */
 class Jgs_Validator_Password extends Zend_Validate_Abstract
 {
-    const LENGTH = 'length';
-    const UPPER = 'upper';
-    const LOWER = 'lower';
-    const DIGIT = 'digit';
+    const LENGTH   = 'length';
+    const UPPER    = 'upper';
+    const LOWER    = 'lower';
+    const DIGIT    = 'digit';
     const NOTEMPTY = 'empty';
 
     protected $_messageTemplates = array(
         self::LENGTH => "Password field must be at least 8 characters in length",
-        self::UPPER => "Password field must contain at least one uppercase letter",
-        self::LOWER => "Password field must contain at least one lowercase letter",
-        self::DIGIT => "Password field must contain at least one digit character",
+        self::UPPER  => "Password field must contain at least one uppercase letter",
+        self::LOWER  => "Password field must contain at least one lowercase letter",
+        self::DIGIT  => "Password field must contain at least one digit character",
     );
 
     /**

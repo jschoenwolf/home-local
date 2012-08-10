@@ -127,8 +127,13 @@ abstract class Jgs_Model_Entity_Abstract
      */
     public function setId($id)
     {
-        $this->id = $id;
-        return $this;
+        $validator = new Jgs_Validator_Id();
+        if ($validator->isValid($id)) {
+            $this->id = $id;
+            return $this;
+        } else {
+            throw new Zend_Validate_Exception("$id is not a valid value for the ID field.");
+        }
     }
 
     /**

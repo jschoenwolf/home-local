@@ -44,12 +44,6 @@ class IndexController extends Zend_Controller_Action
                 return $this->_redirect('/index');
             }
             $this->view->form = $form;
-//            foreach ($form->getMessages() as $message) {
-//                foreach ($message as $value) {
-//                    $this->_message->addMessage($value);
-//                }
-//            }
-//            $this->_redirect($this->getRequest()->getRequestUri());
         } else {
             $this->view->form = $form;
         }
@@ -59,15 +53,12 @@ class IndexController extends Zend_Controller_Action
     {
         $form = new Application_Form_Login();
 
-        $data = $this->_request->getParams();
-//        Zend_Debug::dump($data, 'Data');
         if ($this->getRequest()->isPost()) {
             if ($form->isValid($this->getRequest()->getPost())) {
                 $form->getValues();
                 Zend_Debug::dump($form->getValues(), 'Form Values');
             }
             $this->view->message = $form->getMessages();
-            Zend_Debug::dump($form->getMessages(), 'Messages');
         }
         $this->view->form = $form;
 //        //setup the auth adapter

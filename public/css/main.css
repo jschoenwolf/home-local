@@ -67,6 +67,15 @@ input:-moz-placeholder {
     width: 210px;
     object-fit: fill;
 }
+dt label.required:before {
+    content: "* ";
+    color: #ff0000;
+}
+
+ul.errors {
+    padding: 5px 0 5px 25px;
+    color: #ff0000;
+}
 
 
 

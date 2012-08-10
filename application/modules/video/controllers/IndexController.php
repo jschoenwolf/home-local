@@ -5,7 +5,6 @@ class Video_IndexController extends Zend_Controller_Action
 
     public function preDispatch()
     {
-
         $this->_helper->layout()->search = $this->_helper->search(
             '/video/index/display', 'Search Video Collection!', 'Movie Title');
 
