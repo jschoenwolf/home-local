@@ -8,7 +8,7 @@
  *
  * @author John Schoenwolf
  */
-class Jgs_Validator_Password extends Zend_Validate_Abstract
+class Jgs_Validator_Form_Password extends Zend_Validate_Abstract
 {
     const LENGTH   = 'length';
     const UPPER    = 'upper';
