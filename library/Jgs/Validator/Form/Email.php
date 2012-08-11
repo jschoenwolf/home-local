@@ -6,7 +6,7 @@
  *
  * @author John Schoenwolf
  */
-class Jgs_Validator_Email extends Zend_Validate_Abstract
+class Jgs_Validator_Form_Email extends Zend_Validate_Abstract
 {
     const EMAIL = 'email';
 

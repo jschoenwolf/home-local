@@ -6,7 +6,7 @@
  *
  * @author john
  */
-class Jgs_Validator_Usphone extends Zend_Validate_Abstract
+class Jgs_Validator_Form_Usphone extends Zend_Validate_Abstract
 {
     const PHONE = 'phone';
 

@@ -30,7 +30,7 @@ class Jgs_Validator_Form_Password extends Zend_Validate_Abstract
      */
     public function isValid($value)
     {
-        $this->_setValue($value);
+        $value = $this->_setValue($value);
 
         $isValid = true;
         $stringLength = new Zend_Validate_StringLength(array('min' => 8));
