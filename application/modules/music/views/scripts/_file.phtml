@@ -1,0 +1,13 @@
+<form action="<?php echo $this->element->getAction() ?>" method="<?php echo $this->element->getMethod() ?>">
+    <table>
+        <tr>
+            <th><?php echo $this->element->file->renderLabel() ?></th>
+        </tr>
+        <tr>
+            <td><?php echo $this->element->file->renderFile() ?></td>
+        </tr>
+        <tr>
+            <td><?php echo $this->element->submit->render() ?></td>
+        </tr>
+    </table>
+</form>

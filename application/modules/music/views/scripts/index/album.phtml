@@ -1,0 +1,40 @@
+<section class="block">
+    <article class="column span-4 prepend-8 append-12 last">
+        <?php foreach ($this->paginator as $album): ?>
+            <?php $art = $this->artPath . $album->art ?>
+            <img id="album_img" src="<?php echo $art ?>" alt="album art" height="300" width="300">
+        </article>
+        <div class="column span-24 last">
+            <article class="table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th colspan="3" class="large"><?php echo $album->name ?></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th class="tableth">Track #</th>
+                            <th class="tableth">Title</th>
+                            <th class="tableth">&nbsp;</th>
+                        </tr>
+                        <tr><td colspan="3"></td></tr>
+                        <?php foreach ($album->getTracks() as $track): ?>
+                            <tr>
+                                <td class="track"><?php echo $track->track ?></td>
+                                <td class="title"><?php echo $track->title ?></td>
+                                <td class="audio_player"><audio controls="controls" preload="none"><source src="<?php echo $this->path($track->path) ?>" type="audio/mp3" /></audio></td>
+                            </tr>
+                        </tbody>
+                    <?php endforeach; ?>
+                    <tfoot>
+                        <tr>
+                            <th colspan="3" class="alt large"><?php echo $album->artist->name ?></th>
+                        </tr>
+                    </tfoot>
+                </table>
+            <?php endforeach ?>
+        </article>
+    </div>
+</section>
+<?php echo $this->inlineScript() ?>

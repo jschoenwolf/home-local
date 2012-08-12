@@ -1,0 +1,8 @@
+<?php if (!$this->file) : ?>
+    <?php echo $this->form ?>
+<?php else: ?>
+    <a href="/admin/moviexml/genre">Store the Genres.</a><br />
+    <a href="/admin/moviexml/movie">Save movies to Db.</a><br />
+    <a href="/admin/moviexml/tv">Save Tv Shows to Db.</a><br />
+    <a href="/admin/moviexml/clearfile">Change Xml file</a>
+<?php endif ?>

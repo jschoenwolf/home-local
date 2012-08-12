@@ -1,0 +1,14 @@
+<div class="g block">
+    <?php foreach ($this->genre as $genre): ?>
+        <?php if (!strpos($genre->name, 'TV Shows')): ?>
+            <article class="span-6 column">
+                <table class="genre">
+                    <tr>
+                        <td><a href="/video/index/display/id/<?php echo $genre->id ?>">
+                                <?php echo $genre->name ?></a></td>
+                    </tr>
+                </table>
+            </article>
+        <?php endif ?>
+    <?php endforeach; ?>
+</div>

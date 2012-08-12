@@ -1,0 +1,30 @@
+<article class="track">
+    <form action="<?php echo $this->element->getAction() ?>"
+          method="<?php echo $this->element->getMethod() ?>">
+        <table>
+            <tr>
+                <th colspan="2">Update Album: <?php echo $this->element->name->getValue() ?></th>
+            </tr>
+            <tr>
+                <td><?php echo $this->element->name->renderLabel() ?></td>
+                <td><?php echo $this->element->name->renderViewHelper() ?></td>
+            </tr>
+            <tr>
+                <td><?php echo $this->element->year->renderLabel() ?></td>
+                <td><?php echo $this->element->year->renderViewHelper() ?></td>
+            </tr>
+            <tr>
+                <td><?php echo $this->element->art->renderLabel() ?></td>
+                <td><?php echo $this->element->art->renderViewHelper() ?></td>
+            </tr>
+            <tr>
+                <td colspan="2"><?php echo $this->element->submit ?></td>
+            </tr>
+            <tr>
+                <td colspan="2"><a href="/admin/music/delete/albumId/<?php echo $this->element->id->getValue() ?>" >Delete this album!</a></td>
+            </tr>
+        </table>
+        <?php echo $this->element->id ?>
+        <?php echo $this->element->artist ?>
+    </form>
+</article>

@@ -1,0 +1,19 @@
+<script>
+_V_.options.flash.swf = "/javascript/video-js/video-js.swf"
+</script>
+<section class="block">
+    <article class="span-20 prepend-1 append-1 column">
+        <video id="video" class="video-js vjs-default-skin" controls width="800"
+               height="450" poster="<?php echo $this->baseUrl() . '/' . $this->video->path . '_sheet.jpg' ?>"
+               preload="auto" data-setup="{}">
+            <source src="<?php echo $this->baseUrl() . '/' . $this->video->path ?>" type="video/mp4">
+        </video>
+
+<!--        <a href="<?php //echo $this->baseUrl() . '/' . $this->video->path ?>"
+           style="display:block;width:1280;height:720;"
+           id="video">
+        </a>-->
+    </article>
+</section>
+
+
