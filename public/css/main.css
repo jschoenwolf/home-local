@@ -1,0 +1,81 @@
+body {
+    background: #ddd;
+}
+a {
+    text-decoration: none;
+}
+
+.container {
+    background: #fff;
+    min-height: 1000px;
+}
+
+#header {
+/*    background: #66a2d2;*/
+/*    height: 7.5em;*/
+/*    padding: .5em 0 .5em 0;*/
+/*    text-align: center;*/
+}
+
+header {
+     background: #66a2d2;
+     text-align: center;
+}
+
+#main {
+    min-height: 600px;
+}
+
+#flash {
+    font-size: 1.2em;
+    color: red;
+    text-align: center;
+}
+
+aside {
+    margin-left: 2em;
+}
+
+#album_img {
+    margin-top: 2em;
+}
+
+#footer {
+    border-top: #ccc 1px solid;
+    margin-top: 2em;
+    min-height: 100px;
+}
+input:-moz-placeholder {
+  color: #636363;
+}
+
+#video {
+    margin-top: 2em;
+    height: 720px;
+    width: 100%;
+}
+
+#movieList {
+    margin-top: 2em;
+    margin-left: .8em;
+}
+.movieRow {
+    height: 370px;
+}
+.movieRow img {
+    height: 300px;
+    width: 210px;
+    object-fit: fill;
+}
+dt label.required:before {
+    content: "* ";
+    color: #ff0000;
+}
+
+ul.errors {
+    padding: 5px 0 5px 25px;
+    color: #ff0000;
+}
+
+
+

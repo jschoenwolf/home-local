@@ -1,0 +1,19 @@
+<article class="login">
+    <form action="<?php echo $this->element->getAction() ?>"
+          method="<?php echo $this->element->getMethod() ?>">
+        <table>
+            <tr>
+                <th>Login</th>
+            </tr>
+            <tr>
+                <td><?php echo $this->element->name->renderViewHelper() ?></td>
+            </tr>
+            <tr>
+                <td><?php echo $this->element->password->renderViewHelper() ?></td>
+            </tr>
+            <tr>
+                <td><?php echo $this->element->submit ?></td>
+            </tr>
+        </table>
+    </form>
+</article>
