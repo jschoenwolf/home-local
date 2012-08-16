@@ -35,9 +35,9 @@ class Application_Form_Login extends Zend_Form
         $name->setOptions(array('size' => 20));
         $name->addFilters($filters);
         $name->addFilter('StringToLower');
-        $name->setRequired(TRUE);
-        $name->addValidator('Alpha', FALSE, array(
-            'allowWhiteSpace' => TRUE
+        $name->setRequired(true);
+        $name->addValidator('Alpha', false, array(
+            'allowWhiteSpace' => true
         ));
         $name->addErrorMessage('Your name is required.');
         $name->removeDecorator('HtmlTag');
@@ -49,7 +49,7 @@ class Application_Form_Login extends Zend_Form
         $password->setLabel('Password');
         $password->setAttrib('placeholder', 'Password');
         $password->setOptions(array('size' => 20));
-        $password->setRequired('TRUE');
+        $password->setRequired('true');
         $password->addValidator(new Jgs_Validator_Form_Password());
         $password->addFilters($filters);
         $password->removeDecorator('HtmlTag');

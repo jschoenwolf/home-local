@@ -19,7 +19,6 @@ class Video_IndexController extends Zend_Controller_Action
 
     public function init()
     {
-
         if ($this->_helper->FlashMessenger->hasMessages()) {
             $this->view->messages = $this->_helper->FlashMessenger->getMessages();
         }
@@ -27,7 +26,6 @@ class Video_IndexController extends Zend_Controller_Action
 
     public function indexAction()
     {
-
         $genre = new Video_Model_Mapper_Genre();
         $genres = $genre->findAll();
         $this->view->genre = $genres;
@@ -35,7 +33,6 @@ class Video_IndexController extends Zend_Controller_Action
 
     public function displayAction()
     {
-
         $model = new Video_Model_Mapper_Video();
         $request = $this->getRequest()->getParams();
 
@@ -66,12 +63,10 @@ class Video_IndexController extends Zend_Controller_Action
         $model = new Video_Model_Mapper_Video();
         $video = $model->findById($id);
         $this->view->video = $video;
-        Zend_Debug::dump($video, 'Video');
     }
 
     public function playAction()
     {
-
         $id = $this->getRequest()->getParam('id');
         $model = new Video_Model_Mapper_Video();
         $video = $model->findById($id);

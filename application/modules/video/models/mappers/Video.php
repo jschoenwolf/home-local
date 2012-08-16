@@ -12,7 +12,7 @@
  */
 class Video_Model_Mapper_Video extends Jgs_Model_Mapper_Abstract
 {
-    protected $_tablename = 'videos';
+    protected $_tablename   = 'videos';
     protected $_entityClass = 'Video_Model_Video';
     protected $_genreMapper;
 
@@ -22,43 +22,47 @@ class Video_Model_Mapper_Video extends Jgs_Model_Mapper_Abstract
      *
      * @param Zend_Db_Table_Abstract $tableGateway
      */
-    public function __construct(Zend_Db_Table_Abstract $tableGateway = NULL) {
+    public function __construct(Zend_Db_Table_Abstract $tableGateway = null)
+    {
         $tableGateway = new Application_Model_DbTable_Videos();
         parent::__construct($tableGateway);
     }
 
     /**
+     * Create the entity Video_Model_Video
      *
      * @param object $row
      * @return \Video_Model_Video
      */
-    public function createEntity($row) {
+    public function createEntity($row)
+    {
         $data = array(
-            'id' => $row->id,
-            'title' => $row->title,
-            'year' => $row->year,
-            'director' => $row->director,
-            'producers' => $row->producers,
-            'actors' => $row->actors,
+            'id'          => $row->id,
+            'title'       => $row->title,
+            'year'        => $row->year,
+            'director'    => $row->director,
+            'producers'   => $row->producers,
+            'actors'      => $row->actors,
             'description' => $row->description,
-            'path' => $row->path,
-            'length' => $row->length,
-            'resolution' => $row->resolution,
-            'poster' => $row->poster,
-            'imdb' => $row->imdb,
-            'genre' => $row->genre,
-            'url' => $row->url
+            'path'        => $row->path,
+            'length'      => $row->length,
+            'resolution'  => $row->resolution,
+            'poster'      => $row->poster,
+            'imdb'        => $row->imdb,
+            'genre'       => $row->genre,
+            'url'         => $row->url
         );
         return new Video_Model_Video($data);
     }
 
     /**
+     * Save or update row in database table videos
      *
      * @param Video_Model_Video $video
      * @return object
      */
-    public function saveVideo(Video_Model_Video $video) {
-
+    public function saveVideo(Video_Model_Video $video)
+    {
         if (!is_null($video->id)) {
             $select = $this->getGateway()->select();
             $select->where('id = ?', $video->id);
@@ -82,8 +86,15 @@ class Video_Model_Mapper_Video extends Jgs_Model_Mapper_Abstract
         return $row;
     }
 
-    public function fetchPagedMoviesByGenre($genre) {
-
+    /**
+     * Create a Zend_Paginator adapter, selected by Genre that returns an
+     * array of Video Entity Objects ordered by Title.
+     *
+     * @param type $genre
+     * @return \Video_Model_Paginator_Video
+     */
+    public function fetchPagedMoviesByGenre($genre)
+    {
         $select = $this->getGateway()->select();
         $select->where(new Zend_Db_Expr("FIND_IN_SET('$genre', genre)"));
         $select->order('title', 'ASC');
@@ -94,7 +105,15 @@ class Video_Model_Mapper_Video extends Jgs_Model_Mapper_Abstract
         return $adapter;
     }
 
-    public function fetchPagedMoviesByTitle($title) {
+    /**
+     * Create an Zend_Paginator adapter selected by Title query,
+     * Oredered by Title. Returns an array of Video Entity Objects.
+     *
+     * @param type $title
+     * @return \Video_Model_Paginator_Video
+     */
+    public function fetchPagedMoviesByTitle($title)
+    {
 
         $select = $this->getGateway()->select();
         $select->where(new Zend_Db_Expr("title LIKE '%$title%'"));
@@ -106,7 +125,14 @@ class Video_Model_Mapper_Video extends Jgs_Model_Mapper_Abstract
         return $adapter;
     }
 
-    public function fetchAllMoviesPaged() {
+    /**
+     * Create a Zend_Paginator adapter that returns an array of all
+     * Video Entity Objects ORDERED by Title.
+     *
+     * @return \Video_Model_Paginator_Video
+     */
+    public function fetchAllMoviesPaged()
+    {
         $select = $this->getGateway()->select();
         $select->order('title, ASC');
 
