@@ -32,16 +32,13 @@
                 <div id="main" class="column span-18 border">
                     <div id="flash">
                         <?php
-                        //flash messenger display location
                         if (count($this->messages) > 0) {
-                            foreach ($this->messages as $message) {
-                                 printf("<h3 id='flash'>%s</h3>", $message);
-                            }
-
+                            printf("<h3 id='flash'>%s</h3>", $this->messages[0]);
                         }
                         ?>
                     </div>
                     <?php echo $this->layout()->content; ?>
+
                 </div>
                 <aside id="sidebar" class="column span-4 last">
                     <?php echo $this->layout()->search ?>

@@ -13,7 +13,8 @@ class Video_Model_Mapper_Genre extends Jgs_Model_Mapper_Abstract
      *
      * @param Zend_Db_Table_Abstract $tableGateway
      */
-    function __construct(Zend_Db_Table_Abstract $tableGateway = NULL) {
+    function __construct(Zend_Db_Table_Abstract $tableGateway = null)
+    {
         $tableGateway = new Application_Model_DbTable_Genre();
         parent::__construct($tableGateway);
     }
@@ -23,9 +24,10 @@ class Video_Model_Mapper_Genre extends Jgs_Model_Mapper_Abstract
      * @param object $row
      * @return \Video_Model_Genre
      */
-    protected function createEntity($row) {
+    protected function createEntity($row)
+    {
         $data = array(
-            'id' => $row->id,
+            'id'   => $row->id,
             'name' => $row->name
         );
 
@@ -37,7 +39,8 @@ class Video_Model_Mapper_Genre extends Jgs_Model_Mapper_Abstract
      * @param Video_Model_Genre $genre
      * @return object
      */
-    public function saveGenre(Video_Model_Genre $genre) {
+    public function saveGenre(Video_Model_Genre $genre)
+    {
 
         if (!is_null($genre->id)) {
             $select = $this->getGateway()->select();
