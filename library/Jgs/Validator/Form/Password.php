@@ -30,26 +30,26 @@ class Jgs_Validator_Form_Password extends Zend_Validate_Abstract
      */
     public function isValid($value)
     {
-        $value = $this->_setValue($value);
+        $this->_setValue($value);
 
         $isValid = true;
         $stringLength = new Zend_Validate_StringLength(array('min' => 8));
-        if (!$stringLength->isValid($value)) {
+        if (!$stringLength->isValid($this->_value)) {
             $this->_error(self::LENGTH);
             $isValid = false;
         }
 
-        if (!preg_match('/[A-Z]/', $value)) {
+        if (!preg_match('/[A-Z]/', $this->_value)) {
             $this->_error(self::UPPER);
             $isValid = false;
         }
 
-        if (!preg_match('/[a-z]/', $value)) {
+        if (!preg_match('/[a-z]/', $this->_value)) {
             $this->_error(self::LOWER);
             $isValid = false;
         }
 
-        if (!preg_match('/\d/', $value)) {
+        if (!preg_match('/\d/', $this->_value)) {
             $this->_error(self::DIGIT);
             $isValid = false;
         }

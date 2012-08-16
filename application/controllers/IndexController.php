@@ -24,13 +24,13 @@ class IndexController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        
+
     }
 
     public function registerAction()
     {
         $form = new Application_Form_User();
-
+        Zend_Debug::dump($form->name->getValidator('Zend_Validate_Alpha'), 'Validators');
         if ($this->getRequest()->isPost()) {
             if ($form->isValid($this->getRequest()->getPost())) {
                 $data = $form->getValues();
@@ -52,38 +52,44 @@ class IndexController extends Zend_Controller_Action
     public function loginAction()
     {
         $form = new Application_Form_Login();
+        //setup the auth adapter
+        //get the default db adapter
+        $db = Zend_Db_Table::getDefaultAdapter();
+        //create the auth adapter
+        $authAdapter = new Jgs_Auth_Adapter($db, 'users',
+                'name', 'password');
 
         if ($this->getRequest()->isPost()) {
             if ($form->isValid($this->getRequest()->getPost())) {
-                $form->getValues();
-                Zend_Debug::dump($form->getValues(), 'Form Values');
+                $data = $form->getValues();
+
+                $authAdapter->setIdentity($data['name']);
+                $authAdapter->setCredential($data['password']);
+//
+            } else {
+                $this->view->form = $form;
+                $this->view->errors = $form->getMessages();
             }
-            $this->view->message = $form->getMessages();
-        }
-        $this->view->form = $form;
-//        //setup the auth adapter
-//        //get the default db adapter
-//        $db = Zend_Db_Table::getDefaultAdapter();
-//        //create the auth adapter
-//        $authAdapter = new Zend_Auth_Adapter_DbTable($db, 'users',
-//                        'name', 'password');
-//        $authAdapter->setIdentity($data['name']);
-//        $authAdapter->setCredential(Jgs_Password::comparePassword($data['password'],
-//                $authAdapter->getResultRowObject('password')));
-//        //authenticate
-//        $result = $authAdapter->authenticate();
-//        if ($result->isValid()) {
-//            //store the username, first and last names of the user
-//            $auth = Zend_Auth::getInstance();
-//            $storage = $auth->getStorage();
-//            $storage->write($authAdapter->getResultRowObject(array(
-//                        'username', 'first_name', 'last_name', 'role'
-//                    )));
-//            return $this->_forward('index');
-//        } else {
-//            $this->view->loginMessage =
+            //authenticate
+            $result = $authAdapter->authenticate();
+            Zend_Debug::dump($result, 'Result');
+             Zend_Debug::dump($authAdapter, 'Adapter');
+//            if ($result->isValid()) {
+                //store the username, first and last names of the user
+                $auth = Zend_Auth::getInstance();
+                $storage = $auth->getStorage();
+                $storage->write($authAdapter->getResultRowObject(array(
+                        'username', 'first_name', 'last_name', 'role'
+                    )));
+                $this->message->addMessage('Welcome');
+//                return $this->_redirect('/');
+//            } else {
+//                $this->view->loginMessage =
 //                    "Sorry, your username or password was incorrect";
-//        }
+//            }
+        } else {
+            $this->view->form = $form;
+        }
     }
 
     public function logoutAction()

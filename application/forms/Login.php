@@ -9,6 +9,7 @@ class Application_Form_Login extends Zend_Form
          * set POST method for form
          */
         $this->setMethod('POST');
+        $this->setAction('/index/login');
 
         /**
          * Set the viewScript decorator
@@ -49,7 +50,7 @@ class Application_Form_Login extends Zend_Form
         $password->setAttrib('placeholder', 'Password');
         $password->setOptions(array('size' => 20));
         $password->setRequired('TRUE');
-        $password->addValidator(new Jgs_Validator_Password());
+        $password->addValidator(new Jgs_Validator_Form_Password());
         $password->addFilters($filters);
         $password->removeDecorator('HtmlTag');
 
