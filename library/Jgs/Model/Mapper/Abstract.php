@@ -101,6 +101,18 @@ abstract class Jgs_Model_Mapper_Abstract
         return $entities;
     }
 
+     public function findOneByColumn($column, $value)
+    {
+        $select = $this->getGateway()->select();
+        $select->where("$column = ?", $value);
+
+        $row = $this->getGateway()->fetchRow($select);
+
+        $entity = $this->createEntity($row);
+
+        return $entity;
+    }
+
     /**
      * findById() is proxy for find() method and returns
      * an entity object.

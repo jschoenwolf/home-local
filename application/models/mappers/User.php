@@ -11,39 +11,47 @@ class Application_Model_Mapper_User extends Jgs_Model_Mapper_Abstract
 
     public function __construct(Zend_Db_Table_Abstract $tableGateway = null)
     {
-        $tableGateway = new Application_Model_DbTable_User();
+        if (is_null($tableGateway)) {
+            $tableGateway = new Application_Model_DbTable_User();
+        } else {
+            $tableGateway = $tableGateway;
+        }
+
         parent::__construct($tableGateway);
     }
 
     protected function createEntity($row)
     {
-
         $data = array(
-            'id' => $row->id,
-            'name' => $row->name,
+            'id'       => $row->id,
+            'name'     => $row->name,
             'password' => $row->password,
-            'role' => $row->role,
+            'role'     => $row->role,
         );
         $user = new Application_Model_User($data);
 
         return $user;
     }
 
+    private function hashPassword($password){
+        return Jgs_Password::createPasswordHash($password);
+    }
+
     public function saveUser(Application_Model_User $user)
     {
-
-        if (!empty($user->id) && !is_null($this->findById($user->id))) {
+        if (!is_null($user->id) && !is_null($this->findById($user->id))) {
             $select = $this->getGateway()->select();
             $select->where('id = ?', $user->id);
             $row = $this->getGateway()->fetchRow($select);
         } else {
             $row = $this->getGateway()->createRow();
+            $row->password = $this->hashPassword($user->password);
         }
         $row->name = $user->name;
-        $row->password = $user->password;
         $row->role = $user->role;
 
         $row->save();
         return $row;
     }
+
 }

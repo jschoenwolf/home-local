@@ -23,7 +23,7 @@
  *    hashing algorithm. Raise this to increase security, lower this to make it run faster.  Default value
  *    is 5.
  */
-define('AUTH_SALT', 'Pg$eYW77wRLQDnp*Z@rCvwboWKP5JgTXM%do60@4d707X&oOaxSQgijGH5Cqy^H4');
+define('AUTH_SALT', 'jZ42&2snyR9j8wm*Fc^j@DZNP&N%4D4q');
 define('AUTH_LEVEL', 5);
 
 /**
@@ -74,21 +74,21 @@ abstract class Jgs_Password
      *  Password-Based Key Derivation Function
      *  (Simplified, since some variables are known)
      *
-     *  @param string $p
+     *  @param string $password
      *      The plain text password
      *
-     *  @param string $s
+     *  @param string $salt
      *      The salt used to generate the hash
      *
      *  @return string
      *      Derived key
      */
-    final static private function pbkdf2($p, $s)
+    final static private function pbkdf2($password, $salt)
     {
         $hl = strlen(hash('whirlpool', null, true));
-        $ib = $b = hash_hmac('whirlpool', $s . pack('N', 1), $p, true);
+        $ib = $b = hash_hmac('whirlpool', $salt . pack('N', 1), $password, true);
         for ($i = 1; $i < AUTH_LEVEL * 1000; $i++) {
-            $ib ^= ( $b = hash_hmac('whirlpool', $b . AUTH_SALT, $p, true));
+            $ib ^= ( $b = hash_hmac('whirlpool', $b . AUTH_SALT, $password, true));
         }
         return base64_encode($ib);
     }
@@ -107,7 +107,12 @@ abstract class Jgs_Password
      */
     final static public function createPasswordHash($password, $salt = null)
     {
-        $salt or $salt = self::createPasswordSalt();
+        if (is_null($salt)) {
+            $salt = self::createPasswordSalt();
+        } else {
+            $salt = $salt;
+        }
+//        $salt or $salt = self::createPasswordSalt();
         return $salt . self::pbkdf2($password, $salt);
     }
 

@@ -27,7 +27,6 @@ class Application_Form_User extends Zend_Form
                     'table' => 'users',
                     'field' => 'name'
                 )));
-//        $name->removeDecorator('HtmlTag');
         $this->addElement($name);
 
         $password = new Zend_Form_Element_Password('password');
@@ -37,8 +36,16 @@ class Application_Form_User extends Zend_Form
         $password->setRequired(TRUE);
         $password->addValidator(new Jgs_Validator_Form_Password());
         $password->addFilters($filters);
-//        $password->removeDecorator('HtmlTag');
         $this->addElement($password);
+
+        $passRep = new Zend_Form_Element_Password('passRep');
+        $passRep->setLabel('Re-enter Password');
+        $passRep->setAttrib('placeholder', 'Re-enter Password');
+        $passRep->setOptions(array('size' => 20));
+        $passRep->setRequired(TRUE);
+        $passRep->addValidator(new Zend_Validate_Identical(array('token' => 'password')));
+        $passRep->addFilters($filters);
+        $this->addElement($passRep);
 
         $role = $this->createElement('select', 'role');
         $role->setLabel("Select a role: ")

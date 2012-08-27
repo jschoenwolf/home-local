@@ -19,6 +19,7 @@ class Application_Model_User extends Jgs_Model_Entity_Abstract
     public function setName($name)
     {
         $this->name = $name;
+        return $this;
     }
 
     public function getPassword()
@@ -28,7 +29,8 @@ class Application_Model_User extends Jgs_Model_Entity_Abstract
 
     public function setPassword($password)
     {
-        $this->password = Jgs_Password::createPasswordHash($password);
+        $this->password = $password;
+        return $this;
     }
 
     public function getRole()
@@ -39,5 +41,6 @@ class Application_Model_User extends Jgs_Model_Entity_Abstract
     public function setRole($role = 'guest')
     {
         $this->role = $role;
+        return $this;
     }
 }

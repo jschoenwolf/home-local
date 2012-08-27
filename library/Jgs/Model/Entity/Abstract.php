@@ -20,7 +20,7 @@ abstract class Jgs_Model_Entity_Abstract
      *
      * @var string
      */
-    protected $id;
+    protected $id = null;
 
     /**
      * accepts an array of data for instantiating entity objects
