@@ -19,7 +19,7 @@ class Jgs_Validator_Id extends Zend_Validate_Abstract
      */
     protected $_messageTemplates = array(
         self::NOT_GREATER => "Current Value ('%value%') is not greater than '0'",
-        self::NOT_LESS    => "Current value ('%value%') is not less than '9999'",
+        self::NOT_LESS    => "Current value ('%value%') is not less than '99999'",
         self::NOT_DIGITS  => "Field must contain only digits, current value is '%value%'."
     );
 
@@ -36,7 +36,7 @@ class Jgs_Validator_Id extends Zend_Validate_Abstract
             $this->_error(self::NOT_DIGITS);
             $isValid = false;
         }
-        $less = new Zend_Validate_LessThan(array('max' => 9999));
+        $less = new Zend_Validate_LessThan(array('max' => 99999));
         if (!$less->isValid($this->_value)) {
             $this->_error(self::NOT_LESS);
             $isValid = false;

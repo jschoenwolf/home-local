@@ -6,7 +6,7 @@ class Application_Form_User extends Zend_Form
     public function init() {
 
         $this->setMethod('POST');
-
+        
         $filters = array('StringTrim', 'StripTags', 'HtmlEntities');
 
         $id = $this->createElement('hidden', 'id');

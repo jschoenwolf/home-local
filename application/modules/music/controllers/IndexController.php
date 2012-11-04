@@ -8,14 +8,16 @@ class Music_IndexController extends Zend_Controller_Action
     public function preDispatch()
     {
 
+        $this->_helper->layout()->login = $this->_helper->login();
+
         $this->view->headScript()->appendFile(
-            '/javascript/mediaelement/build/mediaelement-and-player.min.js');
+                '/javascript/mediaelement/build/mediaelement-and-player.min.js');
 
         $this->view->inlineScript()->setScript(
-            "$('audio').mediaelementplayer();");
+                "$('audio').mediaelementplayer();");
 
         $this->_helper->layout()->search = $this->_helper->search(
-            '/music/index/display', 'Search Music Collection!', 'Artist or Title');
+                '/music/index/display', 'Search Music Collection!', 'Artist or Title');
     }
 
     public function init()

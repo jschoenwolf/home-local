@@ -1,0 +1,31 @@
+<?php if ($this->paginator->count() > 1): ?>
+    <div class="pagination">
+        <?php
+        echo $this->paginationControl(
+                $this->paginator, 'Sliding', '_paginatorControl.phtml'
+        );
+        ?>
+    </div>
+<?php endif ?>
+<div class="block" id="karaoke">
+    <?php foreach ($this->paginator as $song): ?>
+        <ul>
+            <li><?php echo $this->padId($song->getId()); ?></li>
+            <li><?php echo $song->getTitle(); ?></li>
+            <li><?php echo $song->artist  ?></li>
+        </ul>
+    <?php endforeach; ?>
+</div>
+
+<?php if ($this->paginator->count() > 1): ?>
+    <div class="pagination">
+        <?php
+        echo $this->paginationControl(
+                $this->paginator, 'Sliding', '_paginatorControl.phtml'
+        );
+        ?>
+    </div>
+    <?php
+
+
+ endif ?>

@@ -1,5 +1,5 @@
 <?php
-//$_SERVER["REQUEST_URI"] = str_replace('index.php','',$_SERVER["REQUEST_URI"]);
+$_SERVER["REQUEST_URI"] = str_replace('index.php','',$_SERVER["REQUEST_URI"]);
 // Define path to application directory
 defined('APPLICATION_PATH')
     || define('APPLICATION_PATH', realpath(dirname(__FILE__) . '/../application'));

@@ -6,9 +6,11 @@
  *
  * @author john
  */
-class Video_Model_Paginator_Video extends Zend_Paginator_Adapter_DbTableSelect {
+class Video_Model_Paginator_Video extends Zend_Paginator_Adapter_DbTableSelect
+{
 
-    public function getItems($offset, $itemCountPerPage) {
+    public function getItems($offset, $itemCountPerPage)
+    {
         $rows = parent::getItems($offset, $itemCountPerPage);
 
         $videos = array();
@@ -18,7 +20,4 @@ class Video_Model_Paginator_Video extends Zend_Paginator_Adapter_DbTableSelect {
         }
         return $videos;
     }
-
 }
-
-?>

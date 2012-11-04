@@ -18,15 +18,43 @@
       <modelsDirectory>
         <dbTableDirectory>
           <dbTableFile dbTableName="Album"/>
-		  <dbTableFile dbTableName="Artist"/>
-		  <dbTableFile dbTableName="Genre"/>
-		  <dbTableFile dbTableName="Karaoke"/>
-		  <dbTableFile dbTableName="Track"/>
-		  <dbTableFile dbTableName="User"/>
-		  <dbTableFile dbTableName="Videos"/>
+          <dbTableFile dbTableName="Artist"/>
+          <dbTableFile dbTableName="Genre"/>
+          <dbTableFile dbTableName="Karaoke"/>
+          <dbTableFile dbTableName="Track"/>
+          <dbTableFile dbTableName="User"/>
+          <dbTableFile dbTableName="Videos"/>
         </dbTableDirectory>
       </modelsDirectory>
-      <modulesDirectory enabled="false"/>
+      <modulesDirectory enabled="false">
+        <moduleDirectory moduleName="karaoke">
+          <apisDirectory enabled="false"/>
+          <configsDirectory enabled="false"/>
+          <controllersDirectory>
+            <controllerFile controllerName="Index">
+              <actionMethod actionName="index"/>
+              <actionMethod actionName="display"/>
+            </controllerFile>
+          </controllersDirectory>
+          <formsDirectory enabled="false"/>
+          <layoutsDirectory enabled="false"/>
+          <modelsDirectory>
+            <dbTableDirectory enabled="false"/>
+          </modelsDirectory>
+          <viewsDirectory>
+            <viewScriptsDirectory>
+              <viewControllerScriptsDirectory forControllerName="Index">
+                <viewScriptFile forActionName="index"/>
+              </viewControllerScriptsDirectory>
+              <viewControllerScriptsDirectory forControllerName="Index">
+                <viewScriptFile forActionName="display"/>
+              </viewControllerScriptsDirectory>
+            </viewScriptsDirectory>
+            <viewHelpersDirectory/>
+            <viewFiltersDirectory/>
+          </viewsDirectory>
+        </moduleDirectory>
+      </modulesDirectory>
       <viewsDirectory>
         <viewScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Index">

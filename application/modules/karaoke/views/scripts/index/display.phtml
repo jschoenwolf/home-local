@@ -1,0 +1,24 @@
+<?php if ($this->paginator->count() > 1): ?>
+    <div class="pagination">
+        <?php
+        echo $this->paginationControl(
+                $this->paginator, 'Sliding', '_paginatorControl.phtml'
+        );
+        ?>
+    </div>
+<?php endif
+?>
+<div class="block">
+    <article class="table">
+        <table>
+            <tr class="edit">
+                <th>Id</th>
+                <th>Title</th>
+                <th>Artist</th>
+            </tr>
+            <?php foreach ($this->paginator as $song): ?>
+                <?php echo $this->partial('_song.phtml', $song) ?>
+            <?php endforeach; ?>
+        </table>
+    </article>
+</div>

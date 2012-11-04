@@ -24,12 +24,13 @@ class IndexController extends Zend_Controller_Action
 
     public function indexAction()
     {
-
+        
     }
 
     public function registerAction()
     {
         $form = new Application_Form_User();
+        $form->setDescription('Hello');
         $form->removeElement('id');
         if ($this->getRequest()->isPost()) {
             if ($form->isValid($this->getRequest()->getPost())) {
