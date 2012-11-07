@@ -9,9 +9,9 @@ $page = $this->paginator->getCurrentPageNumber();
     )
     ?>
 </div>
-<article class="table">
+<article>
     <?php foreach ($this->paginator as $artist): ?>
-        <table class="edit">
+        <table>
             <tr>
                 <th colspan="4"><?php echo $artist->name ?></th>
                 <th><a href="/admin/music/updateartist/id/

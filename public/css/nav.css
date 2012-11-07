@@ -5,7 +5,7 @@ a {
 a:hover {
     color: #66a3d2;
 }
-
+/*Title bar nav*/
 #nav {
     background: #033e6b;
     min-height: 2.5em;
@@ -30,14 +30,11 @@ a:hover {
 #nav a.selected {
     font-weight: bold;
 }
-
+/*Admin Nav*/
 #adminMenu a,h4 {
-    margin-left: 2em;
+    /*margin-left: 2em;*/
 }
-
-.pagination {
-
-}
+/*Pagination Controls*/
 .paginationControl {
     margin-left: 10%;
     margin-bottom: 1em;

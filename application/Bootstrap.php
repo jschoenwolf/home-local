@@ -5,7 +5,6 @@
  */
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
-
     /**
      * initialize the session
      */
@@ -41,17 +40,13 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $view->headMeta()->appendHttpEquiv('Content-Type', Zend_Registry::get(
                 'config')->resources->view->contentType);
         //set css includes
-        $view->headLink()->setStylesheet('/css/normalize.css');
-        $view->headLink()->appendStylesheet('/css/blueprint/src/liquid.css');
-        $view->headLink()->appendStylesheet('/css/blueprint/src/typography.css');
-        $view->headLink()->appendStylesheet(
-            '/javascript/mediaelement/build/mediaelementplayer.css');
+        $view->headlink()->setStylesheet('/bootstrap/css/bootstrap.min.css');
         $view->headLink()->appendStylesheet('/css/main.css');
         $view->headLink()->appendStylesheet('/css/nav.css');
         $view->headLink()->appendStylesheet('/css/table.css');
         //add javascript files
-        $view->headScript()->setFile('/javascript/modernizr.js');
-        $view->headScript()->appendFile('/javascript/mediaelement/build/jquery.js');
+        $view->headScript()->setFile('/bootstrap/js/jquery.min.js');
+        $view->headScript()->appendFile('/bootstrap/js/bootstrap.min.js');
         //add it to the view renderer
         $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper(
                 'ViewRenderer');
@@ -59,5 +54,5 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         //Return it, so that it can be stored by the bootstrap
         return $view;
     }
-}
 
+}

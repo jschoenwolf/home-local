@@ -1,70 +1,66 @@
 <div class="pagination"><?php
 echo $this->paginationControl(
-        $this->paginator, 'Sliding', '_paginatorControl.phtml'
+    $this->paginator, 'Sliding', '_paginatorControl.phtml'
 )
 ?></div>
-<section class="block">
+<section>
     <?php if ($this->paginator->getAdapter() instanceof Music_Model_Paginator_Album): ?>
         <?php foreach ($this->paginator as $album): ?>
-            <article class="column span-4 prepend-8 append-12 last">
-                <?php $art = $this->artPath . $album->art ?>
-                <img id="album_img" src="<?php echo $art ?>" alt="album art" height="300" width="300">
+            <?php $art = $this->artPath . $album->art ?>
+            <img id="album_img" src="<?php echo $art ?>" alt="album art" height="300" width="300">
+            <article>
+                <table>
+                    <thead>
+                        <tr>
+                            <th><a href="/music/index/album/id/<?php echo $album->id ?>"><?php echo $album->name ?></a></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>Track #</th>
+                            <th>Title</th>
+                            <th>&nbsp;</th>
+                        </tr>
+                        <tr><td></td></tr>
+                        <?php foreach ($album->getTracks() as $track): ?>
+                            <?php if ($track->artist->id == $album->artist->id): ?>
+                                <tr>
+                                    <td><?php echo $track->getTrack() ?></td>
+                                    <td><?php echo $track->getTitle() ?></td>
+                                    <td><audio controls="controls" preload="none"><source src="<?php echo $this->path($track->path) ?>" type="audio/mp3" /></audio></td>
+                                </tr>
+                            <?php endif ?>
+                        </tbody>
+                    <?php endforeach; ?>
+                    <tfoot>
+                        <tr>
+                            <th><?php echo $album->artist->name ?></th>
+                        </tr>
+                    </tfoot>
+                </table>
             </article>
-            <div class="column span-24 last">
-                <article class="table">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th colspan="3" class="large"><a href="/music/index/album/id/<?php echo $album->id ?>"><?php echo $album->name ?></a></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th class="tableth">Track #</th>
-                                <th class="tableth">Title</th>
-                                <th class="tableth">&nbsp;</th>
-                            </tr>
-                            <tr><td colspan="3"></td></tr>
-                            <?php foreach ($album->getTracks() as $track): ?>
-                                <?php if ($track->artist->id == $album->artist->id): ?>
-                                    <tr>
-                                        <td class="track"><?php echo $track->getTrack() ?></td>
-                                        <td class="title"><?php echo $track->getTitle() ?></td>
-                                        <td class="audio_player"><audio controls="controls" preload="none"><source src="<?php echo $this->path($track->path) ?>" type="audio/mp3" /></audio></td>
-                                    </tr>
-                                <?php endif ?>
-                            </tbody>
-                        <?php endforeach; ?>
-                        <tfoot>
-                            <tr>
-                                <th colspan="3" class="alt large"><?php echo $album->artist->name ?></th>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </article>
-            </div>
         <?php endforeach ?>
     <?php else: ?>
         <?php foreach ($this->paginator as $mp3): ?>
-            <div class="column span-24 last">
-                <article class="table">
+            <div>
+                <article>
                     <table>
                         <thead>
                             <tr>
-                                <th colspan="3" class="large"><?php echo $mp3->artist->name ?></th>
+                                <th><?php echo $mp3->artist->name ?></th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <th class="tableth">Track #</th>
-                                <th class="tableth">Title</th>
-                                <th class="tableth">&nbsp;</th>
+                                <th>Track #</th>
+                                <th>Title</th>
+                                <th>&nbsp;</th>
                             </tr>
                             <tr><td colspan="3"></td></tr>
                             <tr>
-                                <td class="track"><?php echo $mp3->track ?></td>
-                                <td class="title"><?php echo $mp3->title ?></td>
-                                <td class="audio_player"><audio controls="controls" preload="none"><source src="<?php echo $this->path($mp3->path) ?>" type="audio/mp3" /></audio></td>
+                                <td><?php echo $mp3->track ?></td>
+                                <td><?php echo $mp3->title ?></td>
+                                <td><audio controls="controls" preload="none"><source src="<?php echo $this->path($mp3->path) ?>" type="audio/mp3" /></audio></td>
                             </tr>
                         </tbody>
                     </table>
@@ -75,7 +71,7 @@ echo $this->paginationControl(
 </section>
 <div class="pagination"><?php
     echo $this->paginationControl(
-            $this->paginator, 'Sliding', '_paginatorControl.phtml'
+        $this->paginator, 'Sliding', '_paginatorControl.phtml'
     )
     ?></div>
 <?php echo $this->inlineScript() ?>
