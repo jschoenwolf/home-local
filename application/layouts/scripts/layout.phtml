@@ -25,7 +25,7 @@
                                     <a href="/">Home</a>
                                     <a href="/music/index">Music</a>
                                     <a href="/video/index">Videos</a>
-                                    <a href="/admin/index">Admin</a>
+                                    <a href="/admin/index">Administration</a>
                                     <a href="/karaoke/index">Karaoke</a>
                                     <?php echo $this->layout()->nav ?>&nbsp;
                                 </div>
@@ -75,7 +75,7 @@
                 <div class="span12">
                     <footer>
                         <p>Created by <em>John Schoenwolf</em> with <a href="http://framework.zend.com/">Zend Framework</a> and <a href="http://twitter.github.com/bootstrap">Twitter Bootstrap</a> &COPY;</p>
-                        <!--  TODO remove following line for production enviroment  -->
+                        <!--  TODO remove following line for production environment  -->
                         <?php
                         $this->addScriptPath(APPLICATION_PATH . '/views/scripts');
                         echo $this->render('profiler.phtml')

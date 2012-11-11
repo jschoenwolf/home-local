@@ -24,7 +24,26 @@ class IndexController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        
+        //id3 options
+        $options = array("version" => 3.0, "encoding" => Zend_Media_Id3_Encoding::ISO88591, "compat" => true);
+        //path to collection
+        $path = APPLICATION_PATH . '/../public/Media/Music/';//Currently Approx 2000 files
+        //inner iterator
+        $dir = new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::SKIP_DOTS);
+        //iterator
+        $iterator = new RecursiveIteratorIterator($dir, RecursiveIteratorIterator::SELF_FIRST);
+        foreach ($iterator as $file) {
+            if (!$file->isDir() && $file->getExtension() === 'mp3') {
+                //real path to mp3 file
+                $filePath = $file->getRealPath();
+                Zend_Debug::dump($filePath);//current results: accepted path no errors
+                $id3 = new Zend_Media_Id3v2($filePath, $options);
+                foreach ($id3->getFramesByIdentifier("T*") as $frame) {
+                    $data[$frame->identifier] = $frame->text;
+                }
+                Zend_Debug::dump($data);//currently can scan the whole collection without timing out, but APIC data not being processed.
+            }
+        }
     }
 
     public function registerAction()
@@ -85,5 +104,5 @@ class IndexController extends Zend_Controller_Action
         $authAdapter = Zend_Auth::getInstance();
         $authAdapter->clearIdentity();
     }
-}
 
+}
