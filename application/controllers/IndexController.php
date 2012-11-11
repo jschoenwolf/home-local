@@ -17,7 +17,7 @@ class IndexController extends Zend_Controller_Action
         $this->message = $this->getHelper('FlashMessenger');
         $this->session = new Zend_Session_Namespace('home');
 
-        if ($this->message->hasMessages()) {
+        if($this->message->hasMessages()) {
             $this->view->messages = $this->message->getMessages();
         }
     }
@@ -25,20 +25,20 @@ class IndexController extends Zend_Controller_Action
     public function indexAction()
     {
         //id3 options
-        $options = array("version" => 3.0, "encoding" => Zend_Media_Id3_Encoding::ISO88591, "compat" => true);
+        $options  = array("version"  => 3.0, "encoding" => Zend_Media_Id3_Encoding::ISO88591, "compat"   => true);
         //path to collection
-        $path = APPLICATION_PATH . '/../public/Media/Music/';//Currently Approx 2000 files
+        $path     = APPLICATION_PATH . '/../public/Media/Music/';//Currently Approx 2000 files
         //inner iterator
-        $dir = new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::SKIP_DOTS);
+        $dir      = new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::SKIP_DOTS);
         //iterator
         $iterator = new RecursiveIteratorIterator($dir, RecursiveIteratorIterator::SELF_FIRST);
-        foreach ($iterator as $file) {
-            if (!$file->isDir() && $file->getExtension() === 'mp3') {
+        foreach($iterator as $file) {
+            if(!$file->isDir() && $file->getExtension() === 'mp3') {
                 //real path to mp3 file
                 $filePath = $file->getRealPath();
                 Zend_Debug::dump($filePath);//current results: accepted path no errors
-                $id3 = new Zend_Media_Id3v2($filePath, $options);
-                foreach ($id3->getFramesByIdentifier("T*") as $frame) {
+                $id3      = new Zend_Media_Id3v2($filePath, $options);
+                foreach($id3->getFramesByIdentifier("T*") as $frame) {
                     $data[$frame->identifier] = $frame->text;
                 }
                 Zend_Debug::dump($data);//currently can scan the whole collection without timing out, but APIC data not being processed.
@@ -51,11 +51,11 @@ class IndexController extends Zend_Controller_Action
         $form = new Application_Form_User();
         $form->setDescription('Hello');
         $form->removeElement('id');
-        if ($this->getRequest()->isPost()) {
-            if ($form->isValid($this->getRequest()->getPost())) {
+        if($this->getRequest()->isPost()) {
+            if($form->isValid($this->getRequest()->getPost())) {
                 $data = $form->getValues();
 
-                $user = new Application_Model_User($data);
+                $user   = new Application_Model_User($data);
                 $mapper = new Application_Model_Mapper_User();
 
                 $save = $mapper->saveUser($user);
@@ -73,19 +73,19 @@ class IndexController extends Zend_Controller_Action
     {
         $form = new Application_Form_Login();
 
-        if ($this->getRequest()->isPost()) {
-            if ($form->isValid($this->getRequest()->getPost())) {
-                $data = $form->getValues();
+        if($this->getRequest()->isPost()) {
+            if($form->isValid($this->getRequest()->getPost())) {
+                $data        = $form->getValues();
                 $authAdapter = new Jgs_Auth_Adapter($data['name'], $data['password']);
             } else {
-                $this->view->form = $form;
+                $this->view->form   = $form;
                 $this->view->errors = $form->getMessages();
             }
             //authenticate
             $result = $authAdapter->authenticate();
-            if ($result->isValid()) {
+            if($result->isValid()) {
                 //store the user object
-                $auth = Zend_Auth::getInstance();
+                $auth    = Zend_Auth::getInstance();
                 $storage = $auth->getStorage();
                 $storage->write($authAdapter->getUser());
                 $this->message->addMessage('Welcome');
@@ -104,5 +104,4 @@ class IndexController extends Zend_Controller_Action
         $authAdapter = Zend_Auth::getInstance();
         $authAdapter->clearIdentity();
     }
-
 }

@@ -6,9 +6,9 @@ class Karaoke_IndexController extends Zend_Controller_Action
     public function preDispatch()
     {
         $this->_helper->layout()->search = $this->_helper->search(
-                '/karaoke/index/display', 'Search Karaoke Collection!', 'Karaoke'
+            '/karaoke/index/display', 'Search Karaoke Collection!', 'Karaoke'
         );
-        $this->_helper->layout()->login = $this->_helper->login();
+        $this->_helper->layout()->login  = $this->_helper->login();
     }
 
     public function init()
@@ -20,24 +20,23 @@ class Karaoke_IndexController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        $table = new Application_Model_DbTable_Karaoke();
-        Zend_Debug::dump($table->getAdapter()->listTables(), 'Adapter Table List');
-//        $model = new Karaoke_Model_Mapper_Karaoke();
-//        $adapter = $model->fetchPaged();
-//
-//        $paginator = new Zend_Paginator($adapter);
-//        $paginator->setItemCountPerPage(10);
-//
-//        $page = $this->getRequest()->getParam('page', 1);
-//        $paginator->setCurrentPageNumber($page);
-//
-//        $this->view->paginator = $paginator;
+        $model   = new Karaoke_Model_Mapper_Karaoke();
+        $adapter = $model->fetchPaged();
+
+        $paginator = new Zend_Paginator($adapter);
+        $paginator->setItemCountPerPage(10);
+
+        $page = $this->getRequest()->getParam('page', 1);
+        $paginator->setCurrentPageNumber($page);
+        $paginator->setPageRange(5);
+
+        $this->view->paginator = $paginator;
     }
 
     public function displayAction()
     {
-        $model = new Karaoke_Model_Mapper_Karaoke();
-        $query = $this->getRequest()->getParam('query');
+        $model   = new Karaoke_Model_Mapper_Karaoke();
+        $query   = $this->getRequest()->getParam('query');
         $adapter = $model->fetchPagedByQuery($query);
 
         $paginator = new Zend_Paginator($adapter);
@@ -49,4 +48,3 @@ class Karaoke_IndexController extends Zend_Controller_Action
         $this->view->paginator = $paginator;
     }
 }
-

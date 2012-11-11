@@ -1,8 +1,7 @@
 <?php
 if ($this->pageCount) :
     //you need to add each of the request parameters to url
-    $params = Zend_Controller_Front::getInstance()
-                    ->getRequest()->getParams();
+    $params = Zend_Controller_Front::getInstance()->getRequest()->getParams();
     //remove the system parameters
     unset($params['module']);
     unset($params['controller']);
@@ -38,39 +37,35 @@ if ($this->pageCount) :
                     <!--Number page links-->
                     <?php foreach ($this->pagesInRange as $page): ?>
                         <?php if ($page != $this->current) : ?>
-                            <a href="<?php
-                echo $this->url(array_merge($params, array('page' => $page)))
-                            ?>">
+                            <a href="<?php echo $this->url(array_merge($params, array('page' => $page))) ?>">
                                 <?php echo $page ?></a> |
                         <?php else: ?>
                                 <?php echo $page ?> |
-                            <?php
-                            endif;
-                        endforeach;
-                        ?>
+                            <?php endif;
+                        endforeach; ?>
                 </td>
                 <td>
                     <!--Next page link-->
                     <?php if (isset($this->next)) : ?>
                         <a href="<?php
-                echo $this->url(array_merge($params, array('page' => $this->next)))
+                        echo $this->url(array_merge($params, array('page' => $this->next)))
                         ?>">
                             Next &gt;</a>
                     <?php else : ?>
                         <span class="disabled">Next &gt;</span>
-                    <?php endif; ?>
+    <?php endif; ?>
                 </td>
                 <td class="space">|</td>
                 <td>
                     <!--Last page Link -->
                     <?php if (isset($this->last)): ?>
                         <a href="<?php
-                echo $this->url(array_merge($params, array('page' => $this->last)))
+                        echo $this->url(array_merge($params, array('page' => $this->last)))
                         ?>">
                             Last &gt;</a>
                     <?php else: ?>
                         <span class="disabled">last &gt;</span>
-                    <?php endif ?>
+    <?php endif ?>
                 </td>
             </tr>
         </table>
