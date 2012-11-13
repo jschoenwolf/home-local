@@ -32,18 +32,6 @@ class IndexController extends Zend_Controller_Action
         $dir      = new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::SKIP_DOTS);
         //iterator
         $iterator = new RecursiveIteratorIterator($dir, RecursiveIteratorIterator::SELF_FIRST);
-        foreach($iterator as $file) {
-            if(!$file->isDir() && $file->getExtension() === 'mp3') {
-                //real path to mp3 file
-                $filePath = $file->getRealPath();
-                Zend_Debug::dump($filePath);//current results: accepted path no errors
-                $id3      = new Zend_Media_Id3v2($filePath, $options);
-                foreach($id3->getFramesByIdentifier("T*") as $frame) {
-                    $data[$frame->identifier] = $frame->text;
-                }
-                Zend_Debug::dump($data);//currently can scan the whole collection without timing out, but APIC data not being processed.
-            }
-        }
     }
 
     public function registerAction()
@@ -82,7 +70,7 @@ class IndexController extends Zend_Controller_Action
                 $this->view->errors = $form->getMessages();
             }
             //authenticate
-            $result = $authAdapter->authenticate();
+            $result             = $authAdapter->authenticate();
             if($result->isValid()) {
                 //store the user object
                 $auth    = Zend_Auth::getInstance();
