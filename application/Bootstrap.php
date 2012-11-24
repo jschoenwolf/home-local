@@ -38,8 +38,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         //set default title
         $view->headTitle('Our Home');
         //set head meta data
-        $view->headMeta()->appendHttpEquiv('Content-Type', Zend_Registry::get(
-                'config')->resources->view->contentType);
+        $view->headMeta()->setCharset(Zend_Registry::get('config')->resources->view->charset);
         //set css includes
         $view->headlink()->setStylesheet('/bootstrap/css/bootstrap.min.css');
         $view->headLink()->appendStylesheet('/css/main.css');
@@ -54,5 +53,10 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $viewRenderer->setView($view);
         //Return it, so that it can be stored by the bootstrap
         return $view;
+    }
+
+    protected function _initFront() {
+        $frontController = Zend_Controller_Front::getInstance();
+        $frontController->setParam('disableOutputBuffering', true);
     }
 }
