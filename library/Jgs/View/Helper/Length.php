@@ -1,10 +1,5 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of Length
  *
@@ -12,11 +7,14 @@
  */
 class Zend_View_Helper_Length extends Zend_View_Helper_Abstract
 {
-
+    /**
+     *
+     * @param type $minutes
+     * @return string
+     */
     public function length($minutes)
     {
-
-        $hours = floor($minutes / 60);
+        $hours   = floor($minutes / 60);
         $minutes = $minutes % 60;
 
         if ($hours > 0) {
@@ -26,4 +24,5 @@ class Zend_View_Helper_Length extends Zend_View_Helper_Abstract
         }
         return $time;
     }
+
 }

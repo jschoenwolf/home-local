@@ -8,6 +8,13 @@
 class Jgs_Controller_Action_Helper_Search extends Zend_Controller_Action_Helper_Abstract
 {
 
+    /**
+     *
+     * @param string $action
+     * @param string $label
+     * @param string $placeHolder
+     * @return \Application_Form_Search
+     */
     public function direct($action, $label = null, $placeHolder = null)
     {
         $form = new Application_Form_Search();

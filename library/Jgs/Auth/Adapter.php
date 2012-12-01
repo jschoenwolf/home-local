@@ -12,13 +12,13 @@ class Jgs_Auth_Adapter implements Zend_Auth_Adapter_Interface
      *
      * @var string
      */
-    protected $identity = null;
+    protected $identity    = null;
     /**
      * The password
      *
      * @var string
      */
-    protected $credential = null;
+    protected $credential  = null;
     /**
      * Users database object
      *
@@ -26,6 +26,12 @@ class Jgs_Auth_Adapter implements Zend_Auth_Adapter_Interface
      */
     protected $usersMapper = null;
 
+    /**
+     *
+     * @param string $username
+     * @param string $password
+     * @param Jgs_Model_Mapper_Abstract $userMapper
+     */
     public function __construct($username, $password, Jgs_Model_Mapper_Abstract $userMapper = null)
     {
         if (!is_null($userMapper)) {
@@ -37,6 +43,10 @@ class Jgs_Auth_Adapter implements Zend_Auth_Adapter_Interface
         $this->setCredential($password);
     }
 
+    /**
+     *
+     * @return \Zend_Auth_Result
+     */
     public function authenticate()
     {
         // Fetch user information according to username
@@ -68,53 +78,88 @@ class Jgs_Auth_Adapter implements Zend_Auth_Adapter_Interface
         );
     }
 
+    /**
+     *
+     * @param type $userName
+     * @return \Jgs_Auth_Adapter
+     */
     public function setIdentity($userName)
     {
         $this->identity = $userName;
         return $this;
     }
 
+    /**
+     *
+     * @param type $password
+     * @return \Jgs_Auth_Adapter
+     */
     public function setCredential($password)
     {
         $this->credential = $password;
         return $this;
     }
 
+    /**
+     *
+     * @param type $mapper
+     * @return \Jgs_Auth_Adapter
+     */
     public function setMapper($mapper)
     {
         $this->usersMapper = $mapper;
         return $this;
     }
 
+    /**
+     *
+     * @return object
+     */
     private function getUserObject()
     {
         return $this->getMapper()->findOneByColumn('name', $this->getIdentity());
     }
 
+    /**
+     *
+     * @return object
+     */
     public function getUser()
     {
         $object = $this->getUserObject();
-        $array = array(
-            'id' => $object->id,
+        $array  = array(
+            'id'   => $object->id,
             'name' => $object->name,
             'role' => $object->role
         );
         return (object) $array;
     }
 
+    /**
+     *
+     * @return string
+     */
     public function getIdentity()
     {
         return $this->identity;
     }
 
+    /**
+     *
+     * @return string
+     */
     public function getCredential()
     {
         return $this->credential;
     }
 
+    /**
+     *
+     * @return object Jgs_Model_Mapper_Abstract
+     */
     public function getMapper()
     {
         return $this->usersMapper;
     }
-}
 
+}

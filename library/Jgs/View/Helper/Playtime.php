@@ -1,10 +1,5 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of Playtime
  *
@@ -12,7 +7,11 @@
  */
 class Zend_View_Helper_Playtime extends Zend_View_Helper_Abstract
 {
-
+    /**
+     *
+     * @param type $seconds
+     * @return string
+     */
     public function playtime($seconds)
     {
 
@@ -22,4 +21,5 @@ class Zend_View_Helper_Playtime extends Zend_View_Helper_Abstract
         $time = sprintf("%01d:%02d", $minutes, $seconds);
         return $time;
     }
+
 }

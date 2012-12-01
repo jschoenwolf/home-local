@@ -5,7 +5,6 @@
  */
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
-
     /**
      * initialize the session
      */
@@ -30,7 +29,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     protected function _initView()
     {
         //Initialize view
-        $view         = new Zend_View();
+        $view = new Zend_View();
         //add custom view helper path
         $view->addHelperPath('/../library/Jgs/View/Helper');
         //set doctype for default layout
@@ -53,10 +52,5 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $viewRenderer->setView($view);
         //Return it, so that it can be stored by the bootstrap
         return $view;
-    }
-
-    protected function _initFront() {
-        $frontController = Zend_Controller_Front::getInstance();
-        $frontController->setParam('disableOutputBuffering', true);
     }
 }

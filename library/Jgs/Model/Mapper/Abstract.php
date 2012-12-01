@@ -14,7 +14,7 @@ abstract class Jgs_Model_Mapper_Abstract
      * @var Zend_Db_Table_Abstract $_tableGateway
      */
     protected $tableGateway = null;
-    protected $map = array();
+    protected $map          = array();
 
     /**
      * Will accept a DbTable model passed or will instantiate
@@ -93,7 +93,7 @@ abstract class Jgs_Model_Mapper_Abstract
 
         $entities = array();
         foreach ($result as $row) {
-            $entity = $this->createEntity($row);
+            $entity     = $this->createEntity($row);
             $this->setMap($row->id, $entity);
             $entities[] = $entity;
         }
@@ -101,7 +101,7 @@ abstract class Jgs_Model_Mapper_Abstract
         return $entities;
     }
 
-     public function findOneByColumn($column, $value)
+    public function findOneByColumn($column, $value)
     {
         $select = $this->getGateway()->select();
         $select->where("$column = ?", $value);
@@ -163,7 +163,7 @@ abstract class Jgs_Model_Mapper_Abstract
 
         $entities = array();
         foreach ($rowset as $row) {
-            $entity = $this->createEntity($row);
+            $entity     = $this->createEntity($row);
             $this->setMap($row->id, $entity);
             $entities[] = $entity;
         }

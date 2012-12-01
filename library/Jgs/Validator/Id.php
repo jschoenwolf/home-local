@@ -36,7 +36,7 @@ class Jgs_Validator_Id extends Zend_Validate_Abstract
             $this->_error(self::NOT_DIGITS);
             $isValid = false;
         }
-        $less = new Zend_Validate_LessThan(array('max' => 99999));
+        $less    = new Zend_Validate_LessThan(array('max' => 99999));
         if (!$less->isValid($this->_value)) {
             $this->_error(self::NOT_LESS);
             $isValid = false;
@@ -48,4 +48,5 @@ class Jgs_Validator_Id extends Zend_Validate_Abstract
         }
         return $isValid;
     }
+
 }
