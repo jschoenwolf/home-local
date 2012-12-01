@@ -11,7 +11,7 @@ class Admin_MusicController extends Zend_Controller_Action
         $searchForm = new Application_Form_Search();
         $searchForm->setAction('/admin/music/update');
         $searchForm->query->setAttribs(array('placeholder' => 'Search for Artist',
-            'size' => 27,
+            'size'        => 27,
         ));
         $searchForm->search->setLabel('Find an Artist\'s work.');
         $searchForm->setDecorators(array(
@@ -43,7 +43,7 @@ class Admin_MusicController extends Zend_Controller_Action
         $form = new Application_Form_Music();
         $form->setAction('/admin/music/read');
 
-        $tags = new Application_Model_Tag();
+        $tags = new Music_Model_Tag();
         try {
             if ($this->getRequest()->isPost()) {
                 if ($form->isValid($this->getRequest()->getPost())) {
@@ -73,7 +73,7 @@ class Admin_MusicController extends Zend_Controller_Action
     {
 
         $query = $this->getRequest()->getParam('query');
-        $page = $this->getRequest()->getParam('page', 1);
+        $page  = $this->getRequest()->getParam('page', 1);
 
         $model = new Music_Model_Mapper_Artist();
 
@@ -96,7 +96,7 @@ class Admin_MusicController extends Zend_Controller_Action
     public function updatetrackAction()
     {
         $session = new Zend_Session_Namespace('page');
-        $id = $this->getRequest()->getParam('id');
+        $id      = $this->getRequest()->getParam('id');
 
         $model = new Music_Model_Mapper_Track();
         $track = $model->findById($id);
@@ -124,7 +124,7 @@ class Admin_MusicController extends Zend_Controller_Action
     public function updatealbumAction()
     {
         $session = new Zend_Session_Namespace('page');
-        $id = $this->getRequest()->getParam('id');
+        $id      = $this->getRequest()->getParam('id');
 
         $model = new Music_Model_Mapper_Album();
         $album = $model->findById($id);
@@ -152,9 +152,9 @@ class Admin_MusicController extends Zend_Controller_Action
     public function updateartistAction()
     {
         $session = new Zend_Session_Namespace('page');
-        $id = $this->getRequest()->getParam('id');
+        $id      = $this->getRequest()->getParam('id');
 
-        $model = new Music_Model_Mapper_Artist();
+        $model  = new Music_Model_Mapper_Artist();
         $artist = $model->findById($id);
 
         $form = new Admin_Form_Artist();
@@ -184,21 +184,21 @@ class Admin_MusicController extends Zend_Controller_Action
         try {
             switch ($request) {
                 case isset($request['trackId']):
-                    $id = $request['trackId'];
+                    $id    = $request['trackId'];
                     $model = new Music_Model_Mapper_Track();
                     $model->deleteTrack($id);
                     $this->message->addMessage("Track Deleted!");
 
                     break;
                 case isset($request['albumId']):
-                    $id = $request['albumId'];
+                    $id    = $request['albumId'];
                     $model = new Music_Model_Mapper_Album();
                     $model->deletealbum($id);
                     $this->message->addMessage("Album Deleted!");
 
                     break;
                 case isset($request['artistId']):
-                    $id = $request['artistId'];
+                    $id    = $request['artistId'];
                     $model = new Music_Model_Mapper_Artist();
                     $model->deleteArtist($id);
                     $this->message->addMessage("Artist Deleted!");
@@ -215,4 +215,3 @@ class Admin_MusicController extends Zend_Controller_Action
         }
     }
 }
-
