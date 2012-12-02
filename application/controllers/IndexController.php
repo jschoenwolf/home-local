@@ -16,14 +16,25 @@ class IndexController extends Zend_Controller_Action
         $this->message = $this->getHelper('FlashMessenger');
         $this->session = new Zend_Session_Namespace('home');
 
-        if ($this->message->hasMessages()) {
+        if($this->message->hasMessages()) {
             $this->view->messages = $this->message->getMessages();
         }
     }
 
     public function indexAction()
     {
+        //$base     = Zend_Controller_Front::getInstance()->getBaseUrl();
+
+        $filename = MEDIA_MUSIC_PATH . '\\Amy Grant\\Age to Age\\07 El-Shaddai.mp3';
+      
+        $km = new Karaoke_Model_Mapper_Karaoke();
+        $k  = $km->findById(45);
+        Zend_Debug::dump($k, "Karaoke entity");
         
+        $model = new Music_Model_AudioInfo($filename);
+        Zend_Debug::dump($model->title, "Title");
+        Zend_Debug::dump($model->getFilename(), "Filename");
+        Zend_Debug::dump($model->getAlbum(), "Album Name");
     }
 
     public function registerAction()
@@ -31,8 +42,8 @@ class IndexController extends Zend_Controller_Action
         $form = new Application_Form_User();
         $form->setDescription('Hello');
         $form->removeElement('id');
-        if ($this->getRequest()->isPost()) {
-            if ($form->isValid($this->getRequest()->getPost())) {
+        if($this->getRequest()->isPost()) {
+            if($form->isValid($this->getRequest()->getPost())) {
                 $data = $form->getValues();
 
                 $user   = new Application_Model_User($data);
@@ -53,8 +64,8 @@ class IndexController extends Zend_Controller_Action
     {
         $form = new Application_Form_Login();
 
-        if ($this->getRequest()->isPost()) {
-            if ($form->isValid($this->getRequest()->getPost())) {
+        if($this->getRequest()->isPost()) {
+            if($form->isValid($this->getRequest()->getPost())) {
                 $data        = $form->getValues();
                 $authAdapter = new Jgs_Auth_Adapter($data['name'], $data['password']);
             } else {
@@ -63,7 +74,7 @@ class IndexController extends Zend_Controller_Action
             }
             //authenticate
             $result             = $authAdapter->authenticate();
-            if ($result->isValid()) {
+            if($result->isValid()) {
                 //store the user object
                 $auth    = Zend_Auth::getInstance();
                 $storage = $auth->getStorage();
@@ -84,5 +95,4 @@ class IndexController extends Zend_Controller_Action
         $authAdapter = Zend_Auth::getInstance();
         $authAdapter->clearIdentity();
     }
-
 }

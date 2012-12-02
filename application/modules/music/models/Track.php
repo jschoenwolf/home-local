@@ -12,15 +12,15 @@ class Music_Model_Track extends Jgs_Model_Entity_Abstract implements Jgs_Interfa
     protected $play_time;
     protected $title;
     protected $track;
-    protected $albumMapper = null;
+    protected $albumMapper  = null;
     protected $artistMapper = null;
 
     public function getAlbum()
     {
-        if (!is_null($this->album) && $this->album instanceof Music_Model_Album) {
+        if(!is_null($this->album) && $this->album instanceof Music_Model_Album) {
             return $this->album;
         } else {
-            if (!$this->albumMapper) {
+            if(!$this->albumMapper) {
                 $this->albumMapper = new Music_Model_Mapper_Album();
             }
             return $this->albumMapper->findById($this->getReferenceId('album'));
@@ -29,10 +29,10 @@ class Music_Model_Track extends Jgs_Model_Entity_Abstract implements Jgs_Interfa
 
     public function getArtist()
     {
-        if (!is_null($this->artist) && $this->artist instanceof Music_Model_Artist) {
+        if(!is_null($this->artist) && $this->artist instanceof Music_Model_Artist) {
             return $this->artist;
         } else {
-            if (!$this->artistMapper) {
+            if(!$this->artistMapper) {
                 $this->artistMapper = new Music_Model_Mapper_Artist();
             }
             return $this->artistMapper->findById($this->getReferenceId('artist'));
@@ -139,4 +139,3 @@ class Music_Model_Track extends Jgs_Model_Entity_Abstract implements Jgs_Interfa
         return $this;
     }
 }
-
