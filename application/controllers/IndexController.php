@@ -23,18 +23,7 @@ class IndexController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        //$base     = Zend_Controller_Front::getInstance()->getBaseUrl();
-
-        $filename = MEDIA_MUSIC_PATH . '\\Amy Grant\\Age to Age\\07 El-Shaddai.mp3';
-      
-        $km = new Karaoke_Model_Mapper_Karaoke();
-        $k  = $km->findById(45);
-        Zend_Debug::dump($k, "Karaoke entity");
         
-        $model = new Music_Model_AudioInfo($filename);
-        Zend_Debug::dump($model->title, "Title");
-        Zend_Debug::dump($model->getFilename(), "Filename");
-        Zend_Debug::dump($model->getAlbum(), "Album Name");
     }
 
     public function registerAction()

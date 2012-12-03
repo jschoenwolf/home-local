@@ -28,9 +28,9 @@ class Music_Model_Artist extends Jgs_Model_Entity_Abstract implements Jgs_Interf
      */
     public function setName($name)
     {
-        if (!is_string($name) || strlen($name) < 2 || strlen($name) > 255) {
+        if(!is_string($name) || strlen($name) < 2 || strlen($name) > 255) {
             throw new InvalidArgumentException(
-                "The posted value ($name) for 'Artist Name' is invalid"
+            "The posted value ($name) for 'Artist Name' is invalid"
             );
         }
 
@@ -64,4 +64,3 @@ class Music_Model_Artist extends Jgs_Model_Entity_Abstract implements Jgs_Interf
         return $tracks;
     }
 }
-

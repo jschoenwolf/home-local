@@ -13,7 +13,7 @@ echo $this->paginationControl(
         foreach ($this->paginator as $track):;
 
             $artist = $track->getArtist()->name;
-            $album = $track->getalbum()->name;
+            $album = $track->getalbum()->title;
             ?>
             <?php if ($end_artist != $artist): ?>
 
@@ -27,8 +27,8 @@ echo $this->paginationControl(
             <?php if ($end_album != $album): ?>
 
                 <tr class="display">
-                    <th><img src="<?php echo $this->artPath . 'thumbs/' . ucwords($track->getAlbum()->name) . '_thumb.jpg' ?>" alt="Album Art" /></th>
-                    <th><a href="/music/index/album/id/<?php echo $track->getAlbum()->id ?>"><?php echo ucwords($track->getAlbum()->name) ?></a></th>
+                    <th><img src="<?php echo $this->artPath . 'thumbs/' . ucwords($track->getAlbum()->title) . '_thumb.jpg' ?>" alt="Album Art" /></th>
+                    <th><a href="/music/index/album/id/<?php echo $track->getAlbum()->id ?>"><?php echo ucwords($track->getAlbum()->title) ?></a></th>
                     <th><?php echo $track->getAlbum()->year ?></th>
                 </tr>
 
@@ -50,7 +50,7 @@ echo $this->paginationControl(
 
             <?php
             $end_artist = $track->getArtist()->name;
-            $end_album = $track->getAlbum()->name
+            $end_album = $track->getAlbum()->title
             ?>
 
         <?php endforeach ?>

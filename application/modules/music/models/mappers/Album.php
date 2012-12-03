@@ -31,7 +31,7 @@ class Music_Model_Mapper_Album extends Jgs_Model_Mapper_Abstract
 
         $data = array(
             'id' => $row->id,
-            'name' => $row->name,
+            'name' => $row->title,
             'art' => $row->art,
             'year' => $row->year,
             'artist' => $row->artist_id,
@@ -56,7 +56,7 @@ class Music_Model_Mapper_Album extends Jgs_Model_Mapper_Abstract
         } else {
             $row = $this->getGateway()->createRow();
         }
-        $row->name = $album->name;
+        $row->name = $album->title;
         $row->art = $album->art;
         $row->year = $album->year;
         $row->artist_id = $album->artist->id;
@@ -86,7 +86,7 @@ class Music_Model_Mapper_Album extends Jgs_Model_Mapper_Abstract
         if ($album instanceof Music_Model_Album) {
             if (count($album->getTracks()) > 0) {
                 throw new Zend_Db_Table_Exception(
-                    "Album: $album->name still has tracks assigned.");
+                    "Album: $album->title still has tracks assigned.");
             } else {
                 $where = $this->getGateway()->getAdapter()
                     ->quoteInto('id = ?', $album->id);
@@ -95,7 +95,7 @@ class Music_Model_Mapper_Album extends Jgs_Model_Mapper_Abstract
             $result = $this->findById($album);
             if (count($result->getTracks()) > 0) {
                 throw new Zend_Db_Table_Exception(
-                    "Album: $result->name still has tracks assigned.");
+                    "Album: $result->title still has tracks assigned.");
             } else {
                 $where = $this->getGateway()->getAdapter()
                     ->quoteInto('id = ?', $album);

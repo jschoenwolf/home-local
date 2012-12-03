@@ -1,8 +1,8 @@
 <?php
 
-class Music_Model_Album extends Jgs_Model_Entity_Abstract implements Jgs_Interface_Album
+class Music_Model_Album extends Jgs_Model_Entity_Abstract
 {
-    protected $name;
+    protected $title;
     protected $art;
     protected $year;
     protected $artist;
@@ -13,24 +13,24 @@ class Music_Model_Album extends Jgs_Model_Entity_Abstract implements Jgs_Interfa
      *
      * @return string
      */
-    public function getName() {
-        return htmlspecialchars_decode($this->name, ENT_QUOTES);
+    public function getTitle() {
+        return htmlspecialchars_decode($this->title, ENT_QUOTES);
     }
 
     /**
      * Set Album name
      *
-     * @param string $name
+     * @param string $title
      * @return \Music_Model_Album
      * @throws InvalidArgumentException
      */
-    public function setName($name) {
-        if (!is_string($name) || strlen($name) < 2 || strlen($name) > 255) {
+    public function setTitle($title) {
+        if (!is_string($title) || strlen($title) < 2 || strlen($title) > 255) {
             throw new InvalidArgumentException(
                     "The posted 'Album Name' is invalid"
             );
         }
-        $this->name = htmlspecialchars(trim($name), ENT_QUOTES);
+        $this->title = htmlspecialchars(trim($title), ENT_QUOTES);
         return $this;
     }
 

@@ -1,25 +1,10 @@
 <?php
-/**
- * getID3() settings
- */
-require_once('getid3.php');
 
 /**
  * Class for extracting information from audio files with getID3().
  */
-class Music_Model_AudioInfo extends Jgs_Model_Entity_Abstract
+class Music_Model_TagInfo extends Jgs_Model_Entity_Abstract
 {
-    /**
-     * Private scope variables
-     */
-    private $result;
-    private $data;
-    private $getID3     = null;
-    /**
-     *
-     * @var string path to file to scanned
-     */
-    protected $fileToScan;
     /**
      * data to be extracted and forwarded.
      */
@@ -33,8 +18,7 @@ class Music_Model_AudioInfo extends Jgs_Model_Entity_Abstract
     protected $playtime_string; //example 3:45 minutes:seconds
     protected $playtime_seconds; //example 225.13 seconds
     protected $year;
-    protected $track;
-    protected $attachment = null;//this will be the cover art at some pont.
+    protected $track_number;
     protected $md5; //md5 hash data
     protected $path; //path without file name
     /**
@@ -43,49 +27,9 @@ class Music_Model_AudioInfo extends Jgs_Model_Entity_Abstract
      * @throws InvalidArgumentException
      */
 
-    public function __construct($file, array $options = NULL)
+    public function __construct(array $options = NULL)
     {
-        if(is_readable($file)) {
-            $this->fileToScan = $file;
-        } else {
-            throw new InvalidArgumentException('File not readable.');
-        }
-        if(is_null($this->getID3)) {
-            $this->getID3 = new getID3();
-        }
-        $this->getInfo();
-
         parent::__construct($options);
-    }
-
-    public function __toString()
-    {
-        $vars = get_class_vars($this);
-    }
-
-    public function getInfo()
-    {
-        // Analyze file
-        $this->data = $this->getID3->analyze($this->fileToScan);
-
-        // Exit here on error
-        if(isset($this->data['error'])) {
-            return array('error' => $this->data['error']);
-        }
-
-        $this->setFilename($this->data['filename']);
-        $this->setAlbum($this->data['tags_html']['id3v2']['album'][0]);
-        $this->setArtist($this->data['tags_html']['id3v2']['artist'][0]);
-        $this->setBitrate($this->data['bitrate']);
-        $this->setFormat($this->data['fileformat']);
-        $this->setGenre($this->data['tags_html']['id3v2']['genre'][0]);
-        $this->setMd5($this->data['md5_data']);
-        $this->setPath($this->data['filepath']);
-        $this->setPlaytime_seconds($this->data['playtime_seconds']);
-        $this->setPlaytime_string($this->data['playtime_string']);
-        $this->setTitle($this->data['tags_html']['id3v2']['title'][0]);
-        $this->setTrack($this->data['tags_html']['id3v2']['track_number'][0]);
-        $this->setYear($this->data['tags_html']['id3v2']['year'][0]);
     }
 
     public function getAlbum()
@@ -198,25 +142,14 @@ class Music_Model_AudioInfo extends Jgs_Model_Entity_Abstract
         return $this;
     }
 
-    public function getTrack()
+    public function getTrack_number()
     {
-        return $this->track;
+        return $this->track_number;
     }
 
-    public function setTrack($track)
+    public function setTrack_number($track)
     {
-        $this->track = $track;
-        return $this;
-    }
-
-    public function getAttachment()
-    {
-        return $this->attachment;
-    }
-
-    public function setAttachment($attachment)
-    {
-        $this->attachment = $attachment;
+        $this->track_number = $track;
         return $this;
     }
 

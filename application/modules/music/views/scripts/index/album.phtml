@@ -9,7 +9,7 @@
                 <table>
                     <thead>
                         <tr>
-                            <th><?php echo $album->name ?></th>
+                            <th><?php echo $album->title ?></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -21,7 +21,7 @@
                         <tr><td colspan="3"></td></tr>
                         <?php foreach ($album->getTracks() as $track): ?>
                             <tr>
-                                <td><?php echo $track->track ?></td>
+                                <td><?php echo $track->track_number ?></td>
                                 <td><?php echo $track->title ?></td>
                                 <td><audio controls="controls" preload="none"><source src="<?php echo $this->path($track->path) ?>" type="audio/mp3" /></audio></td>
                             </tr>

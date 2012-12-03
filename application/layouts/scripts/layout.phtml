@@ -1,10 +1,10 @@
-<?php echo $this->doctype() . "\n" ?>
+<?php echo $this->doctype() . "\n"?>
 <html>
     <head>
-        <?php echo $this->headTitle() . "\n" ?>
-        <?php echo $this->headMeta() . "\n" ?>
-        <?php echo $this->headLink() . "\n" ?>
-        <?php echo $this->headscript() . "\n" ?>
+        <?php echo $this->headTitle() . "\n"?>
+        <?php echo $this->headMeta() . "\n"?>
+        <?php echo $this->headLink() . "\n"?>
+        <?php echo $this->headscript() . "\n"?>
     </head>
     <body>
         <div class="container">
@@ -16,7 +16,7 @@
                                 <h1>HOME</h1>
                             </div>
                             <div id="login" class="span4">
-                                <?php echo $this->layout()->login . "\n" ?>
+                                <?php echo $this->layout()->login . "\n"?>
                             </div>
                         </div>
                         <nav class="row">
@@ -27,7 +27,7 @@
                                     <a href="/video/index">Videos</a>
                                     <a href="/admin/index">Administration</a>
                                     <a href="/karaoke/index">Karaoke</a>
-                                    <?php echo $this->layout()->nav ?>&nbsp;
+                                    <?php echo $this->layout()->nav?>&nbsp;
                                 </div>
                             </div>
                         </nav>
@@ -42,29 +42,30 @@
                         <div class="span9">
                             <div id="flash">
                                 <?php
-                                if (count($this->messages) > 0) {
+                                if(count($this->messages) > 0) {
                                     printf("<h3 id='flash'>%s</h3>", $this->messages[0]);
                                 }
                                 ?>
                             </div>
                             <div id="content">
-                                <?php echo $this->layout()->content; ?>
+                                <?php echo $this->layout()->content;?>
                             </div>
                         </div>
                         <aside class="span3">
                             <div>
-                                <?php echo $this->layout()->search ?>
+                                <?php echo $this->layout()->search?>
                             </div>
                             <div id="subNav">
-                                <?php echo $this->layout()->subNav ?>&nbsp;
+                                <?php echo $this->layout()->subNav?>&nbsp;
                             </div>
                             <div class="sidebar-nav">
                                 <div id="adminMenu">
                                     <h4>Administration Links</h4>
-                                    <a href="/admin/music/read">Scan Music Files</a><br />
+                                    <a href="/admin/music/index">Admin Music Index</a><br />
+                                    <a href="/admin/music/read">Scan Music Files CSV</a><br />
                                     <a href="/admin/moviexml/index">Movie Xml</a><br />
                                     <a href="/admin/music/update">Update Music Info</a>
-                                    <?php echo $this->layout()->adminMenu ?>&nbsp;
+                                    <?php echo $this->layout()->adminMenu?>&nbsp;
                                 </div>
                             </div>
                         </aside>
@@ -86,6 +87,6 @@
         </section>
     </body>
 </html>
-<?php echo $this->inlineScript() ?>
+<?php echo $this->inlineScript()?>
 
 

@@ -28,7 +28,7 @@ class Karaoke_Model_Mapper_Karaoke extends Jgs_Model_Mapper_Abstract
             'artist' => $row->artist,
             'manu' => $row->manu,
             'disc' => $row->disc,
-            'track' => $row->track
+            'track' => $row->track_number
         );
 
         return new Karaoke_Model_Karaoke($data);

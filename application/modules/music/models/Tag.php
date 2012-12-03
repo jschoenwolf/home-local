@@ -26,7 +26,7 @@ class Music_Model_Tag
     public function __construct(array $options = null)
     {
 
-        if (is_array($options)) {
+        if(is_array($options)) {
             $this->setOptions($options);
         }
     }
@@ -42,9 +42,9 @@ class Music_Model_Tag
         /* @var $methods Application_Model_Tag */
         $methods = get_class_methods($this);
 
-        foreach ($options as $key => $value) {
+        foreach($options as $key => $value) {
             $method = 'set' . ucfirst($key);
-            if (in_array($method, $methods)) {
+            if(in_array($method, $methods)) {
                 $this->$method($value);
             }
         }
@@ -60,7 +60,7 @@ class Music_Model_Tag
     public function __set($name, $value)
     {
         $method = 'set' . $name;
-        if (!method_exists($this, $method)) {
+        if(!method_exists($this, $method)) {
             throw new Zend_Exception('Invalid Tag Property');
         }
         $this->$method($value);
@@ -75,7 +75,7 @@ class Music_Model_Tag
     public function __get($name)
     {
         $method = 'get' . $name;
-        if (!method_exists($this, $method)) {
+        if(!method_exists($this, $method)) {
             throw new Zend_Exception('Invalid Tag Property');
         }
         return $this->$method();
@@ -88,19 +88,19 @@ class Music_Model_Tag
         $artistMapper = new Music_Model_Mapper_Artist();
         $albumMapper  = new Music_Model_Mapper_Album();
 
-        if (isset($this->hash)) {
+        if(isset($this->hash)) {
             //see if track already exists by comparing hashs
             $trackRow = $trackMapper->fetchByColumn('hash', $this->getHash());
             //if track does not exist
-            if (is_null($trackRow)) {
+            if(is_null($trackRow)) {
                 //save the artist
                 $artistData = array(
-                    'name'     => $this->getArtist()
+                    'name' => $this->getArtist()
                 );
                 //see it the artist exists by name
-                $artistRow = $artistMapper->fetchByColumn('name', $this->getArtist());
+                $artistRow  = $artistMapper->fetchByColumn('name', $this->getArtist());
                 //does artist exist?
-                if (is_null($artistRow)) {
+                if(is_null($artistRow)) {
                     $artistRow = $artistMapper->save($artistData);
                 }
 
@@ -108,7 +108,7 @@ class Music_Model_Tag
                 //does the album exist?
                 $albumRow = $albumMapper->fetchByColumn('name', $this->getAlbum());
                 //if yes
-                if (is_null($albumRow)) {
+                if(is_null($albumRow)) {
                     $albumData = array(
                         'name'      => $this->getAlbum(),
                         'artist_id' => $artistRow->id,
@@ -116,10 +116,10 @@ class Music_Model_Tag
                         'year'      => $this->getYear()
                     );
                     //get album row
-                    $albumRow   = $albumMapper->save($albumData);
+                    $albumRow  = $albumMapper->save($albumData);
                 }
                 //Save track data
-                $trackData  = array(
+                $trackData = array(
                     'title'     => $this->getTitle(),
                     'filename'  => $this->getFilename(),
                     'path'      => $this->getPath(),
@@ -223,7 +223,7 @@ class Music_Model_Tag
 
     public function setYear($year)
     {
-        $this->year = (int) $year;
+        $this->year = (int)$year;
         return $this;
     }
 
@@ -234,7 +234,7 @@ class Music_Model_Tag
 
     public function setTrack($track)
     {
-        $this->track = (int) $track;
+        $this->track = (int)$track;
         return $this;
     }
 

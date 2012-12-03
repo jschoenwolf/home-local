@@ -12,7 +12,7 @@ class Music_Model_Mapper_Track extends Jgs_Model_Mapper_Abstract
      *
      * @var string $_tableName
      */
-    protected $tableName = 'track';
+    protected $tableName   = 'track';
     /**
      * Name of entity model class as a string.
      *
@@ -54,17 +54,17 @@ class Music_Model_Mapper_Track extends Jgs_Model_Mapper_Abstract
     {
 
         $data = array(
-            'id' => $row->id,
-            'filename' => $row->filename,
-            'format' => $row->format,
-            'genre' => $row->genre,
-            'hash' => $row->hash,
-            'path' => $row->path,
-            'play_time' => $row->play_time,
-            'title' => $row->title,
-            'track' => $row->track,
-            'album' => $row->album_id,
-            'artist' => $row->artist_id
+            'id'           => $row->id,
+            'filename'     => $row->filename,
+            'format'       => $row->format,
+            'genre'        => $row->genre,
+            'hash'         => $row->hash,
+            'path'         => $row->path,
+            'playtime'     => $row->playtime,
+            'title'        => $row->title,
+            'track_number' => $row->track_number,
+            'album'        => $row->album_id,
+            'artist'       => $row->artist_id
         );
 
         return new Music_Model_Track($data);
@@ -79,23 +79,24 @@ class Music_Model_Mapper_Track extends Jgs_Model_Mapper_Abstract
     public function saveTrack(Music_Model_Track $track)
     {
 
-        if (!is_null($track->id) && !is_null($this->findById($track->id))) {
+        if(!is_null($track->id) && !is_null($this->findById($track->id))) {
             $select = $this->getGateway()->select();
             $select->where('id = ?', $track->id);
-            $row = $this->getGateway()->fetchRow($select);
+            $row    = $this->getGateway()->fetchRow($select);
         } else {
             $row = $this->getGateway()->createRow();
         }
-        $row->album_id = $track->album->id;
-        $row->artist_id = $track->artist->id;
-        $row->filename = $track->filename;
-        $row->format = $track->format;
-        $row->genre = $track->genre;
-        $row->hash = $track->hash;
-        $row->path = $track->path;
-        $row->play_time = $track->play_time;
-        $row->title = $track->title;
-        $row->track = $track->track;
+
+        $row->album_id     = $track->album->id;
+        $row->artist_id    = $track->artist->id;
+        $row->filename     = $track->filename;
+        $row->format       = $track->format;
+        $row->genre        = $track->genre;
+        $row->hash         = $track->hash;
+        $row->path         = $track->path;
+        $row->playtime     = $track->playtime;
+        $row->title        = $track->title;
+        $row->track_number = $track->track_number;
 
         $row->save();
         return $row;
@@ -112,11 +113,11 @@ class Music_Model_Mapper_Track extends Jgs_Model_Mapper_Abstract
     public function fetchPagedTracks($id = null, $query = null)
     {
 
-        if (!is_null($id)) {
+        if(!is_null($id)) {
             $select = $this->getGateway()->select();
             $select->where('track.artist_id = ?', $id);
         }
-        if (!is_null($query)) {
+        if(!is_null($query)) {
             $select = $this->getGateway()
                 ->select(Zend_Db_Table::SELECT_WITH_FROM_PART);
             $select->setIntegrityCheck(false);
@@ -142,7 +143,7 @@ class Music_Model_Mapper_Track extends Jgs_Model_Mapper_Abstract
      */
     public function findByIdPaged($column, $value)
     {
-        $select = $this->getGateway()->select();
+        $select  = $this->getGateway()->select();
         $select->where("$column = ?", $value);
         //assign select() to object specific paginator adapter
         $adapter = new Music_Model_Paginator_Track($select);
@@ -159,7 +160,7 @@ class Music_Model_Mapper_Track extends Jgs_Model_Mapper_Abstract
     public function deleteTrack($track)
     {
 
-        if ($track instanceof Music_Model_Track) {
+        if($track instanceof Music_Model_Track) {
             $where = $this->getGateway()->getAdapter()
                 ->quoteInto('id = ?', $track->id);
         } else {

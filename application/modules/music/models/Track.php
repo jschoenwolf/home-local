@@ -9,9 +9,9 @@ class Music_Model_Track extends Jgs_Model_Entity_Abstract implements Jgs_Interfa
     protected $genre;
     protected $hash;
     protected $path;
-    protected $play_time;
+    protected $playtime;
     protected $title;
-    protected $track;
+    protected $track_number;
     protected $albumMapper  = null;
     protected $artistMapper = null;
 
@@ -64,9 +64,9 @@ class Music_Model_Track extends Jgs_Model_Entity_Abstract implements Jgs_Interfa
         return $this->path;
     }
 
-    public function getPlay_time()
+    public function getPlaytime()
     {
-        return $this->play_time;
+        return $this->playtime;
     }
 
     public function getTitle()
@@ -74,9 +74,9 @@ class Music_Model_Track extends Jgs_Model_Entity_Abstract implements Jgs_Interfa
         return ucwords($this->title);
     }
 
-    public function getTrack()
+    public function getTrack_number()
     {
-        return $this->track;
+        return $this->track_number;
     }
 
     public function setAlbum($album)
@@ -121,9 +121,9 @@ class Music_Model_Track extends Jgs_Model_Entity_Abstract implements Jgs_Interfa
         return $this;
     }
 
-    public function setPlay_time($play_time)
+    public function setPlaytime($play_time)
     {
-        $this->play_time = $play_time;
+        $this->playtime = $play_time;
         return $this;
     }
 
@@ -133,9 +133,9 @@ class Music_Model_Track extends Jgs_Model_Entity_Abstract implements Jgs_Interfa
         return $this;
     }
 
-    public function setTrack($track)
+    public function setTrack_number($track)
     {
-        $this->track = $track;
+        $this->track_number = $track;
         return $this;
     }
 }

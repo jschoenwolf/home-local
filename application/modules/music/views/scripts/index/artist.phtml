@@ -12,7 +12,7 @@ echo $this->paginationControl(
                 <table>
                     <thead>
                         <tr>
-                            <th><a href="/music/index/album/id/<?php echo $album->id ?>"><?php echo $album->name ?></a></th>
+                            <th><a href="/music/index/album/id/<?php echo $album->id ?>"><?php echo $album->title ?></a></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -58,7 +58,7 @@ echo $this->paginationControl(
                             </tr>
                             <tr><td colspan="3"></td></tr>
                             <tr>
-                                <td><?php echo $mp3->track ?></td>
+                                <td><?php echo $mp3->track_number ?></td>
                                 <td><?php echo $mp3->title ?></td>
                                 <td><audio controls="controls" preload="none"><source src="<?php echo $this->path($mp3->path) ?>" type="audio/mp3" /></audio></td>
                             </tr>
