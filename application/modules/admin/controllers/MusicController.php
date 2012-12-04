@@ -34,7 +34,12 @@ class Admin_MusicController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        
+        $base    = Zend_Controller_Front::getInstance()->getBaseUrl();
+        $dir     = realpath(MEDIA_MUSIC_PATH);
+        Zend_Debug::dump($dir, "Directory");
+        $scanner = new Jgs_DirectoryItems($dir);
+        Zend_Debug::dump($scanner, "Scanner");
+        Zend_Debug::dump($scanner->getDirectoryName());
     }
 
     public function scanAction()
