@@ -5,280 +5,155 @@
  */
 class Music_Model_Tag
 {
-    protected $album;
-    protected $artist;
-    protected $bitrate;
-    protected $title;
-    protected $filename;
-    protected $format;
-    protected $genre;
-    protected $play_time;
-    protected $year;
-    protected $track;
-    protected $art = null;
-    protected $hash;
-    protected $path;
+    /**
+     * Music_Model_TagInfo object
+     */
+    public $taginfo;
+    /**
+     * Mappers
+     */
+    protected $albumMapper;
+    protected $artistMapper;
+    protected $trackMapper;
+    /**
+     * Foreign Keys
+     */
+    public $album_id;
+    public $artist_id;
 
     /**
      *
-     * @param array $options
+     * @param object Music_Model_TagInfo
+     * @return boolean
      */
-    public function __construct(array $options = null)
+    public function __construct(Music_Model_TagInfo $tagInfo)
     {
+        $this->taginfo = $tagInfo;
 
-        if(is_array($options)) {
-            $this->setOptions($options);
+        if (is_null($this->albumMapper)) {
+            $this->albumMapper = new Music_Model_Mapper_Album();
+        }
+        if (is_null($this->artistMapper)) {
+            $this->artistMapper = new Music_Model_Mapper_Artist();
+        }
+        if (is_null($this->trackMapper)) {
+            $this->trackMapper = new Music_Model_Mapper_Track();
         }
     }
 
     /**
+     * Does record already exist in DB
      *
-     * @param array $options
-     * @return \Application_Model_Tag
+     * Pass in the mapper to use as a string.
+     * Will trigger predefined validator DbNoRecordExists
+     *
+     * @param string $mapper accepted values are: 'album' 'artist' 'track'
+     * @return boolean returns true if no record exists
      */
-    public function setOptions(array $options)
+    protected function dbNoExist($mapper)
     {
+        switch ($mapper) {
+            case 'album':
+                $value   = $this->taginfo->getAlbum();
+                $options = array(
+                    'table'  => 'album',
+                    'field'  => 'title'
+                );
+                break;
+            case 'artist':
+                $value   = $this->taginfo->getArtist();
+                $options = array(
+                    'table'  => 'artist',
+                    'field'  => 'name'
+                );
+                break;
+            case 'track':
+                $value   = $this->taginfo->getMd5();
+                $options = array(
+                    'table' => 'track',
+                    'field' => 'hash'
+                );
 
-        /* @var $methods Application_Model_Tag */
-        $methods = get_class_methods($this);
-
-        foreach($options as $key => $value) {
-            $method = 'set' . ucfirst($key);
-            if(in_array($method, $methods)) {
-                $this->$method($value);
-            }
+            default:
+                break;
         }
-        return $this;
+        $validator = new Zend_Validate_Db_NoRecordExists($options);
+        if ($validator->isValid($value)) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
     }
 
-    /**
-     *
-     * @param type $name
-     * @param type $value
-     * @throws Zend_Exception
-     */
-    public function __set($name, $value)
+    public function albums()
     {
-        $method = 'set' . $name;
-        if(!method_exists($this, $method)) {
-            throw new Zend_Exception('Invalid Tag Property');
+        if ($this->dbNoExist('album')) {
+            $album = new Music_Model_Album(array(
+                    'title'  => $this->taginfo->getAlbum(),
+                    'artist' => $this->artist_id,
+                    'art'    => $this->taginfo->getAlbum() . '.jpg',
+                    'year'   => $this->taginfo->getYear()
+                ));
+
+            $record = $this->albumMapper->saveAlbum($album);
+
+            $this->album_id = $record->getId();
+            return $record;
+        } else {
+            $record = $this->albumMapper->findOneByColumn(
+                'title', $this->taginfo->getAlbum());
+
+            $this->album_id = $record->getId();
+            return $record;
         }
-        $this->$method($value);
     }
 
-    /**
-     *
-     * @param type $name
-     * @return type
-     * @throws Zend_Exception
-     */
-    public function __get($name)
+    public function artists()
     {
-        $method = 'get' . $name;
-        if(!method_exists($this, $method)) {
-            throw new Zend_Exception('Invalid Tag Property');
+        if ($this->dbNoExist('artist')) {
+            $artist = new Music_Model_Artist(array(
+                    'name'  => $this->taginfo->getArtist()
+                ));
+            $record = $this->artistMapper->saveArtist($artist);
+
+            $this->artist_id = $record->getId();
+            return $record;
+        } else {
+            $record = $this->artistMapper->findOneByColumn(
+                'name', $this->taginfo->getArtist());
+
+            $this->artist_id = $record->getId();
+            return $record;
         }
-        return $this->$method();
+    }
+
+    public function tracks()
+    {
+        if ($this->dbNoExist('track')) {
+
+            $track = new Music_Model_Track(array(
+                    'title'        => $this->taginfo->getTitle(),
+                    'filename'     => $this->taginfo->getFilename(),
+                    'path'         => $this->taginfo->getPath(),
+                    'format'       => $this->taginfo->getFormat(),
+                    'genre'        => $this->taginfo->getGenre(),
+                    'artist'       => $this->artist_id,
+                    'album'        => $this->album_id,
+                    'track_number' => $this->taginfo->getTrack_number(),
+                    'playtime'     => $this->taginfo->getPlaytime_seconds(),
+                    'hash'         => $this->taginfo->getMd5()
+                ));
+
+            $record = $this->trackMapper->saveTrack($track);
+            return $record;
+        } else {
+            return $this->trackMapper->findOneByColumn(
+                    'title', $this->taginfo->getTitle());
+        }
     }
 
     public function saveTags()
     {
 
-        $trackMapper  = new Music_Model_Mapper_Track();
-        $artistMapper = new Music_Model_Mapper_Artist();
-        $albumMapper  = new Music_Model_Mapper_Album();
-
-        if(isset($this->hash)) {
-            //see if track already exists by comparing hashs
-            $trackRow = $trackMapper->fetchByColumn('hash', $this->getHash());
-            //if track does not exist
-            if(is_null($trackRow)) {
-                //save the artist
-                $artistData = array(
-                    'name' => $this->getArtist()
-                );
-                //see it the artist exists by name
-                $artistRow  = $artistMapper->fetchByColumn('name', $this->getArtist());
-                //does artist exist?
-                if(is_null($artistRow)) {
-                    $artistRow = $artistMapper->save($artistData);
-                }
-
-                //Save the Album Data
-                //does the album exist?
-                $albumRow = $albumMapper->fetchByColumn('name', $this->getAlbum());
-                //if yes
-                if(is_null($albumRow)) {
-                    $albumData = array(
-                        'name'      => $this->getAlbum(),
-                        'artist_id' => $artistRow->id,
-                        'art'       => $this->getAlbum() . '.jpg',
-                        'year'      => $this->getYear()
-                    );
-                    //get album row
-                    $albumRow  = $albumMapper->save($albumData);
-                }
-                //Save track data
-                $trackData = array(
-                    'title'     => $this->getTitle(),
-                    'filename'  => $this->getFilename(),
-                    'path'      => $this->getPath(),
-                    'format'    => $this->getFormat(),
-                    'genre'     => $this->getGenre(),
-                    'artist_id' => $artistRow->id,
-                    'album_id'  => $albumRow->id,
-                    'track'     => $this->getTrack(),
-                    'play_time' => $this->getPlay_time(),
-                    'hash'      => $this->getHash()
-                );
-                //save track data
-                $trackMapper->save($trackData);
-            }
-        } else {
-            return;
-        }
-    }
-
-    public function getAlbum()
-    {
-        return $this->album;
-    }
-
-    public function setAlbum($album)
-    {
-        $this->album = $album;
-        return $this;
-    }
-
-    public function getArtist()
-    {
-        return $this->artist;
-    }
-
-    public function setArtist($artist)
-    {
-        $this->artist = $artist;
-        return $this;
-    }
-
-    public function getBitrate()
-    {
-        return $this->bitrate;
-    }
-
-    public function setBitrate($bitrate)
-    {
-        $this->bitrate = $bitrate;
-        return $this;
-    }
-
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
-    public function setTitle($title)
-    {
-        $this->title = $title;
-        return $this;
-    }
-
-    public function getFilename()
-    {
-        return $this->filename;
-    }
-
-    public function setFilename($filename)
-    {
-        $this->filename = $filename;
-        return $this;
-    }
-
-    public function getFormat()
-    {
-        return $this->format;
-    }
-
-    public function setFormat($file_format)
-    {
-        $this->format = $file_format;
-        return $this;
-    }
-
-    public function getPlay_time()
-    {
-        return $this->play_time;
-    }
-
-    public function setPlay_time($playtime)
-    {
-        $this->play_time = $playtime;
-        return $this;
-    }
-
-    public function getYear()
-    {
-        return $this->year;
-    }
-
-    public function setYear($year)
-    {
-        $this->year = (int)$year;
-        return $this;
-    }
-
-    public function getTrack()
-    {
-        return $this->track;
-    }
-
-    public function setTrack($track)
-    {
-        $this->track = (int)$track;
-        return $this;
-    }
-
-    public function getArt()
-    {
-        return $this->art;
-    }
-
-    public function setArt($art)
-    {
-        $this->art = $art;
-        return $this;
-    }
-
-    public function getHash()
-    {
-        return $this->hash;
-    }
-
-    public function setHash($hash)
-    {
-        $this->hash = $hash;
-        return $this;
-    }
-
-    public function getGenre()
-    {
-        return $this->genre;
-    }
-
-    public function setGenre($genre)
-    {
-        $this->genre = $genre;
-        return $this;
-    }
-
-    public function getPath()
-    {
-        return $this->path;
-    }
-
-    public function setPath($path)
-    {
-        $this->path = $path;
-        return $this;
     }
 }

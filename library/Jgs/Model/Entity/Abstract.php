@@ -29,7 +29,7 @@ abstract class Jgs_Model_Entity_Abstract
      */
     public function __construct(array $options = null)
     {
-        if(is_array($options)) {
+        if (is_array($options)) {
             $this->setOptions($options);
         }
     }
@@ -43,10 +43,10 @@ abstract class Jgs_Model_Entity_Abstract
     {
         $methods = get_class_methods($this);
 
-        foreach($options as $key => $value) {
+        foreach ($options as $key => $value) {
 
             $method = 'set' . ucfirst($key);
-            if(in_array($method, $methods)) {
+            if (in_array($method, $methods)) {
                 $this->$method($value);
             }
         }
@@ -61,13 +61,13 @@ abstract class Jgs_Model_Entity_Abstract
     {
         $property = strtolower($name);
 
-        if(!property_exists($this, $property)) {
+        if (!property_exists($this, $property)) {
             throw new \InvalidArgumentException("Setting the property '$property'
                     is not valid for this entity");
         }
         $mutator = 'set' . ucfirst(strtolower($name));
 
-        if(method_exists($this, $mutator) && is_callable(array($this, $mutator))) {
+        if (method_exists($this, $mutator) && is_callable(array($this, $mutator))) {
             $this->$mutator($value);
         } else {
             $this->$property = $value;
@@ -85,13 +85,13 @@ abstract class Jgs_Model_Entity_Abstract
     {
         $property = strtolower($name);
 
-        if(!property_exists($this, $property)) {
+        if (!property_exists($this, $property)) {
             throw new \InvalidArgumentException(
-            "Getting the property '$property' is not valid for this entity");
+                "Getting the property '$property' is not valid for this entity");
         }
         $accessor = 'get' . ucfirst(strtolower($name));
         return (method_exists($this, $accessor) && is_callable(array(
-                $this, $accessor)))?$this->$accessor():$this->$property;
+                $this, $accessor))) ? $this->$accessor() : $this->$property;
     }
 
     /**
@@ -103,9 +103,9 @@ abstract class Jgs_Model_Entity_Abstract
     {
         $vars  = get_object_vars($this);
         $array = array();
-        foreach($vars as $key => $value) {
-            if((stripos($key, 'mapper') || stripos($key, 'references')) === false) {
-                if(is_null($value)) {
+        foreach ($vars as $key => $value) {
+            if ((stripos($key, 'mapper') || stripos($key, 'references')) === false) {
+                if (is_null($value)) {
                     $array[$key] = $this->getReferenceId($key);
                 } else {
                     $array[$key] = $value;
@@ -124,7 +124,7 @@ abstract class Jgs_Model_Entity_Abstract
     public function setId($id)
     {
         $validator = new Jgs_Validator_Id();
-        if($validator->isValid($id)) {
+        if ($validator->isValid($id)) {
             $this->id = $id;
             return $this;
         } else {
@@ -161,7 +161,7 @@ abstract class Jgs_Model_Entity_Abstract
      */
     public function getReferenceId($name)
     {
-        if(isset($this->references[$name])) {
+        if (isset($this->references[$name])) {
 
             return $this->references[$name];
         }

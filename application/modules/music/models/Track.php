@@ -1,6 +1,6 @@
 <?php
 
-class Music_Model_Track extends Jgs_Model_Entity_Abstract implements Jgs_Interface_Track
+class Music_Model_Track extends Jgs_Model_Entity_Abstract
 {
     protected $album;
     protected $artist;

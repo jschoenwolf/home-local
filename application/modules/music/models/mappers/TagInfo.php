@@ -36,6 +36,7 @@ class Music_Model_Mapper_TagInfo extends Jgs_Model_Mapper_Abstract
             'title'            => $row->title,
             'filename'         => $row->filename,
             'format'           => $row->format,
+            'genre'            => $row->genre,
             'playtime_seconds' => $row->playtime_seconds,
             'playtime_string'  => $row->playtime_string,
             'track_number'     => $row->track_number,

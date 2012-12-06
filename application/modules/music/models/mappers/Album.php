@@ -30,10 +30,10 @@ class Music_Model_Mapper_Album extends Jgs_Model_Mapper_Abstract
     {
 
         $data = array(
-            'id' => $row->id,
-            'name' => $row->title,
-            'art' => $row->art,
-            'year' => $row->year,
+            'id'     => $row->id,
+            'title'  => $row->title,
+            'art'    => $row->art,
+            'year'   => $row->year,
             'artist' => $row->artist_id,
         );
 
@@ -52,14 +52,16 @@ class Music_Model_Mapper_Album extends Jgs_Model_Mapper_Abstract
         if (!is_null($album->id) && !is_null($this->findById($album->id))) {
             $select = $this->getGateway()->select();
             $select->where('id = ?', $album->id);
+
             $row = $this->getGateway()->fetchRow($select);
         } else {
-            $row = $this->getGateway()->createRow();
+
+            $row            = $this->getGateway()->createRow();
         }
-        $row->name = $album->title;
-        $row->art = $album->art;
-        $row->year = $album->year;
-        $row->artist_id = $album->artist->id;
+        $row->title     = $album->title;
+        $row->art       = $album->art;
+        $row->year      = $album->year;
+        $row->artist_id = $album->getArtist()->id;
 
         $row->save();
         return $row;

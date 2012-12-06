@@ -16,19 +16,14 @@ class Jgs_DirectoryItems
         $this->directory        = $directory;
         $this->replaceCharacter = $replaceCharacter;
 
-        $dir = new RecursiveDirectoryIterator($directory);
-        $it  = new RecursiveIteratorIterator($dir, RecursiveIteratorIterator::SELF_FIRST);
+        $dir = new RecursiveDirectoryIterator($directory, FilesystemIterator::SKIP_DOTS);
+        $it  = new RecursiveIteratorIterator($dir);
 
-        //foreach($it as $fullFileName => $fileSplObject) {
-        //  if($fileSplObject->isDir()) {
-        //     echo utf8_encode($fullFileName) . ' ' . utf8_encode($fileSplObject->getFilename()) . '<br \>';
-        //     Zend_Debug::dump($fullFileName, "Full File Name");
-        //     Zend_Debug::dump($fileSplObject, "Spl File Info");
-        // }
-        // }
-        foreach($it as $value) {
-            Zend_Debug::dump($value, "Iterator");
+        $files = array();
+        foreach ($it as $value) {
+            $files[$value->getFilename()] = $value;
         }
+        return $files;
     }
 
     public function __destruct()
@@ -57,11 +52,11 @@ class Jgs_DirectoryItems
         //$extension = "";
         $types   = array("jpg", "jpeg", "gif", "png");
 
-        foreach($this->fileArray as $key => $value) {
+        foreach ($this->fileArray as $key => $value) {
             $extension = substr($value, (strpos($value, ".") + 1));
             $extension = strtolower($extension);
 
-            if(!in_array($extension, $types)) {
+            if (!in_array($extension, $types)) {
                 $boolean = FALSE;
                 break;
             }
@@ -75,11 +70,11 @@ class Jgs_DirectoryItems
         $boolean   = TRUE;
         //$ext       = "";
 
-        foreach($this->fileArray as $key => $value) {
+        foreach ($this->fileArray as $key => $value) {
             $extString = substr($key, (strpos($key, ".") + 1));
             $ext       = strtolower($extString);
 
-            if($extension != $ext) {
+            if ($extension != $ext) {
                 $boolean = FALSE;
                 break;
             }
@@ -107,11 +102,11 @@ class Jgs_DirectoryItems
 
         $extension = strtolower($extension);
 
-        foreach($this->fileArray as $key => $value) {
+        foreach ($this->fileArray as $key => $value) {
             $extString = substr($key, (strpos($key, ".") + 1));
             $ext       = strtolower($extString);
 
-            if($ext != $extension) {
+            if ($ext != $extension) {
                 unset($this->fileArray [$key]);
             }
         }
@@ -122,11 +117,11 @@ class Jgs_DirectoryItems
         // $extension = "";
         $types = array("jpg", "jpeg", "gif", "png");
 
-        foreach($this->fileArray as $key => $value) {
+        foreach ($this->fileArray as $key => $value) {
             $ext       = substr($key, (strpos($key, ".") + 1));
             $extension = strtolower($ext);
 
-            if(!in_array($extension, $types)) {
+            if (!in_array($extension, $types)) {
                 unset($this->fileArray[$key]);
             }
         }
@@ -138,9 +133,9 @@ class Jgs_DirectoryItems
         //$dir = "";
         $dir = opendir($this->directory) or die("Couldn't open the directory");
 
-        while(FALSE !== ($file = readdir($dir))) {
+        while (FALSE !== ($file = readdir($dir))) {
 
-            if(is_file("$this->directory/$file")) {
+            if (is_file("$this->directory/$file")) {
                 $title                  = $this->createTitle($file);
                 $this->fileArray[$file] = $title;
             }

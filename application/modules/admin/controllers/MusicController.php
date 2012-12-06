@@ -34,13 +34,35 @@ class Admin_MusicController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        $base = Zend_Controller_Front::getInstance()->getBaseUrl();
-        $dir  = realpath(MEDIA_MUSIC_PATH);
+        $base  = Zend_Controller_Front::getInstance()->getBaseUrl();
+        $dir   = realpath(MEDIA_MUSIC_PATH);
         Zend_Debug::dump($dir, "Directory");
-//        $dirIt = new RecursiveDirectoryIterator($dir, FilesystemIterator::SKIP_DOTS);
-//        $it    = new RecursiveIteratorIterator($dirIt);
-        foreach (spl_classes() as $key => $value) {
-            echo $key . ' -&gt; ' . $value . '<br />';
+        $dirIt = new RecursiveDirectoryIterator($dir, FilesystemIterator::SKIP_DOTS);
+        $it    = new RecursiveIteratorIterator($dirIt);
+        $songs = array();
+        foreach ($it as $value) {
+            if (stripos($value, '.mp3') || stripos($value, '.aac')) {
+                $songs[$value->getFilename()] = $value;
+            }
+        }
+
+        $song    = array_shift($songs);
+        $tag     = new Music_Model_Mapper_TagInfo($song->getPathName());
+        $tagInfo = $tag->getInfo();
+        $model   = new Music_Model_Tag($tagInfo);
+
+        if (!$model === FALSE) {
+            $artist = $model->artists();
+            $album  = $model->albums();
+            $track = $model->tracks();
+            Zend_Debug::dump($artist, 'Artist');
+            Zend_Debug::dump($album, 'Album');
+            Zend_Debug::dump($track, 'Track');
+            //Zend_Debug::dump($model->taginfo, 'Tag Info');
+            Zend_Debug::dump($model->artist_id, 'artist_id');
+            Zend_Debug::dump($model->album_id, 'album_id');
+        } else {
+            Zend_Debug::dump('FALSE');
         }
     }
 
