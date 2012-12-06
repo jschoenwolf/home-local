@@ -17,7 +17,7 @@ class Jgs_DirectoryItems
         $this->replaceCharacter = $replaceCharacter;
 
         $dir = new RecursiveDirectoryIterator($directory);
-        $it  = new RecursiveIteratorIterator($dir, RecursiveIteratorIterator::CHILD_FIRST);
+        $it  = new RecursiveIteratorIterator($dir, RecursiveIteratorIterator::SELF_FIRST);
 
         //foreach($it as $fullFileName => $fileSplObject) {
         //  if($fileSplObject->isDir()) {

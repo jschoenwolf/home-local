@@ -21,8 +21,9 @@ class Music_Model_TagInfo extends Jgs_Model_Entity_Abstract
     protected $track_number;
     protected $md5; //md5 hash data
     protected $path; //path without file name
+
     /**
-     * 
+     *
      * @param string $file
      * @throws InvalidArgumentException
      */

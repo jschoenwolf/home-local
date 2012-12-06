@@ -27,24 +27,26 @@ class Admin_MusicController extends Zend_Controller_Action
     {
 
         $this->message = $this->getHelper('FlashMessenger');
-        if($this->message->hasMessages()) {
+        if ($this->message->hasMessages()) {
             $this->view->messages = $this->message->getMessages();
         }
     }
 
     public function indexAction()
     {
-        $base    = Zend_Controller_Front::getInstance()->getBaseUrl();
-        $dir     = realpath(MEDIA_MUSIC_PATH);
+        $base = Zend_Controller_Front::getInstance()->getBaseUrl();
+        $dir  = realpath(MEDIA_MUSIC_PATH);
         Zend_Debug::dump($dir, "Directory");
-        $scanner = new Jgs_DirectoryItems($dir);
-        Zend_Debug::dump($scanner, "Scanner");
-        Zend_Debug::dump($scanner->getDirectoryName());
+//        $dirIt = new RecursiveDirectoryIterator($dir, FilesystemIterator::SKIP_DOTS);
+//        $it    = new RecursiveIteratorIterator($dirIt);
+        foreach (spl_classes() as $key => $value) {
+            echo $key . ' -&gt; ' . $value . '<br />';
+        }
     }
 
     public function scanAction()
     {
-        
+
     }
 
     public function readAction()
@@ -55,15 +57,15 @@ class Admin_MusicController extends Zend_Controller_Action
 
         $tags = new Music_Model_Tag();
         try {
-            if($this->getRequest()->isPost()) {
-                if($form->isValid($this->getRequest()->getPost())) {
+            if ($this->getRequest()->isPost()) {
+                if ($form->isValid($this->getRequest()->getPost())) {
                     $file = $form->file->getFileName();
                     $form->getValues();
-                    if($form->file->isUploaded()) {
+                    if ($form->file->isUploaded()) {
                         $tracks = $this->_utilities->csvToArray($file);
                     }
-                    foreach($tracks as $track) {
-                        if(is_array($track)) {
+                    foreach ($tracks as $track) {
+                        if (is_array($track)) {
                             $tags->setOptions($track);
                             $tags->saveTags();
                         }
@@ -73,7 +75,7 @@ class Admin_MusicController extends Zend_Controller_Action
                 }
             }
             $this->view->form = $form;
-        } catch(Zend_Exception $e) {
+        } catch (Zend_Exception $e) {
             $this->_helper->flashMessenger->addMessage($e->getMessage());
             $this->_redirect('/admin/index');
         }
@@ -87,7 +89,7 @@ class Admin_MusicController extends Zend_Controller_Action
 
         $model = new Music_Model_Mapper_Artist();
 
-        if(isset($query)) {
+        if (isset($query)) {
             $adapter = $model->findByColumnPaged('name', $query);
         } else {
             $adapter = $model->fetchAllPaged();
@@ -114,8 +116,8 @@ class Admin_MusicController extends Zend_Controller_Action
         $form = new Admin_Form_Track();
         $form->setAction('/admin/music/updatetrack/');
 
-        if($this->getRequest()->isPost()) {
-            if($form->isValid($this->getRequest()->getPost())) {
+        if ($this->getRequest()->isPost()) {
+            if ($form->isValid($this->getRequest()->getPost())) {
                 $data = $form->getValues();
 
                 $newTrack = new Music_Model_Track($data);
@@ -142,8 +144,8 @@ class Admin_MusicController extends Zend_Controller_Action
         $form = new Admin_Form_Album();
         $form->setAction('/admin/music/updatealbum/');
 
-        if($this->getRequest()->isPost()) {
-            if($form->isValid($this->getRequest()->getPost())) {
+        if ($this->getRequest()->isPost()) {
+            if ($form->isValid($this->getRequest()->getPost())) {
                 $data = $form->getValues();
 
                 $newAlbum = new Music_Model_Album($data);
@@ -170,8 +172,8 @@ class Admin_MusicController extends Zend_Controller_Action
         $form = new Admin_Form_Artist();
         $form->setAction('/admin/music/updateartist/');
 
-        if($this->getRequest()->isPost()) {
-            if($form->isValid($this->getRequest()->getPost())) {
+        if ($this->getRequest()->isPost()) {
+            if ($form->isValid($this->getRequest()->getPost())) {
                 $data = $form->getValues();
 
                 $newArtist = new Music_Model_Artist($data);
@@ -219,7 +221,7 @@ class Admin_MusicController extends Zend_Controller_Action
                     break;
             }
             $this->getHelper('Redirector')->gotoSimple('update', null, null, array('page' => $session->page));
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             $this->message->addMessage($e->getMessage());
             $this->getHelper('Redirector')->gotoSimple('update', null, null, array('page' => $session->page));
         }

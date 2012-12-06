@@ -16,14 +16,14 @@ class IndexController extends Zend_Controller_Action
         $this->message = $this->getHelper('FlashMessenger');
         $this->session = new Zend_Session_Namespace('home');
 
-        if($this->message->hasMessages()) {
+        if ($this->message->hasMessages()) {
             $this->view->messages = $this->message->getMessages();
         }
     }
 
     public function indexAction()
     {
-        
+
     }
 
     public function registerAction()
@@ -31,8 +31,8 @@ class IndexController extends Zend_Controller_Action
         $form = new Application_Form_User();
         $form->setDescription('Hello');
         $form->removeElement('id');
-        if($this->getRequest()->isPost()) {
-            if($form->isValid($this->getRequest()->getPost())) {
+        if ($this->getRequest()->isPost()) {
+            if ($form->isValid($this->getRequest()->getPost())) {
                 $data = $form->getValues();
 
                 $user   = new Application_Model_User($data);
@@ -53,8 +53,8 @@ class IndexController extends Zend_Controller_Action
     {
         $form = new Application_Form_Login();
 
-        if($this->getRequest()->isPost()) {
-            if($form->isValid($this->getRequest()->getPost())) {
+        if ($this->getRequest()->isPost()) {
+            if ($form->isValid($this->getRequest()->getPost())) {
                 $data        = $form->getValues();
                 $authAdapter = new Jgs_Auth_Adapter($data['name'], $data['password']);
             } else {
@@ -63,7 +63,7 @@ class IndexController extends Zend_Controller_Action
             }
             //authenticate
             $result             = $authAdapter->authenticate();
-            if($result->isValid()) {
+            if ($result->isValid()) {
                 //store the user object
                 $auth    = Zend_Auth::getInstance();
                 $storage = $auth->getStorage();
