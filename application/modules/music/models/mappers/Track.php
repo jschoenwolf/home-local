@@ -127,7 +127,7 @@ class Music_Model_Mapper_Track extends Jgs_Model_Mapper_Abstract
         }
         $select->order('track.artist_id ASC');
         $select->order('track.album_id ASC');
-        $select->order('track.track ASC');
+        $select->order('track.track_number ASC');
 
         $adapter = new Music_Model_Paginator_Track($select);
 

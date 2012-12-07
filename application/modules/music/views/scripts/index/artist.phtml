@@ -25,7 +25,7 @@ echo $this->paginationControl(
                         <?php foreach ($album->getTracks() as $track): ?>
                             <?php if ($track->artist->id == $album->artist->id): ?>
                                 <tr>
-                                    <td><?php echo $track->getTrack() ?></td>
+                                    <td><?php echo $track->getTrack_number() ?></td>
                                     <td><?php echo $track->getTitle() ?></td>
                                     <td><audio controls="controls" preload="none"><source src="<?php echo $this->path($track->path) ?>" type="audio/mp3" /></audio></td>
                                 </tr>

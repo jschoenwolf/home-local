@@ -120,7 +120,7 @@ class Music_Model_Album extends Jgs_Model_Entity_Abstract
      */
     public function getTracks() {
         $mapper = new Music_Model_Mapper_Track();
-        $tracks = $mapper->findByColumn('album_id', $this->id, 'track ASC');
+        $tracks = $mapper->findByColumn('album_id', $this->id, 'track_number ASC');
 
         return $tracks;
     }
