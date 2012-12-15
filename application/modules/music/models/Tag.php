@@ -23,13 +23,13 @@ class Music_Model_Tag
 
     /**
      *
-     * @param object Music_Model_TagInfo
+     * @param string
      * @return boolean
      */
-    public function __construct(Music_Model_TagInfo $tagInfo)
+    public function __construct(Music_Model_TagInfo $taginfo)
     {
-        $this->taginfo = $tagInfo;
-
+        $this->taginfo = $taginfo;
+        
         if (is_null($this->albumMapper)) {
             $this->albumMapper = new Music_Model_Mapper_Album();
         }
@@ -150,10 +150,5 @@ class Music_Model_Tag
             return $this->trackMapper->findOneByColumn(
                     'title', $this->taginfo->getTitle());
         }
-    }
-
-    public function saveTags()
-    {
-
     }
 }

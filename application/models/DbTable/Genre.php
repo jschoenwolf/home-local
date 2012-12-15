@@ -2,7 +2,7 @@
 
 class Application_Model_DbTable_Genre extends Zend_Db_Table_Abstract
 {
-    protected $_name = 'genre';
+    protected $_name    = 'genre';
     protected $_primary = 'id';
 
     public function saveGenre(array $data)
@@ -12,7 +12,7 @@ class Application_Model_DbTable_Genre extends Zend_Db_Table_Abstract
         if (array_key_exists('id', $data) && isset($data['id'])) {
             $row = $this->find($dataObject->id)->current();
         } else {
-            $row = $this->createRow();
+            $row       = $this->createRow();
         }
         $row->name = $dataObject->name;
         $row->save();
@@ -44,4 +44,3 @@ class Application_Model_DbTable_Genre extends Zend_Db_Table_Abstract
         return $result;
     }
 }
-

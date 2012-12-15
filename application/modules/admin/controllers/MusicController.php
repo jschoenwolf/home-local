@@ -4,6 +4,7 @@ class Admin_MusicController extends Zend_Controller_Action
 {
     protected $message;
     protected $thumbPath = '/images/mp3art/thumbs/';
+    private $session;
 
     public function preDispatch()
     {
@@ -25,7 +26,7 @@ class Admin_MusicController extends Zend_Controller_Action
 
     public function init()
     {
-
+        $this->session = new Zend_Session_Namespace('songs');
         $this->message = $this->getHelper('FlashMessenger');
         if ($this->message->hasMessages()) {
             $this->view->messages = $this->message->getMessages();
@@ -34,41 +35,15 @@ class Admin_MusicController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        $base  = Zend_Controller_Front::getInstance()->getBaseUrl();
-        $dir   = realpath(MEDIA_MUSIC_PATH);
-        Zend_Debug::dump($dir, "Directory");
-        $dirIt = new RecursiveDirectoryIterator($dir, FilesystemIterator::SKIP_DOTS);
-        $it    = new RecursiveIteratorIterator($dirIt);
-        $songs = array();
-        foreach ($it as $value) {
-            if (stripos($value, '.mp3') || stripos($value, '.aac')) {
-                $songs[$value->getFilename()] = $value;
-            }
-        }
+        $utilities = new Jgs_Utilities();
+        $dir       = realpath(MEDIA_MUSIC_PATH);
 
-        $song    = array_shift($songs);
-        $tag     = new Music_Model_Mapper_TagInfo($song->getPathName());
-        $tagInfo = $tag->getInfo();
-        $model   = new Music_Model_Tag($tagInfo);
-
-        if (!$model === FALSE) {
-            $artist = $model->artists();
-            $album  = $model->albums();
-            $track = $model->tracks();
-            Zend_Debug::dump($artist, 'Artist');
-            Zend_Debug::dump($album, 'Album');
-            Zend_Debug::dump($track, 'Track');
-            //Zend_Debug::dump($model->taginfo, 'Tag Info');
-            Zend_Debug::dump($model->artist_id, 'artist_id');
-            Zend_Debug::dump($model->album_id, 'album_id');
-        } else {
-            Zend_Debug::dump('FALSE');
-        }
     }
 
     public function scanAction()
     {
-
+        $song = array_shift($this->session->songs);
+      
     }
 
     public function readAction()

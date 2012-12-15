@@ -1,10 +1,5 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * General Purpose Utility Class
  *
@@ -98,7 +93,7 @@ class Jgs_Utilities
      */
     public function csvToArray($file)
     {
-        $row = 0;
+        $row    = 0;
         $handle = fopen($file, "r");
         $tracks = array();
         if ($handle != false) {
@@ -111,7 +106,7 @@ class Jgs_Utilities
                 $row++;
                 if ($row > 1 && count($keys) == count($values)) {
 
-                    $track = array_combine($keys, $values);
+                    $track    = array_combine($keys, $values);
                     $tracks[] = $track;
                 }
             }
@@ -122,12 +117,12 @@ class Jgs_Utilities
 
     public function time($string)
     {
-        $exp = explode('-', $string);
+        $exp        = explode('-', $string);
         $timeString = array();
         foreach ($exp as $value) {
             $timeString[] = $this->normTime($value);
         }
-        $time = implode('-', $timeString);
+        $time         = implode('-', $timeString);
         return $time;
     }
 
@@ -150,5 +145,21 @@ class Jgs_Utilities
                 return $i[1];
             }, $string);
         return $result;
+    }
+
+    public function dirScanForMusic($dir)
+    {
+        $dirIt = new RecursiveDirectoryIterator(
+                $dir, FilesystemIterator::CURRENT_AS_SELF | FilesystemIterator::SKIP_DOTS);
+        $it    = new RecursiveIteratorIterator(
+                $dirIt, RecursiveIteratorIterator::SELF_FIRST);
+
+        $files = array();
+        foreach ($it as $value) {
+            if (stripos($value->getFilename(), '.mp3') || stripos($value->getFilename(), '.aac')) {
+                $files[] = $value->getPathname();
+            }
+        }
+        return $files;
     }
 }
