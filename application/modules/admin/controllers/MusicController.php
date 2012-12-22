@@ -35,15 +35,7 @@ class Admin_MusicController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        $utilities = new Jgs_Utilities();
-        $dir       = realpath(MEDIA_MUSIC_PATH);
 
-    }
-
-    public function scanAction()
-    {
-        $song = array_shift($this->session->songs);
-      
     }
 
     public function readAction()
@@ -52,29 +44,34 @@ class Admin_MusicController extends Zend_Controller_Action
         $form = new Application_Form_Music();
         $form->setAction('/admin/music/read');
 
-        $tags = new Music_Model_Tag();
+        $taginfo = new Music_Model_TagInfo();
         try {
             if ($this->getRequest()->isPost()) {
                 if ($form->isValid($this->getRequest()->getPost())) {
                     $file = $form->file->getFileName();
                     $form->getValues();
                     if ($form->file->isUploaded()) {
-                        $tracks = $this->_utilities->csvToArray($file);
+                        $utilities = new Jgs_Utilities();
+                        $tracks = $utilities->csvToArray($file);
                     }
+
                     foreach ($tracks as $track) {
                         if (is_array($track)) {
-                            $tags->setOptions($track);
-                            $tags->saveTags();
+                            set_time_limit(30);
+                            $taginfo->setOptions($track);
+                            $tag = new Music_Model_Tag($taginfo);
+                            $tag->track();
                         }
                     }
-                    $this->_helper->flashMessenger->addMessage('Operatation Complete.');
-                    $this->_redirect($this->getRequest()->getRequestUri());
+                    $count = count($tracks);
+                    $this->_helper->flashMessenger->addMessage("$count, new songs added to database.");
+                    $this->_redirect('/admin/music/index');
                 }
             }
             $this->view->form = $form;
         } catch (Zend_Exception $e) {
-            $this->_helper->flashMessenger->addMessage($e->getMessage());
-            $this->_redirect('/admin/index');
+            $this->_helper->flashMessenger->addMessage($e->getMessage(). ' ' . $e->getTraceAsString());
+            $this->_redirect('/admin/music/index');
         }
     }
 
@@ -82,7 +79,7 @@ class Admin_MusicController extends Zend_Controller_Action
     {
 
         $query = $this->getRequest()->getParam('query');
-        $page  = $this->getRequest()->getParam('page', 1);
+        $page = $this->getRequest()->getParam('page', 1);
 
         $model = new Music_Model_Mapper_Artist();
 
@@ -105,7 +102,7 @@ class Admin_MusicController extends Zend_Controller_Action
     public function updatetrackAction()
     {
         $session = new Zend_Session_Namespace('page');
-        $id      = $this->getRequest()->getParam('id');
+        $id = $this->getRequest()->getParam('id');
 
         $model = new Music_Model_Mapper_Track();
         $track = $model->findById($id);
@@ -133,7 +130,7 @@ class Admin_MusicController extends Zend_Controller_Action
     public function updatealbumAction()
     {
         $session = new Zend_Session_Namespace('page');
-        $id      = $this->getRequest()->getParam('id');
+        $id = $this->getRequest()->getParam('id');
 
         $model = new Music_Model_Mapper_Album();
         $album = $model->findById($id);
@@ -161,9 +158,9 @@ class Admin_MusicController extends Zend_Controller_Action
     public function updateartistAction()
     {
         $session = new Zend_Session_Namespace('page');
-        $id      = $this->getRequest()->getParam('id');
+        $id = $this->getRequest()->getParam('id');
 
-        $model  = new Music_Model_Mapper_Artist();
+        $model = new Music_Model_Mapper_Artist();
         $artist = $model->findById($id);
 
         $form = new Admin_Form_Artist();
@@ -193,21 +190,21 @@ class Admin_MusicController extends Zend_Controller_Action
         try {
             switch ($request) {
                 case isset($request['trackId']):
-                    $id    = $request['trackId'];
+                    $id = $request['trackId'];
                     $model = new Music_Model_Mapper_Track();
                     $model->deleteTrack($id);
                     $this->message->addMessage("Track Deleted!");
 
                     break;
                 case isset($request['albumId']):
-                    $id    = $request['albumId'];
+                    $id = $request['albumId'];
                     $model = new Music_Model_Mapper_Album();
                     $model->deletealbum($id);
                     $this->message->addMessage("Album Deleted!");
 
                     break;
                 case isset($request['artistId']):
-                    $id    = $request['artistId'];
+                    $id = $request['artistId'];
                     $model = new Music_Model_Mapper_Artist();
                     $model->deleteArtist($id);
                     $this->message->addMessage("Artist Deleted!");

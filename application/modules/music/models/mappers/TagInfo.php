@@ -64,12 +64,12 @@ class Music_Model_Mapper_TagInfo extends Jgs_Model_Mapper_Abstract
         $this->result['bitrate']          = (isset($this->data['bitrate']) ? $this->data['bitrate'] : '');
         $this->result['format']           = (isset($this->data['fileformat']) ? $this->data['fileformat'] : '');
         $this->result['genre']            = (isset($this->data['tags_html']['id3v2']['genre'][0]) ? $this->data['tags_html']['id3v2']['genre'][0] : '');
-        $this->result['md5']              = (isset($this->data['md5_data']) ? $this->data['md5_data'] : '');
+        $this->result['md5']              = md5_file($this->fileToScan);
         $this->result['path']             = (isset($this->data['filepath']) ? $this->data['filepath'] : '');
         $this->result['playtime_seconds'] = (isset($this->data['playtime_seconds']) ? $this->data['playtime_seconds'] : '');
         $this->result['playtime_string']  = (isset($this->data['playtime_string']) ? $this->data['playtime_string'] : '');
         $this->result['title']            = (isset($this->data['tags_html']['id3v2']['title'][0]) ? $this->data['tags_html']['id3v2']['title'][0] : '');
-        $this->result['track_number']     = (isset($this->data['tags_html']['id3v2']['track_number'][0]) ? $this->data['tags_html']['id3v2']['track_number'][0] : '');
+        $this->result['track_number']     = (isset($this->data['tags_html']['id3v2']['track_number'][0]) ? $this->data['tags_html']['id3v2']['track_number'][0] : NULL);
         $this->result['year']             = (isset($this->data['tags_html']['id3v2']['year'][0]) ? $this->data['tags_html']['id3v2']['year'][0] : '');
 
         $entity = $this->createEntity($this->result);

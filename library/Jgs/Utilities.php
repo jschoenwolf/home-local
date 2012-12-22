@@ -97,7 +97,7 @@ class Jgs_Utilities
         $handle = fopen($file, "r");
         $tracks = array();
         if ($handle != false) {
-            while ($data = fgetcsv($handle, 1000, ';')) {
+            while ($data = fgetcsv($handle, 0, ';')) {
                 if ($row === 0) {
                     $keys = $data;
                 } else {
@@ -107,7 +107,7 @@ class Jgs_Utilities
                 if ($row > 1 && count($keys) == count($values)) {
 
                     $track    = array_combine($keys, $values);
-                    $tracks[] = $track;
+                    $tracks[] = array_change_key_case($track);
                 }
             }
             fclose($handle);
@@ -156,7 +156,7 @@ class Jgs_Utilities
 
         $files = array();
         foreach ($it as $value) {
-            if (stripos($value->getFilename(), '.mp3') || stripos($value->getFilename(), '.aac')) {
+            if (stripos($value->getFilename(), '.mp3') || stripos($value->getFilename(), '.m4a')) {
                 $files[] = $value->getPathname();
             }
         }

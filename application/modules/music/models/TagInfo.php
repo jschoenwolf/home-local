@@ -40,7 +40,7 @@ class Music_Model_TagInfo extends Jgs_Model_Entity_Abstract
 
     public function setAlbum($album)
     {
-        $this->album = $album;
+        $this->album = utf8_encode(strtolower(trim($album)));
         return $this;
     }
 
@@ -51,7 +51,7 @@ class Music_Model_TagInfo extends Jgs_Model_Entity_Abstract
 
     public function setArtist($artist)
     {
-        $this->artist = $artist;
+        $this->artist = utf8_encode(strtolower(trim($artist)));
         return $this;
     }
 
@@ -73,7 +73,7 @@ class Music_Model_TagInfo extends Jgs_Model_Entity_Abstract
 
     public function setTitle($title)
     {
-        $this->title = $title;
+        $this->title = utf8_encode(strtolower(trim($title)));
         return $this;
     }
 
@@ -84,7 +84,7 @@ class Music_Model_TagInfo extends Jgs_Model_Entity_Abstract
 
     public function setFilename($filename)
     {
-        $this->filename = $filename;
+        $this->filename = utf8_encode($filename);
         return $this;
     }
 
@@ -106,7 +106,7 @@ class Music_Model_TagInfo extends Jgs_Model_Entity_Abstract
 
     public function setGenre($genre)
     {
-        $this->genre = $genre;
+        $this->genre = strtolower(trim($genre));
         return $this;
     }
 
@@ -150,7 +150,7 @@ class Music_Model_TagInfo extends Jgs_Model_Entity_Abstract
 
     public function setTrack_number($track)
     {
-        $this->track_number = $track;
+        $this->track_number = (int)$track;
         return $this;
     }
 
