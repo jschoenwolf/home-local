@@ -35,7 +35,7 @@ class IndexController extends Zend_Controller_Action
             if ($form->isValid($this->getRequest()->getPost())) {
                 $data = $form->getValues();
 
-                $user   = new Application_Model_User($data);
+                $user = new Application_Model_User($data);
                 $mapper = new Application_Model_Mapper_User();
 
                 $save = $mapper->saveUser($user);
@@ -55,17 +55,18 @@ class IndexController extends Zend_Controller_Action
 
         if ($this->getRequest()->isPost()) {
             if ($form->isValid($this->getRequest()->getPost())) {
-                $data        = $form->getValues();
+                $data = $form->getValues();
                 $authAdapter = new Jgs_Auth_Adapter($data['name'], $data['password']);
             } else {
-                $this->view->form   = $form;
+                $this->view->form = $form;
                 $this->view->errors = $form->getMessages();
             }
+
             //authenticate
-            $result             = $authAdapter->authenticate();
+            $result = $authAdapter->authenticate();
             if ($result->isValid()) {
                 //store the user object
-                $auth    = Zend_Auth::getInstance();
+                $auth = Zend_Auth::getInstance();
                 $storage = $auth->getStorage();
                 $storage->write($authAdapter->getUser());
                 $this->message->addMessage('Welcome');

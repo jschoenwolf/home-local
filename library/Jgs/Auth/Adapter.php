@@ -12,13 +12,13 @@ class Jgs_Auth_Adapter implements Zend_Auth_Adapter_Interface
      *
      * @var string
      */
-    protected $identity    = null;
+    protected $identity = null;
     /**
      * The password
      *
      * @var string
      */
-    protected $credential  = null;
+    protected $credential = null;
     /**
      * Users database object
      *
@@ -127,7 +127,7 @@ class Jgs_Auth_Adapter implements Zend_Auth_Adapter_Interface
     public function getUser()
     {
         $object = $this->getUserObject();
-        $array  = array(
+        $array = array(
             'id'   => $object->id,
             'name' => $object->name,
             'role' => $object->role
@@ -161,5 +161,4 @@ class Jgs_Auth_Adapter implements Zend_Auth_Adapter_Interface
     {
         return $this->usersMapper;
     }
-
 }
