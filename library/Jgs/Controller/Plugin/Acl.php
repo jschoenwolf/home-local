@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Description of Acl
  *
@@ -55,13 +56,13 @@ class Jgs_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
         $auth = Zend_Auth::getInstance();
         if ($auth->hasIdentity()) {
             $identity = $auth->getIdentity();
-            $role     = strtolower($identity->role);
+            $role = strtolower($identity->role);
         } else {
             $role = 'guest';
         }
 
         $controller = $request->controller;
-        $action     = $request->action;
+        $action = $request->action;
 
         if (!$acl->isAllowed($role, $controller, $action)) {
             if ($role == 'guest') {
@@ -73,5 +74,4 @@ class Jgs_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
             }
         }
     }
-
 }

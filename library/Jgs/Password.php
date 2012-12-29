@@ -25,7 +25,6 @@
  */
 define('AUTH_SALT', 'jZ42&2snyR9j8wm*Fc^j@DZNP&N%4D4q');
 define('AUTH_LEVEL', 5);
-
 /**
  * The Password class works by generating a 104-character hash.  The first 16 characters are a unique
  * salt value that is generated for each password.  The rest of the 88 characters is the hash generated

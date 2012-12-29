@@ -56,7 +56,7 @@ class Music_Model_Mapper_Album extends Jgs_Model_Mapper_Abstract
             $row = $this->getGateway()->fetchRow($select);
         } else {
 
-            $row            = $this->getGateway()->createRow();
+            $row = $this->getGateway()->createRow();
         }
         $row->title     = $album->title;
         $row->art       = $album->art;

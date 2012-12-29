@@ -2,15 +2,14 @@
 
 class Application_Form_Login extends Zend_Form
 {
-
-    public function init() {
-
+    public function init()
+    {
         /**
          * set POST method for form
          */
         $this->setMethod('POST');
+        //set default action
         $this->setAction('/index/login');
-
         /**
          * Set the viewScript decorator
          */
@@ -19,13 +18,10 @@ class Application_Form_Login extends Zend_Form
                     'viewScript' => '_login.phtml'
             ))
         ));
-
         /**
          * Set standard filters for all elements
          */
         $filters = array('StringTrim', 'StripTags', 'HtmlEntities');
-
-
         /**
          * Text element 'name'
          */
@@ -41,9 +37,8 @@ class Application_Form_Login extends Zend_Form
         ));
         $name->addErrorMessage('Your name is required.');
         $name->removeDecorator('HtmlTag');
-
         /**
-         * Password elemnent for 'password'
+         * Password element for 'password'
          */
         $password = new Zend_Form_Element_Password('password');
         $password->setLabel('Password');
@@ -53,15 +48,16 @@ class Application_Form_Login extends Zend_Form
         $password->addValidator(new Jgs_Validator_Form_Password());
         $password->addFilters($filters);
         $password->removeDecorator('HtmlTag');
-
-
+        /**
+         * submit button
+         */
         $submit = new Zend_Form_Element_Submit('submit');
         $submit->setLabel('Login');
         $submit->removeDecorator('HtmlTag');
         $submit->removeDecorator('DtDdWrapper');
-
-
+        /**
+         * add all elements to the form
+         */
         $this->addElements(array($name, $password, $submit));
     }
 }
-

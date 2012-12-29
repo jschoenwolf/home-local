@@ -2,17 +2,16 @@
 
 class Application_Form_User extends Zend_Form
 {
-
-    public function init() {
-
+    public function init()
+    {
         $this->setMethod('POST');
-        
+        //default filters
         $filters = array('StringTrim', 'StripTags', 'HtmlEntities');
-
+        //id element
         $id = $this->createElement('hidden', 'id');
         $id->setDecorators(array('ViewHelper'));
         $this->addElement($id);
-
+        //name element
         $name = new Zend_Form_Element_Text('name');
         $name->setLabel('Name');
         $name->setAttrib('placeholder', 'Username');
@@ -24,11 +23,11 @@ class Application_Form_User extends Zend_Form
             'allowWhiteSpace' => TRUE
         ));
         $name->addValidator(new Zend_Validate_Db_NoRecordExists(array(
-                    'table' => 'users',
-                    'field' => 'name'
-                )));
+                'table' => 'users',
+                'field' => 'name'
+            )));
         $this->addElement($name);
-
+        //password element
         $password = new Zend_Form_Element_Password('password');
         $password->setLabel('Password');
         $password->setAttrib('placeholder', 'Password');
@@ -37,7 +36,7 @@ class Application_Form_User extends Zend_Form
         $password->addValidator(new Jgs_Validator_Form_Password());
         $password->addFilters($filters);
         $this->addElement($password);
-
+        //second password element
         $passRep = new Zend_Form_Element_Password('passRep');
         $passRep->setLabel('Re-enter Password');
         $passRep->setAttrib('placeholder', 'Re-enter Password');
@@ -46,13 +45,13 @@ class Application_Form_User extends Zend_Form
         $passRep->addValidator(new Zend_Validate_Identical(array('token' => 'password')));
         $passRep->addFilters($filters);
         $this->addElement($passRep);
-
+        //role element
         $role = $this->createElement('select', 'role');
         $role->setLabel("Select a role: ")
-                ->addMultiOption('user', 'User')
-                ->addMultiOption('administrator', 'Administrator');
+            ->addMultiOption('user', 'User')
+            ->addMultiOption('administrator', 'Administrator');
         $this->addElement($role);
-
+        //submit element
         $submit = new Zend_Form_Element_Submit('submit');
         $submit->setLabel('Register');
         $submit->removeDecorator('HtmlTag');
@@ -60,4 +59,3 @@ class Application_Form_User extends Zend_Form
         $this->addElement($submit);
     }
 }
-

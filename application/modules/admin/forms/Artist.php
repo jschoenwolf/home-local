@@ -25,4 +25,3 @@ class Admin_Form_Artist extends Zend_Form
         $this->addElement($submit);
     }
 }
-

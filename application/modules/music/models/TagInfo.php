@@ -150,7 +150,7 @@ class Music_Model_TagInfo extends Jgs_Model_Entity_Abstract
 
     public function setTrack_number($track)
     {
-        $this->track_number = (int)$track;
+        $this->track_number = (int) $track;
         return $this;
     }
 

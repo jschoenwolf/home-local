@@ -1,15 +1,15 @@
-<form action="<?php echo $this->element->getAction() ?>"
-      method="<?php echo $this->element->getMethod() ?>"
-      enctype="<?php echo $this->element->getAttrib('enctype') ?>">
+<form action="<?php echo $this->element->getAction()?>"
+      method="<?php echo $this->element->getMethod()?>"
+      enctype="<?php echo $this->element->getAttrib('enctype')?>">
     <table>
         <tr>
-            <th><?php echo $this->element->file->renderLabel() ?></th>
+            <th><?php echo $this->element->file->renderLabel()?></th>
         </tr>
         <tr>
-            <td><?php echo $this->element->file->renderFile() ?></td>
+            <td><?php echo $this->element->file->renderFile()?></td>
         </tr>
         <tr>
-            <td><?php echo $this->element->submit->render() ?></td>
+            <td><?php echo $this->element->submit->render()?></td>
         </tr>
     </table>
 </form>

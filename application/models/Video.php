@@ -4,7 +4,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  * Description of video
  *
@@ -26,7 +25,8 @@ class Application_Model_Video
     protected $imdb;
     private $utility;
 
-    public function __construct(array $options = null) {
+    public function __construct(array $options = null)
+    {
 
         if (is_array($options)) {
             $this->setOptions($options);
@@ -34,7 +34,8 @@ class Application_Model_Video
         $this->utility = new Jgs_Utilities();
     }
 
-    public function setOptions(array $options) {
+    public function setOptions(array $options)
+    {
 
         $methods = get_class_methods($this);
 
@@ -47,7 +48,8 @@ class Application_Model_Video
         return $this;
     }
 
-    public function __set($name, $value) {
+    public function __set($name, $value)
+    {
         $method = 'set' . ucfirst($name);
         if (!method_exists($this, $method)) {
             throw new Zend_Exception('Invalid Tag Property');
@@ -55,7 +57,8 @@ class Application_Model_Video
         $this->$method($value);
     }
 
-    public function __get($name) {
+    public function __get($name)
+    {
         $method = 'get' . ucfirst($name);
         if (!method_exists($this, $method)) {
             throw new Zend_Exception('Invalid Tag Property');
@@ -63,7 +66,8 @@ class Application_Model_Video
         return $this->$method();
     }
 
-    public function storeGenre() {
+    public function storeGenre()
+    {
         $genre = $this->getGenreArray();
         $model = new Application_Model_DbTable_Genre();
         foreach ($genre as $value) {
@@ -74,14 +78,15 @@ class Application_Model_Video
             } else {
                 //update row
                 $model->saveGenre(array(
-                    'id' => $row->id,
+                    'id'   => $row->id,
                     'name' => $value
                 ));
             }
         }
     }
 
-    public function saveMovie() {
+    public function saveMovie()
+    {
         $model = new Application_Model_DbTable_Videos();
         $gModel = new Application_Model_DbTable_Genre();
         $genre = array();
@@ -106,7 +111,7 @@ class Application_Model_Video
         $row = $model->fetchVideoRow($this->getImdb());
         if ($row !== false) {
             //update row
-            $id = array('id' => $row->id);
+            $id = array('id'   => $row->id);
             $data2 = array_merge($data1, $id);
             $model->saveVideo($data2);
         } else {
@@ -115,107 +120,132 @@ class Application_Model_Video
         }
     }
 
-    public function getTitle() {
+    public function getTitle()
+    {
         return $this->title;
     }
 
-    public function setTitle($title) {
+    public function setTitle($title)
+    {
         $this->title = $title;
     }
 
-    public function getYear() {
+    public function getYear()
+    {
         return $this->year;
     }
 
-    public function setYear($year) {
+    public function setYear($year)
+    {
         $this->year = $year;
     }
 
-    public function getGenreString() {
+    public function getGenreString()
+    {
         $string = implode(',', $this->genre);
         return $string;
     }
 
-    public function getGenreArray() {
+    public function getGenreArray()
+    {
         return $this->genre;
     }
 
-    public function setGenre($genre) {
+    public function setGenre($genre)
+    {
         $array = explode(',', $genre);
         $result = $this->utility->arrayTrim($array);
 
         $this->genre = $result;
     }
 
-    public function getDirector() {
+    public function getDirector()
+    {
         return $this->director;
     }
 
-    public function setDirector($director) {
+    public function setDirector($director)
+    {
         $this->director = $director;
     }
 
-    public function getProducers() {
+    public function getProducers()
+    {
         return $this->producers;
     }
 
-    public function setProducers($producers) {
+    public function setProducers($producers)
+    {
         $this->producers = $producers;
     }
 
-    public function getActors() {
+    public function getActors()
+    {
         return $this->actors;
     }
 
-    public function setActors($actors) {
+    public function setActors($actors)
+    {
         $this->actors = $actors;
     }
 
-    public function getDescription() {
+    public function getDescription()
+    {
         return $this->description;
     }
 
-    public function setDescription($description) {
+    public function setDescription($description)
+    {
         $this->description = $description;
     }
 
-    public function getPath() {
+    public function getPath()
+    {
         return $this->path;
     }
 
-    public function setPath($path) {
+    public function setPath($path)
+    {
         $this->path = $this->utility->trimPath($path, 2);
     }
 
-    public function getLength() {
+    public function getLength()
+    {
         return $this->length;
     }
 
-    public function setLength($length) {
+    public function setLength($length)
+    {
         $this->length = $length;
     }
 
-    public function getResolution() {
+    public function getResolution()
+    {
         return $this->resolution;
     }
 
-    public function setResolution($resolution) {
+    public function setResolution($resolution)
+    {
         $this->resolution = $resolution;
     }
 
-    public function getPoster() {
+    public function getPoster()
+    {
         return $this->poster;
     }
 
-    public function setPoster($poster) {
+    public function setPoster($poster)
+    {
         $this->poster = $poster;
     }
 
-    public function getImdb() {
+    public function getImdb()
+    {
         return $this->imdb;
     }
 
-    public function setImdb($imdb) {
+    public function setImdb($imdb)
+    {
         $this->imdb = $imdb;
     }
 }

@@ -8,7 +8,7 @@ class Karaoke_IndexController extends Zend_Controller_Action
         $this->_helper->layout()->search = $this->_helper->search(
             '/karaoke/index/display', 'Search Karaoke Collection!', 'Karaoke'
         );
-        $this->_helper->layout()->login  = $this->_helper->login();
+        $this->_helper->layout()->login = $this->_helper->login();
     }
 
     public function init()
@@ -20,7 +20,7 @@ class Karaoke_IndexController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        $model   = new Karaoke_Model_Mapper_Karaoke();
+        $model = new Karaoke_Model_Mapper_Karaoke();
         $adapter = $model->fetchPaged();
 
         $paginator = new Zend_Paginator($adapter);
@@ -35,8 +35,8 @@ class Karaoke_IndexController extends Zend_Controller_Action
 
     public function displayAction()
     {
-        $model   = new Karaoke_Model_Mapper_Karaoke();
-        $query   = $this->getRequest()->getParam('query');
+        $model = new Karaoke_Model_Mapper_Karaoke();
+        $query = $this->getRequest()->getParam('query');
         $adapter = $model->fetchPagedByQuery($query);
 
         $paginator = new Zend_Paginator($adapter);

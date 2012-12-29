@@ -2,7 +2,7 @@
 
 class Admin_MoviexmlController extends Zend_Controller_Action
 {
-    protected $xmlUtilities = null;
+    protected $xmlUtilities;
     protected $session;
     protected $message;
 
@@ -124,4 +124,3 @@ class Admin_MoviexmlController extends Zend_Controller_Action
         $this->getHelper('Redirector')->gotoSimple('index');
     }
 }
-

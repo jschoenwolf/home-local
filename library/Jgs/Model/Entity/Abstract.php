@@ -101,7 +101,7 @@ abstract class Jgs_Model_Entity_Abstract
      */
     public function toArray()
     {
-        $vars  = get_object_vars($this);
+        $vars = get_object_vars($this);
         $array = array();
         foreach ($vars as $key => $value) {
             if ((stripos($key, 'mapper') || stripos($key, 'references')) === false) {

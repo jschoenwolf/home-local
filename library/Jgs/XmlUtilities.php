@@ -1,7 +1,7 @@
 <?php
 
 /**
- * General Xml utilities
+ * General Jgs_XmlUtilities
  *
  * @author John Schoenwolf
  * @copyright 2012
@@ -27,18 +27,18 @@ class Jgs_XmlUtilities
         /* @var $array JGS_Application_XmlUtilities */
         $array = array();
         foreach ($xpath as $node) {
-            $keys['title'] = (string) $node->origtitle;
-            $keys['year'] = (string) $node->year;
-            $keys['genre'] = (string) $node->genre;
-            $keys['director'] = (string) $node->director;
-            $keys['producers'] = (string) $node->producers;
-            $keys['actors'] = (string) $node->actors;
-            $keys['path'] = (string) $node->path;
+            $keys['title']       = (string) $node->origtitle;
+            $keys['year']        = (string) $node->year;
+            $keys['genre']       = (string) $node->genre;
+            $keys['director']    = (string) $node->director;
+            $keys['producers']   = (string) $node->producers;
+            $keys['actors']      = (string) $node->actors;
+            $keys['path']        = (string) $node->path;
             $keys['description'] = (string) $node->description;
-            $keys['length'] = (int) $node->length;
-            $keys['poster'] = (string) $node->poster;
-            $keys['resolution'] = (string) $node->resolution;
-            $keys['imdb'] = (string) $node->url;
+            $keys['length']      = (int) $node->length;
+            $keys['poster']      = (string) $node->poster;
+            $keys['resolution']  = (string) $node->resolution;
+            $keys['imdb']        = (string) $node->url;
 
             /* @var $keys JGS_Application_XmlUtilities */
             $array[] = $keys;

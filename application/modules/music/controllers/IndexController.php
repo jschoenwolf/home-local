@@ -11,13 +11,13 @@ class Music_IndexController extends Zend_Controller_Action
         $this->_helper->layout()->login = $this->_helper->login();
 
         $this->view->headScript()->appendFile(
-                '/javascript/mediaelement/build/mediaelement-and-player.min.js');
+            '/javascript/mediaelement/build/mediaelement-and-player.min.js');
 
         $this->view->inlineScript()->setScript(
-                "$('audio').mediaelementplayer();");
+            "$('audio').mediaelementplayer();");
 
         $this->_helper->layout()->search = $this->_helper->search(
-                '/music/index/display', 'Search Music Collection!', 'Artist or Title');
+            '/music/index/display', 'Search Music Collection!', 'Artist or Title');
     }
 
     public function init()
@@ -65,7 +65,7 @@ class Music_IndexController extends Zend_Controller_Action
                 $this->view->artPath = '/images/mp3art/';
                 break;
             case (isset($request['id'])):
-                $this->_forward('artist', null, null, array('id' => $request['id']));
+                $this->_forward('artist', null, null, array('id'     => $request['id']));
                 break;
             default:
                 $adapter = $model->fetchPagedTracks();
@@ -113,4 +113,3 @@ class Music_IndexController extends Zend_Controller_Action
         $this->view->artPath = '/images/mp3art/';
     }
 }
-

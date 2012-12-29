@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Description of Db_Adapter
+ * Description of Jgs_Auth_Adapter
  *
  * @author John Schoenwolf
  */
@@ -27,7 +27,6 @@ class Jgs_Auth_Adapter implements Zend_Auth_Adapter_Interface
     protected $usersMapper = null;
 
     /**
-     *
      * @param string $username
      * @param string $password
      * @param Jgs_Model_Mapper_Abstract $userMapper
@@ -44,7 +43,6 @@ class Jgs_Auth_Adapter implements Zend_Auth_Adapter_Interface
     }
 
     /**
-     *
      * @return \Zend_Auth_Result
      */
     public function authenticate()
@@ -59,7 +57,6 @@ class Jgs_Auth_Adapter implements Zend_Auth_Adapter_Interface
                     array('Invalid username')
             );
         }
-
         // check whether or not the hash matches
         $check = Jgs_Password::comparePassword($this->getCredential(), $user->password);
         if (!$check) {
@@ -69,7 +66,6 @@ class Jgs_Auth_Adapter implements Zend_Auth_Adapter_Interface
                     array('Incorrect password')
             );
         }
-
         // Success!
         return new Zend_Auth_Result(
                 Zend_Auth_Result::SUCCESS,
@@ -79,7 +75,6 @@ class Jgs_Auth_Adapter implements Zend_Auth_Adapter_Interface
     }
 
     /**
-     *
      * @param type $userName
      * @return \Jgs_Auth_Adapter
      */
@@ -90,7 +85,6 @@ class Jgs_Auth_Adapter implements Zend_Auth_Adapter_Interface
     }
 
     /**
-     *
      * @param type $password
      * @return \Jgs_Auth_Adapter
      */
@@ -101,7 +95,6 @@ class Jgs_Auth_Adapter implements Zend_Auth_Adapter_Interface
     }
 
     /**
-     *
      * @param type $mapper
      * @return \Jgs_Auth_Adapter
      */
@@ -112,7 +105,6 @@ class Jgs_Auth_Adapter implements Zend_Auth_Adapter_Interface
     }
 
     /**
-     *
      * @return object
      */
     private function getUserObject()
@@ -121,7 +113,6 @@ class Jgs_Auth_Adapter implements Zend_Auth_Adapter_Interface
     }
 
     /**
-     *
      * @return object
      */
     public function getUser()
@@ -136,7 +127,6 @@ class Jgs_Auth_Adapter implements Zend_Auth_Adapter_Interface
     }
 
     /**
-     *
      * @return string
      */
     public function getIdentity()
@@ -145,7 +135,6 @@ class Jgs_Auth_Adapter implements Zend_Auth_Adapter_Interface
     }
 
     /**
-     *
      * @return string
      */
     public function getCredential()
@@ -154,7 +143,6 @@ class Jgs_Auth_Adapter implements Zend_Auth_Adapter_Interface
     }
 
     /**
-     *
      * @return object Jgs_Model_Mapper_Abstract
      */
     public function getMapper()

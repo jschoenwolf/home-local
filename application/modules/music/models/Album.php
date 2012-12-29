@@ -13,7 +13,8 @@ class Music_Model_Album extends Jgs_Model_Entity_Abstract
      *
      * @return string
      */
-    public function getTitle() {
+    public function getTitle()
+    {
         return htmlspecialchars_decode($this->title, ENT_QUOTES);
     }
 
@@ -24,10 +25,11 @@ class Music_Model_Album extends Jgs_Model_Entity_Abstract
      * @return \Music_Model_Album
      * @throws InvalidArgumentException
      */
-    public function setTitle($title) {
+    public function setTitle($title)
+    {
         if (!is_string($title) || strlen($title) < 2 || strlen($title) > 255) {
             throw new InvalidArgumentException(
-                    "The posted 'Album Name' is invalid"
+                "The posted 'Album Name' is invalid"
             );
         }
         $this->title = htmlspecialchars(trim($title), ENT_QUOTES);
@@ -39,7 +41,8 @@ class Music_Model_Album extends Jgs_Model_Entity_Abstract
      *
      * @return string
      */
-    public function getArt() {
+    public function getArt()
+    {
         return htmlspecialchars_decode($this->art, ENT_QUOTES);
     }
 
@@ -50,10 +53,11 @@ class Music_Model_Album extends Jgs_Model_Entity_Abstract
      * @return \Music_Model_Album
      * @throws InvalidArgumentException
      */
-    public function setArt($art) {
+    public function setArt($art)
+    {
         if (!is_string($art) || strlen($art) < 2 || strlen($art) > 255) {
             throw new InvalidArgumentException(
-                    "The posted 'Album Image Name' is invalid"
+                "The posted 'Album Image Name' is invalid"
             );
         }
         $this->art = htmlspecialchars(trim($art), ENT_QUOTES);
@@ -65,7 +69,8 @@ class Music_Model_Album extends Jgs_Model_Entity_Abstract
      *
      * @return string
      */
-    public function getYear() {
+    public function getYear()
+    {
         return $this->year;
     }
 
@@ -76,10 +81,11 @@ class Music_Model_Album extends Jgs_Model_Entity_Abstract
      * @return \Music_Model_Album
      * @throws InvalidArgumentException
      */
-    public function setYear($year) {
+    public function setYear($year)
+    {
         if (strlen($year) > 4) {
             throw new InvalidArgumentException(
-                    "The posted value for 'Album Year' is invalid."
+                "The posted value for 'Album Year' is invalid."
             );
         }
         $this->year = $year;
@@ -91,7 +97,8 @@ class Music_Model_Album extends Jgs_Model_Entity_Abstract
      *
      * @return \Music_Model_Artist
      */
-    public function getArtist() {
+    public function getArtist()
+    {
         if (!is_null($this->artist) && $this->artist instanceof Music_Model_Artist) {
             return $this->artist;
         } else {
@@ -108,7 +115,8 @@ class Music_Model_Album extends Jgs_Model_Entity_Abstract
      * @param string $artist
      * @return \Music_Model_Album
      */
-    public function setArtist($artist) {
+    public function setArtist($artist)
+    {
         $this->setReferenceId('artist', $artist);
         return $this;
     }
@@ -118,11 +126,11 @@ class Music_Model_Album extends Jgs_Model_Entity_Abstract
      *
      * @return \Music_Model_Mappper_Track
      */
-    public function getTracks() {
+    public function getTracks()
+    {
         $mapper = new Music_Model_Mapper_Track();
         $tracks = $mapper->findByColumn('album_id', $this->id, 'track_number ASC');
 
         return $tracks;
     }
 }
-

@@ -1,12 +1,12 @@
 <script>
-_V_.options.flash.swf = "/javascript/video-js/video-js.swf"
+    _V_.options.flash.swf = "/javascript/video-js/video-js.swf"
 </script>
 <section>
     <article>
         <video id="video" class="video-js vjs-default-skin" controls width="800"
-               height="450" poster="<?php echo $this->baseUrl() . '/' . $this->video->path . '_sheet.jpg' ?>"
+               height="450" poster="<?php echo $this->baseUrl() . '/' . $this->video->path . '_sheet.jpg'?>"
                preload="auto" data-setup="{}">
-            <source src="<?php echo $this->baseUrl() . '/' . $this->video->path ?>" type="video/mp4">
+            <source src="<?php echo $this->baseUrl() . '/' . $this->video->path?>" type="video/mp4">
         </video>
 
 <!--        <a href="<?php //echo $this->baseUrl() . '/' . $this->video->path ?>"

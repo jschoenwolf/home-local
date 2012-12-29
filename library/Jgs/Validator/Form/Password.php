@@ -10,10 +10,10 @@
  */
 class Jgs_Validator_Form_Password extends Zend_Validate_Abstract
 {
-    const LENGTH   = 'length';
-    const UPPER    = 'upper';
-    const LOWER    = 'lower';
-    const DIGIT    = 'digit';
+    const LENGTH = 'length';
+    const UPPER = 'upper';
+    const LOWER = 'lower';
+    const DIGIT = 'digit';
     const NOTEMPTY = 'empty';
 
     protected $_messageTemplates = array(
@@ -56,4 +56,3 @@ class Jgs_Validator_Form_Password extends Zend_Validate_Abstract
         return $isValid;
     }
 }
-

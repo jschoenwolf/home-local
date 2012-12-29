@@ -27,7 +27,7 @@ class Music_Model_Mapper_TagInfo extends Jgs_Model_Mapper_Abstract
 
     protected function createEntity($row)
     {
-        $row  = (object) $row;
+        $row = (object) $row;
         $data = array(
             'id'               => NULL,
             'album'            => $row->album,
@@ -44,7 +44,6 @@ class Music_Model_Mapper_TagInfo extends Jgs_Model_Mapper_Abstract
             'md5'              => $row->md5,
             'path'             => $row->path
         );
-
         return new Music_Model_TagInfo($data);
     }
 
@@ -52,12 +51,10 @@ class Music_Model_Mapper_TagInfo extends Jgs_Model_Mapper_Abstract
     {
         // Analyze file
         $this->data = $this->getID3->analyze($this->fileToScan);
-
         // Exit here on error
         if (isset($this->data['error'])) {
             return array('error' => $this->data['error']);
         }
-
         $this->result['filename']         = (isset($this->data['filename']) ? $this->data['filename'] : '' );
         $this->result['album']            = (isset($this->data['tags_html']['id3v2']['album'][0]) ? $this->data['tags_html']['id3v2']['album'][0] : '');
         $this->result['artist']           = (isset($this->data['tags_html']['id3v2']['artist'][0]) ? $this->data['tags_html']['id3v2']['artist'][0] : '');

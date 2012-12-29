@@ -37,4 +37,3 @@ class Admin_Form_Album extends Zend_Form
         $this->addElement($submit);
     }
 }
-

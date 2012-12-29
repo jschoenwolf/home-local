@@ -1,16 +1,16 @@
 <article class="search">
-    <form action="<?php echo $this->element->getAction() ?>"
-          method="<?php echo $this->element->getMethod() ?>">
+    <form action="<?php echo $this->element->getAction()?>"
+          method="<?php echo $this->element->getMethod()?>">
         <table>
             <tr>
-                <th><?php echo $this->element->query->renderLabel() ?></th>
+                <th><?php echo $this->element->query->renderLabel()?></th>
             </tr>
             <tr>
-                <td><?php echo $this->element->query->renderViewHelper() ?></td>
+                <td><?php echo $this->element->query->renderViewHelper()?></td>
             </tr>
             <tr>
-                <td><?php echo $this->element->search ?></td>
+                <td><?php echo $this->element->search?></td>
             </tr>
-        </table> 
+        </table>
     </form>
 </article>

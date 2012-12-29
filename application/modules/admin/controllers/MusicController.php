@@ -70,7 +70,7 @@ class Admin_MusicController extends Zend_Controller_Action
             }
             $this->view->form = $form;
         } catch (Zend_Exception $e) {
-            $this->_helper->flashMessenger->addMessage($e->getMessage(). ' ' . $e->getTraceAsString());
+            $this->_helper->flashMessenger->addMessage($e->getMessage() . ' ' . $e->getTraceAsString());
             $this->_redirect('/admin/music/index');
         }
     }

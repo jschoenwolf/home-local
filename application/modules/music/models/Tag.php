@@ -95,7 +95,7 @@ class Music_Model_Tag
             $record = $this->getTrackMapper()->saveTrack($track);
             return $record;
         } else {
-            return ;
+            return;
         }
     }
 

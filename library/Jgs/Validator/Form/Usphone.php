@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Description of Usphone.
+ * Description of Jgs_Validator_Form_Usphone.
  * Validate a U.S. Phone number pattern
  *
  * @author john

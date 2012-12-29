@@ -33,15 +33,18 @@ class Application_Model_Mapper_User extends Jgs_Model_Mapper_Abstract
         return $user;
     }
 
-    private function hashPassword($password){
+    private function hashPassword($password)
+    {
         return Jgs_Password::createPasswordHash($password);
     }
 
     public function saveUser(Application_Model_User $user)
     {
         if (!is_null($user->id) && !is_null($this->findById($user->id))) {
+
             $select = $this->getGateway()->select();
             $select->where('id = ?', $user->id);
+            
             $row = $this->getGateway()->fetchRow($select);
         } else {
             $row = $this->getGateway()->createRow();
@@ -53,5 +56,4 @@ class Application_Model_Mapper_User extends Jgs_Model_Mapper_Abstract
         $row->save();
         return $row;
     }
-
 }

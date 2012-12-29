@@ -7,12 +7,11 @@ class Application_Model_DbTable_Genre extends Zend_Db_Table_Abstract
 
     public function saveGenre(array $data)
     {
-
         $dataObject = (object) $data;
         if (array_key_exists('id', $data) && isset($data['id'])) {
             $row = $this->find($dataObject->id)->current();
         } else {
-            $row       = $this->createRow();
+            $row = $this->createRow();
         }
         $row->name = $dataObject->name;
         $row->save();
@@ -22,7 +21,6 @@ class Application_Model_DbTable_Genre extends Zend_Db_Table_Abstract
 
     public function fetchGenreRow($fieldName = null, $fieldValue = null)
     {
-
         $select = $this->select();
         $select->where("$fieldName = ?", $fieldValue);
 

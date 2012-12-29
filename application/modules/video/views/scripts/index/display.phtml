@@ -1,20 +1,21 @@
-<?php if ($this->paginator->count() > 1): ?>
+<?php if ($this->paginator->count() > 1):?>
     <div class="pagination"><?php
     echo $this->paginationControl(
-            $this->paginator, 'Sliding', '_paginatorControl.phtml'
+        $this->paginator, 'Sliding', '_paginatorControl.phtml'
     )
     ?></div>
-<?php endif ?>
+<?php endif?>
 <div>
-    <?php foreach ($this->paginator as $video): ?>
-        <?php echo $this->partial('_movie.phtml', $video) ?>
-    <?php endforeach; ?>
+    <?php foreach ($this->paginator as $video):?>
+        <?php echo $this->partial('_movie.phtml', $video)?>
+    <?php endforeach;?>
 </div>
-<?php if ($this->paginator->count() > 1): ?>
+<?php if ($this->paginator->count() > 1):?>
     <div class="pagination"><?php
     echo $this->paginationControl(
-            $this->paginator, 'Sliding', '_paginatorControl.phtml'
+        $this->paginator, 'Sliding', '_paginatorControl.phtml'
     )
     ?></div>
     <?php
+
  endif ?>

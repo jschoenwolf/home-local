@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Description of User
+ * Description of Application_Model_User
  *
  * @author John Schoenwolf
  */

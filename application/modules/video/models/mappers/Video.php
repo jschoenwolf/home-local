@@ -4,7 +4,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  * Description of Video
  *
@@ -12,7 +11,7 @@
  */
 class Video_Model_Mapper_Video extends Jgs_Model_Mapper_Abstract
 {
-    protected $_tablename   = 'videos';
+    protected $_tablename = 'videos';
     protected $_entityClass = 'Video_Model_Video';
     protected $_genreMapper;
 
@@ -140,5 +139,4 @@ class Video_Model_Mapper_Video extends Jgs_Model_Mapper_Abstract
         return $adapter;
     }
 }
-
 ?>

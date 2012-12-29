@@ -25,8 +25,8 @@ class Music_Model_Mapper_Artist extends Jgs_Model_Mapper_Abstract
     {
 
         $data = array(
-            'id' => $row->id,
-            'name' => $row->name
+            'id'    => $row->id,
+            'name'  => $row->name
         );
         $artist = new Music_Model_Artist($data);
 

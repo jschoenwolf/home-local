@@ -24,12 +24,9 @@ abstract class Jgs_Model_Mapper_Abstract
      */
     public function __construct(Zend_Db_Table_Abstract $tableGateway = null)
     {
-
         if (is_null($tableGateway)) {
-
             $this->tableGateway = new Zend_Db_Table($this->_tableName);
         } else {
-
             $this->tableGateway = $tableGateway;
         }
     }
@@ -41,7 +38,6 @@ abstract class Jgs_Model_Mapper_Abstract
      */
     protected function getGateway()
     {
-
         return $this->tableGateway;
     }
 
@@ -81,23 +77,20 @@ abstract class Jgs_Model_Mapper_Abstract
      */
     public function findByColumn($column, $value, $order = null)
     {
-
         $select = $this->getGateway()->select();
         $select->where("$column = ?", $value);
 
         if (!is_null($order)) {
             $select->order($order);
         }
-
         $result = $this->getGateway()->fetchAll($select);
 
         $entities = array();
         foreach ($result as $row) {
-            $entity     = $this->createEntity($row);
+            $entity = $this->createEntity($row);
             $this->setMap($row->id, $entity);
             $entities[] = $entity;
         }
-
         return $entities;
     }
 
@@ -122,7 +115,6 @@ abstract class Jgs_Model_Mapper_Abstract
      */
     public function findById($id)
     {
-
         if ($this->getMap($id)) {
             return $this->getMap($id);
         }
@@ -149,7 +141,6 @@ abstract class Jgs_Model_Mapper_Abstract
      */
     public function findAll(array $where = null, $order = null)
     {
-
         $select = $this->getGateway()->select();
 
         if (!is_null($where)) {
@@ -158,12 +149,11 @@ abstract class Jgs_Model_Mapper_Abstract
         if (!is_null($order)) {
             $select->order($order);
         }
-
         $rowset = $this->getGateway()->fetchAll($select);
 
         $entities = array();
         foreach ($rowset as $row) {
-            $entity     = $this->createEntity($row);
+            $entity = $this->createEntity($row);
             $this->setMap($row->id, $entity);
             $entities[] = $entity;
         }

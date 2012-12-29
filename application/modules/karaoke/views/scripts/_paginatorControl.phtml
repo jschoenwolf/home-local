@@ -12,62 +12,63 @@ if ($this->pageCount) :
             <tr>
                 <td>
                     <!--First Page Link -->
-                    <?php if (isset($this->first)): ?>
+                    <?php if (isset($this->first)):?>
                         <a href="<?php
                 echo $this->url(array_merge($params, array('page' => $this->first)))
                         ?>">
                             &lt; First</a>
-                    <?php else : ?>
+                    <?php else :?>
                         <span class="disabled">&lt; First</span>
-                    <?php endif ?>
+                    <?php endif?>
                 </td>
                 <td class="space">|</td>
                 <td>
                     <!--Previous Page Links-->
-                    <?php if (isset($this->previous)) : ?>
+                    <?php if (isset($this->previous)) :?>
                         <a href="<?php
                 echo $this->url(array_merge($params, array('page' => $this->previous)))
                         ?>">
                             &lt; Prev</a>
-                    <?php else : ?>
+                    <?php else :?>
                         <span class="disabled">&lt; Prev</span>
-                    <?php endif ?>
+                    <?php endif?>
                 </td>
                 <td>|
                     <!--Number page links-->
-                    <?php foreach ($this->pagesInRange as $page): ?>
-                        <?php if ($page != $this->current) : ?>
-                            <a href="<?php echo $this->url(array_merge($params, array('page' => $page))) ?>">
-                                <?php echo $page ?></a> |
-                        <?php else: ?>
-                                <?php echo $page ?> |
+                    <?php foreach ($this->pagesInRange as $page):?>
+                        <?php if ($page != $this->current) :?>
+                            <a href="<?php echo $this->url(array_merge($params, array('page' => $page)))?>">
+                                <?php echo $page?></a> |
+                        <?php else:?>
+                                <?php echo $page?> |
                             <?php endif;
-                        endforeach; ?>
+                        endforeach;
+                        ?>
                 </td>
                 <td>
                     <!--Next page link-->
-                    <?php if (isset($this->next)) : ?>
+                    <?php if (isset($this->next)) :?>
                         <a href="<?php
                         echo $this->url(array_merge($params, array('page' => $this->next)))
                         ?>">
                             Next &gt;</a>
-                    <?php else : ?>
+                    <?php else :?>
                         <span class="disabled">Next &gt;</span>
-    <?php endif; ?>
+    <?php endif;?>
                 </td>
                 <td class="space">|</td>
                 <td>
                     <!--Last page Link -->
-                    <?php if (isset($this->last)): ?>
+                    <?php if (isset($this->last)):?>
                         <a href="<?php
                         echo $this->url(array_merge($params, array('page' => $this->last)))
                         ?>">
                             Last &gt;</a>
-                    <?php else: ?>
+                    <?php else:?>
                         <span class="disabled">last &gt;</span>
-    <?php endif ?>
+    <?php endif?>
                 </td>
             </tr>
         </table>
     </div>
-<?php endif; ?>
+<?php endif;?>

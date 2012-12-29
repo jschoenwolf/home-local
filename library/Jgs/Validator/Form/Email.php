@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Description of Email.
+ * Description of Jgs_Validator_Form_Email.
  * Validate an Email address.
  *
  * @author John Schoenwolf
@@ -26,7 +26,6 @@ class Jgs_Validator_Form_Email extends Zend_Validate_Abstract
             $this->_error(self::EMAIL);
             $isValid = false;
         }
-
         return $isValid;
     }
 }
