@@ -95,7 +95,9 @@ class Music_Model_Tag
             $record = $this->getTrackMapper()->saveTrack($track);
             return $record;
         } else {
-            return;
+            $track = $this->getTrackMapper()->findOneByColumn('hash', $this->taginfo->getMd5());
+            $track->setTitle($this->taginfo->getTitle());
+            $record = $this->getTrackMapper()->saveTrack($track);
         }
     }
 

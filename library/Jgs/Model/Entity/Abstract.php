@@ -42,7 +42,6 @@ abstract class Jgs_Model_Entity_Abstract
     public function setOptions(array $options)
     {
         $methods = get_class_methods($this);
-
         foreach ($options as $key => $value) {
 
             $method = 'set' . ucfirst($key);

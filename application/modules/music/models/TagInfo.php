@@ -73,7 +73,7 @@ class Music_Model_TagInfo extends Jgs_Model_Entity_Abstract
 
     public function setTitle($title)
     {
-        $this->title = utf8_encode(strtolower(trim($title)));
+        $this->title = $title;
         return $this;
     }
 

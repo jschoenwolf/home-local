@@ -65,7 +65,7 @@ class Music_IndexController extends Zend_Controller_Action
                 $this->view->artPath = '/images/mp3art/';
                 break;
             case (isset($request['id'])):
-                $this->_forward('artist', null, null, array('id'     => $request['id']));
+                $this->_forward('artist', null, null, array('id' => $request['id']));
                 break;
             default:
                 $adapter = $model->fetchPagedTracks();
@@ -76,7 +76,9 @@ class Music_IndexController extends Zend_Controller_Action
     public function artistAction()
     {
         $id = $this->getRequest()->getParam('id');
+
         $artist = new Music_Model_Mapper_Artist();
+       
         if (count($artist->findById($id)->getAlbums()) > 0) {
             $model = new Music_Model_Mapper_Album();
             $adapter = $model->findByIdPaged('artist_id ', $id);

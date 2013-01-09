@@ -1,20 +1,24 @@
-<div class="pagination"><?php
+<div><?php
 echo $this->paginationControl(
     $this->paginator, 'Sliding', '_paginatorControl.phtml'
 )
 ?>
 </div>
-<?php foreach ($this->paginator as $artist): ?>
-    <table class="genre">
-        <tr>
-            <td><a href="/music/index/display/id/<?php echo $artist->id ?>">
-                    <?php echo $artist->name ?></a></td>
-        </tr>
-    </table>
-<?php endforeach; ?>
-<div class="pagination"><?php
-echo $this->paginationControl(
-    $this->paginator, 'Sliding', '_paginatorControl.phtml'
-)
-?>
+<div class="row">
+    <?php foreach ($this->paginator as $artist):?>
+        <div class="span3">
+            <table class="table-bordered">
+                <tr>
+                    <td class="button"><a href="/music/index/display/id/<?php echo $artist->id?>">
+                            <?php echo ucwords($artist->name)?></a></td>
+                </tr>
+            </table>
+        </div>
+    <?php endforeach;?>
+</div>
+<div><?php
+    echo $this->paginationControl(
+        $this->paginator, 'Sliding', '_paginatorControl.phtml'
+    )
+    ?>
 </div>

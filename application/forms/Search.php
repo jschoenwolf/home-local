@@ -14,9 +14,6 @@ class Application_Form_Search extends Zend_Form
         $query = $this->createElement('text', 'query');
         // element options
         $query->setLabel('Search Keywords');
-        $query->setAttribs(array('placeholder' => 'Title',
-            'size'        => 27,
-        ));
         // add the element to the form
         $this->addElement($query);
         //submit element

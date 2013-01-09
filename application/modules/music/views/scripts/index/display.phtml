@@ -1,14 +1,14 @@
-<div class="pagination"><?php
+<div><?php
 echo $this->paginationControl(
         $this->paginator, 'Sliding', '_paginatorControl.phtml'
 )
 ?></div>
-<article class="table">
+<article>
     <?php
     $end_artist = '';
     $end_album = '';
     ?>
-    <table>
+    <table class="table-bordered">
         <?php
         foreach ($this->paginator as $track):;
 
@@ -20,31 +20,30 @@ echo $this->paginationControl(
 
                 <thead>
                     <tr>
-                        <th colspan="3"><?php echo $track->getArtist()->name ?></th>
+                        <th colspan="3"><?php echo ucwords($track->getArtist()->name) ?></th>
                     </tr>
                 </thead>
             <?php endif ?>
             <?php if ($end_album != $album): ?>
 
-                <tr class="display">
+                <tr>
                     <th><img src="<?php echo $this->artPath . 'thumbs/' . ucwords($track->getAlbum()->title) . '_thumb.jpg' ?>" alt="Album Art" /></th>
                     <th><a href="/music/index/album/id/<?php echo $track->getAlbum()->id ?>"><?php echo ucwords($track->getAlbum()->title) ?></a></th>
                     <th><?php echo $track->getAlbum()->year ?></th>
                 </tr>
 
                 <tr>
-                    <th class="tableth">Track #</th>
-                    <th class="tableth">Title</th>
-                    <th class="tableth">&nbsp;</th>
+                    <th>Track #</th>
+                    <th>Title</th>
+                    <th>&nbsp;</th>
 
 
                 </tr>
             <?php endif; ?>
             <tr>
-                <td class="track"><?php echo $this->escape($track->getTrack()) ?></td>
-                <td class="title"><?php echo $this->escape($track->getTitle()) ?></td>
-                <td class="audio_player"><audio controls="controls" preload="none">
-                        <source src="<?php echo $this->path($track->getPath()) ?>" type="audio/mp3" /></audio></td>
+                <td><?php echo $this->escape($track->getTrack()) ?></td>
+                <td><?php echo $this->escape($track->getTitle()) ?></td>
+                <td><?php echo $this->path($track->getPath() . '/' . $track->getFilename()) ?></td>
             </tr>
 
 
@@ -56,7 +55,7 @@ echo $this->paginationControl(
         <?php endforeach ?>
     </table>
 </article>
-<div class="pagination"><?php
+<div><?php
         echo $this->paginationControl(
                 $this->paginator, 'Sliding', '_paginatorControl.phtml'
         );

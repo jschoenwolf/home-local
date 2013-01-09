@@ -53,6 +53,7 @@ class Admin_MusicController extends Zend_Controller_Action
                     if ($form->file->isUploaded()) {
                         $utilities = new Jgs_Utilities();
                         $tracks = $utilities->csvToArray($file);
+                        $track = array_shift($tracks);
                     }
 
                     foreach ($tracks as $track) {

@@ -20,7 +20,7 @@ class Jgs_Controller_Action_Helper_Search extends Zend_Controller_Action_Helper_
         $form->search->setLabel($label);
         $form->query->setAttribs(array(
             'placeholder' => $placeHolder,
-            'size'        => 27,
+            'size'        => 20,
         ));
         return $form;
     }
