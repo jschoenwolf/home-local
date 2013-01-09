@@ -7,7 +7,7 @@ echo $this->paginationControl(
     <?php if ($this->paginator->getAdapter() instanceof Music_Model_Paginator_Album):?>
         <?php foreach ($this->paginator as $album):?>
             <?php $art = $this->artPath . $album->art?>
-            <img id="album_img" src="<?php echo $art?>" alt="album art" height="300" width="300">
+            <img id="album_img" src="<?php echo $art;?>" alt="album art" height="300" width="300">
             <article>
                 <table class="table-bordered">
                     <thead>
@@ -23,7 +23,7 @@ echo $this->paginationControl(
                     <tr><td></td></tr>
                     <?php foreach ($album->getTracks() as $track):?>
                         <?php if ($track->artist->id == $album->artist->id):?>
-                        <!--                            <tbody>-->
+                                <!--                            <tbody>-->
                             <tr>
                                 <td><?php echo $track->getTrack_number()?></td>
                                 <td><?php echo $track->getTitle();?></td>

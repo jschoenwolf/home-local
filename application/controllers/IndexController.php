@@ -23,7 +23,13 @@ class IndexController extends Zend_Controller_Action
 
     public function indexAction()
     {
-
+//        $file = MEDIA_MUSIC_PATH . '\\Audioslave\\Audioslave\\01 Be Yourself.mp3';
+//        $path = 'images/mp3art/';
+//        $info = new Music_Model_Mapper_TagInfo($file);
+//        $tag = new Music_Model_Tag($info->getInfo());
+        $model = new Music_Model_Mapper_Album();
+        $album = $model->findById(4);
+        $image = $album->setCoverArt();
     }
 
     public function registerAction()

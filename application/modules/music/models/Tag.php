@@ -28,6 +28,15 @@ class Music_Model_Tag
     public function __construct(Music_Model_TagInfo $taginfo)
     {
         $this->taginfo = $taginfo;
+        if (is_null($this->artistMapper)) {
+            $this->artistMapper = new Music_Model_Mapper_Artist();
+        }
+        if (is_null($this->albumMapper)) {
+            $this->albumMapper = new Music_Model_Mapper_Album();
+        }
+        if (is_null($this->trackMapper)) {
+            $this->trackMapper = new Music_Model_Mapper_Track();
+        }
         $this->setArtist_id();
         $this->setAlbum_id();
     }
@@ -158,46 +167,16 @@ class Music_Model_Tag
 
     public function getAlbumMapper()
     {
-        if (is_null($this->albumMapper)) {
-            $this->setAlbumMapper();
-        }
         return $this->albumMapper;
-    }
-
-    public function setAlbumMapper()
-    {
-        if (is_null($this->albumMapper)) {
-            $this->albumMapper = new Music_Model_Mapper_Album();
-        }
     }
 
     public function getArtistMapper()
     {
-        if (is_null($this->artistMapper)) {
-            $this->setArtistMapper();
-        }
         return $this->artistMapper;
-    }
-
-    public function setArtistMapper()
-    {
-        if (is_null($this->artistMapper)) {
-            $this->artistMapper = new Music_Model_Mapper_Artist();
-        }
     }
 
     public function getTrackMapper()
     {
-        if (is_null($this->trackMapper)) {
-            $this->setTrackMapper();
-        }
         return $this->trackMapper;
-    }
-
-    public function setTrackMapper()
-    {
-        if (is_null($this->trackMapper)) {
-            $this->trackMapper = new Music_Model_Mapper_Track();
-        }
     }
 }

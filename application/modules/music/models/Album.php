@@ -64,6 +64,12 @@ class Music_Model_Album extends Jgs_Model_Entity_Abstract
         return $this;
     }
 
+    public function setCoverArt() {
+       $track = array_shift($this->getTracks());
+       $tagInfo = new Music_Model_Mapper_TagInfo($track->path . $track->filename);
+       $tagInfo->getCoverImage();
+    }
+
     /**
      * Get release year of Album
      *
