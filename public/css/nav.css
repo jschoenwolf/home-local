@@ -1,5 +1,5 @@
 a {
-   color: #0b61a4;
+    color: #0b61a4;
 }
 
 a:hover {
@@ -36,16 +36,17 @@ a:hover {
 }
 /*Pagination Controls*/
 .paginationControl {
-    margin-left: 10%;
-    margin-bottom: 1em;
-    margin-top: 1em;
-    max-width: 80%;
-    text-align: center;
-    font-size: larger;
+    margin-left: 21%;
+    margin-bottom: 1.5em;
+    margin-top: 1.5em;
+    max-width: 95%;
+
 }
 .paginationControl tr {
     border: #ccc 1px solid;
 }
 .paginationControl td {
+    font-variant: small-caps;
+    text-align: center;
     font-size: larger;
 }
