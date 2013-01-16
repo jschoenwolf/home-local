@@ -27,9 +27,11 @@ class IndexController extends Zend_Controller_Action
 //        $path = 'images/mp3art/';
 //        $info = new Music_Model_Mapper_TagInfo($file);
 //        $tag = new Music_Model_Tag($info->getInfo());
-        $model = new Music_Model_Mapper_Album();
-        $album = $model->findById(4);
-        $image = $album->setCoverArt();
+//        $model = new Music_Model_Mapper_Album();
+//        $album = $model->findById(4);
+//        $image = $album->setCoverArt();
+
+     
     }
 
     public function registerAction()
