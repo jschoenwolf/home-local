@@ -30,9 +30,6 @@ class IndexController extends Zend_Controller_Action
 //        $model = new Music_Model_Mapper_Album();
 //        $album = $model->findById(4);
 //        $image = $album->setCoverArt();
-       
-
-
     }
 
     public function registerAction()
