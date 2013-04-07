@@ -1,18 +1,10 @@
-a {
-    color: #0b61a4;
-}
-
-a:hover {
-    color: #66a3d2;
-}
-/*Title bar nav*/
 #nav {
     background: #033e6b;
     min-height: 2.5em;
     margin: 0 0 .5em 0;
     padding: .5em 0;
-    border-top: black 1px solid;
-    border-bottom: black 1px solid;
+    border-top: black 2px solid;
+    border-bottom: black 2px solid;
 }
 #nav a {
     font-family: "Arial Black";
@@ -22,31 +14,6 @@ a:hover {
     display: inline;
     padding: .4em;
 }
-
 #nav a:hover {
     color: #66a3d2;
-}
-
-#nav a.selected {
-    font-weight: bold;
-}
-/*Admin Nav*/
-#adminMenu a,h4 {
-    /*margin-left: 2em;*/
-}
-/*Pagination Controls*/
-.paginationControl {
-    margin-left: 21%;
-    margin-bottom: 1.5em;
-    margin-top: 1.5em;
-    max-width: 95%;
-
-}
-.paginationControl tr {
-    border: #ccc 1px solid;
-}
-.paginationControl td {
-    font-variant: small-caps;
-    text-align: center;
-    font-size: larger;
 }

@@ -40,7 +40,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         //set head meta data
         $view->headMeta()->setCharset(Zend_Registry::get('config')->resources->view->charset);
         //set css includes
-        $view->headlink()->setStylesheet('/bootstrap/css/bootstrap.min.css');
+        $view->headlink()->setStylesheet('/bootstrap/css/bootstrap.css');
         $view->headLink()->appendStylesheet('/css/main.css');
         $view->headLink()->appendStylesheet('/css/nav.css');
         $view->headLink()->appendStylesheet('/css/table.css');

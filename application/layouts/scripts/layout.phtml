@@ -7,21 +7,21 @@
         <?php echo $this->headscript() . "\n"?>
     </head>
     <body>
-        <div class="container">
-            <div class="row">
+        <div class="container-fluid">
+            <div class="row-fluid">
                 <div class="span12">
                     <header>
-                        <div class="row">
+                        <div class="row-fluid">
                             <div class="span8">
-                                <h1>HOME</h1>
+                                <h1>Hi</h1>
                             </div>
                             <div id="login" class="span4">
                                 <?php echo $this->layout()->login . "\n"?>
                             </div>
                         </div>
-                        <nav class="row">
+                        <nav class="row-fluid">
                             <div class="span12">
-                                <div id="nav" class="navbar">
+                                <div id="nav">
                                     <a href="/">Home</a>
                                     <a href="/music/index">Music</a>
                                     <a href="/video/index">Videos</a>
@@ -35,10 +35,10 @@
                 </div>
             </div>
         </div>
-        <section class="container">
-            <article class="row">
-                <div id="main" class="span12">
-                    <div class="row">
+        <section class="container-fluid">
+            <article class="row-fluid">
+                <div class="span12">
+                    <div class="row-fluid">
                         <div class="span9">
                             <div id="flash">
                                 <?php
@@ -47,7 +47,7 @@
                                 }
                                 ?>
                             </div>
-                            <div id="content">
+                            <div>
                                 <?php echo $this->layout()->content;?>
                             </div>
                         </div>
@@ -55,16 +55,18 @@
                             <div>
                                 <?php echo $this->layout()->search?>
                             </div>
-                            <div id="subNav">
+                            <div>
                                 <?php echo $this->layout()->subNav?>&nbsp;
                             </div>
-                            <div class="sidebar-nav">
-                                <div id="adminMenu">
+                            <div>
+                                <div>
                                     <h4>Administration Links</h4>
-                                    <a href="/admin/music/index">Admin Music Index</a><br />
-                                    <a href="/admin/music/read">Scan Music Files CSV</a><br />
-                                    <a href="/admin/moviexml/index">Movie Xml</a><br />
-                                    <a href="/admin/music/update">Update Music Info</a>
+                                    <ul class='nav nav-list'>
+                                        <li><a href="/admin/music/index">Admin Music Index</a></li>
+                                        <li><a href="/admin/music/read">Scan Music Files CSV</a></li>
+                                        <li><a href="/admin/moviexml/index">Movie Xml</a></li>
+                                        <li><a href="/admin/music/update">Update Music Info</a></li>
+                                    </ul>
                                     <?php echo $this->layout()->adminMenu?>&nbsp;
                                 </div>
                             </div>
@@ -72,7 +74,7 @@
                     </div>
                 </div>
             </article>
-            <div class="row">
+            <div class="row-fluid">
                 <div class="span12">
                     <footer>
                         <p>Created by <em>John Schoenwolf</em> with <a href="http://framework.zend.com/">Zend Framework</a> and <a href="http://twitter.github.com/bootstrap">Twitter Bootstrap</a> &COPY;</p>

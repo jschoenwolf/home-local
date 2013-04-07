@@ -1,24 +1,38 @@
-<?php if ($this->paginator->count() > 1): ?>
-    <div class="pagination">
-        <?php
-        echo $this->paginationControl(
+<div class="row-fluid">
+    <div class="span12">
+        <?php if ($this->paginator->count() > 1):?>
+            <?php
+            echo $this->paginationControl(
                 $this->paginator, 'Sliding', '_paginatorControl.phtml'
-        );
-        ?>
+            );
+            ?>
+        <?php endif?>
     </div>
-<?php endif
-?>
-<div class="block">
-    <article class="table">
-        <table>
-            <tr class="edit">
-                <th>Id</th>
-                <th>Title</th>
-                <th>Artist</th>
-            </tr>
-            <?php foreach ($this->paginator as $song): ?>
-                <?php echo $this->partial('_song.phtml', $song) ?>
-            <?php endforeach; ?>
-        </table>
-    </article>
+</div>
+<table class="table table-striped table-condensed table-hover">
+    <thead>
+        <tr>
+            <th>Cavs #</th>
+            <th>Title</th>
+            <th>Artist</th>
+            <th>Publisher</th>
+            <th>Disc Number</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($this->paginator as $song):?>
+            <?php echo $this->partial('_songRow.phtml', $song)?>
+        <?php endforeach;?>
+    </tbody>
+</table>
+<div class="row-fluid">
+    <div class="span12">
+        <?php if ($this->paginator->count() > 1):?>
+            <?php
+            echo $this->paginationControl(
+                $this->paginator, 'Sliding', '_paginatorControl.phtml'
+            );
+            ?>
+        <?php endif?>
+    </div>
 </div>
