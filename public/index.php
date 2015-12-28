@@ -9,8 +9,8 @@ defined('APPLICATION_ENV')
     || define('APPLICATION_ENV', (getenv('APPLICATION_ENV')?getenv('APPLICATION_ENV'):'development'));
 
 //Define Media Path
-defined('MEDIA_MUSIC_PATH') 
-    || define('MEDIA_MUSIC_PATH', 'Media\\Music');
+//defined('MEDIA_MUSIC_PATH') 
+//    || define('MEDIA_MUSIC_PATH', 'Media\\Music');
 
 // Ensure library/ is on include_path
 set_include_path(implode(PATH_SEPARATOR, array(
