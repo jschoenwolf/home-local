@@ -16,16 +16,13 @@
                                 <h1>Hi</h1>
                             </div>
                             <div id="login" class="span4">
-                                <?php echo $this->layout()->login . "\n"?>
+                                <?php //echo $this->layout()->login . "\n"?>
                             </div>
                         </div>
                         <nav class="row-fluid">
                             <div class="span12">
                                 <div id="nav">
                                     <a href="/">Home</a>
-                                    <a href="/music/index">Music</a>
-                                    <a href="/video/index">Videos</a>
-                                    <a href="/admin/index">Administration</a>
                                     <a href="/karaoke/index">Karaoke</a>
                                     <?php echo $this->layout()->nav?>&nbsp;
                                 </div>
@@ -57,18 +54,6 @@
                             </div>
                             <div>
                                 <?php echo $this->layout()->subNav?>&nbsp;
-                            </div>
-                            <div>
-                                <div>
-                                    <h4>Administration Links</h4>
-                                    <ul class='nav nav-list'>
-                                        <li><a href="/admin/music/index">Admin Music Index</a></li>
-                                        <li><a href="/admin/music/read">Scan Music Files CSV</a></li>
-                                        <li><a href="/admin/moviexml/index">Movie Xml</a></li>
-                                        <li><a href="/admin/music/update">Update Music Info</a></li>
-                                    </ul>
-                                    <?php echo $this->layout()->adminMenu?>&nbsp;
-                                </div>
                             </div>
                         </aside>
                     </div>

@@ -8,7 +8,7 @@ class Karaoke_IndexController extends Zend_Controller_Action
         $this->_helper->layout()->search = $this->_helper->search(
             '/karaoke/index/display', 'Search Karaoke Collection!', 'Karaoke'
         );
-        $this->_helper->layout()->login = $this->_helper->login();
+        //$this->_helper->layout()->login = $this->_helper->login();
     }
 
     public function init()
