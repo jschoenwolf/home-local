@@ -1,0 +1,16 @@
+<div class="offset3">
+    <?php if ($this->paginator->count() > 1): ?>
+        <?php
+        echo $this->paginationControl(
+                $this->paginator, 'Sliding', '_paginatorControl.phtml'
+        );
+        ?>
+    <?php endif ?>
+</div>
+<?php
+foreach ($this->paginator as $value) {
+    echo $value->artist."<br />";
+    echo $value->title;
+            
+}
+?>

@@ -5,13 +5,12 @@
  *
  * @author John Schoenwolf
  */
-class Karaoke_Model_Mapper_Karaoke extends Jgs_Model_Mapper_Abstract
-{
+class Karaoke_Model_Mapper_Karaoke extends Jgs_Model_Mapper_Abstract {
+
     protected $tableName = 'karaoke';
     protected $entityClass = 'Karaoke_Model_Karaoke';
 
-    public function __construct(Zend_Db_Table_Abstract $tableGateway = null)
-    {
+    public function __construct(Zend_Db_Table_Abstract $tableGateway = null) {
         if (is_null($tableGateway)) {
             $tableGateway = new Application_Model_DbTable_Karaoke();
         } else {
@@ -20,22 +19,20 @@ class Karaoke_Model_Mapper_Karaoke extends Jgs_Model_Mapper_Abstract
         parent::__construct($tableGateway);
     }
 
-    public function createEntity($row)
-    {
+    public function createEntity($row) {
         $data = array(
-            'id'     => $row->id,
-            'title'  => $row->title,
+            'id' => $row->id,
+            'title' => $row->title,
             'artist' => $row->artist,
-            'manu'   => $row->manu,
-            'disc'   => $row->disc,
-            'track'  => $row->track
+            'manu' => $row->manu,
+            'disc' => $row->disc,
+            'track' => $row->track
         );
 
         return new Karaoke_Model_Karaoke($data);
     }
 
-    public function fetchPaged()
-    {
+    public function fetchPaged() {
         $select = $this->getGateway()->select();
         $select->order('id ASC');
 
@@ -44,8 +41,16 @@ class Karaoke_Model_Mapper_Karaoke extends Jgs_Model_Mapper_Abstract
         return $adapter;
     }
 
-    public function fetchPagedByQuery($query)
-    {
+    public function fetchArtist() {
+        $select = $this->getGateway()->select();
+        $select->order('artist ASC');
+        
+        $adapter = new Karaoke_Model_Paginator_Karaoke($select);
+        
+        return $adapter;
+    }
+
+    public function fetchPagedByQuery($query) {
         $select = $this->getGateway()->select();
         $select->where(new Zend_Db_Expr("title LIKE '%$query%'"));
         $select->orWhere(new Zend_Db_Expr("artist LIKE '%$query%'"));
@@ -56,4 +61,5 @@ class Karaoke_Model_Mapper_Karaoke extends Jgs_Model_Mapper_Abstract
 
         return $adapter;
     }
+
 }
