@@ -21,12 +21,12 @@ class Karaoke_Model_Mapper_Karaoke extends Jgs_Model_Mapper_Abstract {
 
     public function createEntity($row) {
         $data = array(
-            'id' => $row->id,
-            'title' => $row->title,
+            'id'     => $row->id,
+            'title'  => $row->title,
             'artist' => $row->artist,
-            'manu' => $row->manu,
-            'disc' => $row->disc,
-            'track' => $row->track
+            'manu'   => $row->manu,
+            'disc'   => $row->disc,
+            'track'  => $row->track
         );
 
         return new Karaoke_Model_Karaoke($data);
@@ -38,15 +38,6 @@ class Karaoke_Model_Mapper_Karaoke extends Jgs_Model_Mapper_Abstract {
 
         $adapter = new Karaoke_Model_Paginator_Karaoke($select);
 
-        return $adapter;
-    }
-
-    public function fetchArtist() {
-        $select = $this->getGateway()->select();
-        $select->order('artist ASC');
-        
-        $adapter = new Karaoke_Model_Paginator_Karaoke($select);
-        
         return $adapter;
     }
 

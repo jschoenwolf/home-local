@@ -54,7 +54,7 @@ class Karaoke_IndexController extends Zend_Controller_Action
     {
         $this->view->headTitle('Karaoke: By Artist.', Zend_View_Helper_Placeholder_Container_Abstract::SET);
         
-        $model = new Karaoke_Model_Mapper_Karaoke();
+        $model = new Karaoke_Model_Mapper_Artist();
         $adapter = $model->fetchArtist();
         
         $paginator = new Zend_Paginator($adapter);
